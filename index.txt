@@ -1,10 +1,10 @@
-vCard - Personal Portfolio
+Welcome to my Personal Portfolio
 
 # sidebar
 
-alt = Richard hanrick
-Richard hanrick
-Web developer
+alt = Daisy Mboya
+Daisy Mboya
+GIS Analyst
 
 Show Contacts
 
