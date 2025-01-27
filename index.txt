@@ -96,44 +96,61 @@ Resume
 
 Education
 
-University school of the arts
-2007 — 2008
-Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.
+The University of British Columbia (Vancouver, Canada)
+2024-2025
+Master of Geomatics for Environmental Management
 
-New york academy of art
-2006 — 2007
-Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est omnis..
+The University of Nairobi (Nairobi, Kenya)
+2013-2018
+Bachelor of Science, Geospatial Engineering
 
-High school of art and design
-2002 — 2004
-Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur magni dolores eos.
+Loreto High School Matunda (Kitale, Kenya)
+2008—2011
+High School Certificate
 
 Experience
 
-Creative director
-2015 — Present
-Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas molestias exceptur.
+Rural Electrification and Renewable Energy Corporation (Nairobi, Kenya)
+April 2022 - Date
+Geospatial Analyst
 
-Art director
-2013 — 2015
-Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.
+Ministry of Lands and Physical Planning (Nairobi, Kenya)
+Jan 2019 - Mar 2022
+Geospatial Analyst
 
-Web designer
-2010 — 2013
-Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.
+National Housing Corporation (Nairobi, Kenya)
+April 2019 - Dec 2019
+Intern
 
-My skills
+Kenya Urban Roads Authority (Nairobi, Kenya)
+Jan 2017-March 2017
+Intern
 
-Web design
-80%
+University of Nairobi Enterprises and Services (Nairobi, Kenya)
+2015 - 2017
+Project Assistant
+
+Online Courses 
+
+Esri Eastern Africa
+Imagery In Action
+Spatial Data Science
 Graphic design
-70%
-Branding
-90%
-WordPress
-50%
+ArcGIS Pro Essential Workflows
+Managing Geospatial Data with ArcGIS
+Sharing Content to ArcGIS Enterprise
+Deploying and Maintaining a Multi user Geodatabase
+Configuring Utility Networks in ArcGIS
 
+Memberships and Affiliations
 
+The Institution of Surveyors of Kenya
+2019 – Date
+Graduate Member
+
+Kenya Red Cross Society 
+2021 – Date
+Life Member
 
 # portfolio
 
