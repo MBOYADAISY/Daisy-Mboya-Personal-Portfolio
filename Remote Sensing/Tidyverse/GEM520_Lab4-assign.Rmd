@@ -1,0 +1,713 @@
+---
+title: 'GEM520 - Lab 4: Vancouver street trees analysis with tidyverse'
+author: "Mboya Daisy Akinyi"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  pdf_document: 
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The goal of this lab is to get to know the tidyverse collection of packages, in particular the `dplyr`, `tidyr` and `ggplot2` packages for data cleaning and manipulation, analysis and visualization.
+
+Learning objectives:
+
+-   Getting familiar with the `tidyverse` environment
+-   Perform data cleaning and basic analysis
+-   Make plots and map aesthetics with `ggplot2`
+
+Software requirements
+
+-   RStudio
+-   RMarkdown and related dependencies (e.g. knitr)
+-   `dplyr`, `tidyr`, `ggplot2` packages from the `tidyverse` collection
+
+## Instructions and deliverables
+
+You will submit this assignment on Canvas as a pdf file generated with R Markdown.
+
+**Complete all the lab in a regular script file (.R). Once the lab is completed and everything works as expected, copy and paste your chunks of code in the R Markdown template (.Rmd) and type your written answers where needed**
+
+## Dataset description
+
+In this lab, you will use the `street_trees.csv` dataset obtained from [Vancouver City Open Data Portal](https://opendata.vancouver.ca/explore/dataset/street-trees/information/?disjunctive.species_name&disjunctive.common_name&disjunctive.height_range_id). This dataset lists trees located on public streets but not the ones located in parks or private properties.
+
+The following attributes were recorded for each tree (non-exhaustive list):
+
+-   An individual tree ID
+-   Tree species (both latin and common name)
+-   Diameter at breast height (1.3 m), in **inches**
+-   Height class: An integer from 0 to 10 with 0 = 0 - 10 ft (0 - 3 m), 1 = 10 - 20 ft (0 - 6 m), ..., 10 = 100+ ft (30+ m)
+-   The name of the street and neighbourhood the tree is located in.
+
+There are four `csv` files located in the data folder of Lab 4:
+
+-   `street_trees.csv`: Main dataset with the attributes recorded for each tree
+-   `trees_count.csv`: A summary of the `street_trees.csv` dataset with the number of trees per neighbourhood.
+-   `trees_height_diameter.csv`: The `street_trees.csv` dataset organized in a different way
+-   `public_street_length`: The length of public streets of Vancouver, in **meters**. Streets are divided by blocks and the ones that overlap two neighbourhoods have separate records.
+
+The following map shows the name of the neighbourhoods that we will look into in this lab. 
+
+
+------------------------------------------------------------------------
+
+# Attaching packages
+
+Before you start, attach the tidyverse collection of packages.
+
+```{r, echo = TRUE, verbose = FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+library(ggrepel)
+```
+
+## Question 1
+
+Open the `trees_count.csv` file as a data frame called `trees_count`.
+
+The data stored in `trees_count` contains 3 variables:
+
+-   Tree species
+-   Number of tree per species
+-   Vancouver neighbourhoods
+
+Is the `trees_count` data frame in a tidy format? Why? Use function(s) from the tidyverse collection of packages to reshape the data to a tidy format if it is not already.
+
+---
+
+### Code answer
+
+```{r}
+#Load the csv file as a dataframe
+tree_count <- data.frame(read_csv("trees_count.csv", show_col_types = FALSE))
+head(tree_count)
+
+#Reshape ths dataframe
+tree_count <- pivot_longer(data = tree_count, cols = 2:ncol(tree_count),
+                           names_to = 'neighbourhoods',values_to = 'count')
+tree_count
+```
+
+
+### Written answer
+
+Given that the data frame contains 3 variables:Tree species, Number of tree per
+species and Vancouver neighborhoods, It is expected that:
+
+1. Each variable should have its own columns
+
+2. Each observation must have its own row
+
+3. Each value must have its own cell
+
+The data frame is not in a tidy format since the column values have been populated by values of the variables.
+
+
+## Question 2
+
+Open the `trees_height_diam.csv` file as a data frame called `trees_h_d`.
+
+The data stored in `trees_h_d` contains 4 variables:
+
+-   Individual tree ID
+-   Tree species
+-   Tree height rank
+-   Tree diameter
+
+Is the `trees_h_d` data frame in a tidy format? Why? Use function(s) from the tidyverse collection of packages to reshape the data to a tidy format if it is not already.
+
+---
+
+### Code answer
+
+```{r}
+#Load the csv file as a dataframe
+trees_h_d <- data.frame(read_csv("trees_height_diam.csv", 
+                                 show_col_types = FALSE))
+head(trees_h_d)
+
+#Reshape ths dataframe
+trees_h_d <- pivot_wider(data = trees_h_d, names_from = 'attribute', 
+                         values_from = 'value')
+head(trees_h_d)
+```
+
+
+### Written answer
+
+Given that the data frame contains 4 variables:Individual tree ID, Tree species,
+Tree Height rank, tree diameter, It is expected that:
+
+1. Each variable should have its own columns
+
+2. Each observation must have its own row
+
+3. Each value must have its own cell
+
+The data frame is not in a tidy format since The attribute column has different observations (diameter and height rank) scattered in multiple rows.
+
+
+## Question 3
+
+Open the `street_trees.csv` file as a data frame called `street_trees` and display the column names of `street_trees` in the console.
+
+Clean the column names of `street_trees` by renaming them as follows:
+
+`"tree_id"`, `"street"`, `"neighbourhood"`, `"species"`, `"common_name"`, `"height_rank"`, `"diameter_in"`, `"year_planted"`
+
+---
+
+### Code answer
+
+```{r}
+#Load the street_trees file
+street_trees <- data.frame(read_csv("street_trees.csv", show_col_types = FALSE))
+
+#List the column names
+colnames(street_trees)
+
+#Rename the column names
+street_trees <- dplyr::rename(street_trees, 
+                              tree_id = Tree.ID,
+                              street = Street.Name,
+                              neighbourhood = Neighbourh,
+                              species = SpeciesName,
+                              common_name = CommonName,
+                              height_rank = hrank,
+                              diameter_in = Diameter,
+                              year_planted = YearPlanted)
+
+#Display the renamed column names
+colnames(street_trees)
+
+
+```
+
+## Question 4
+
+How many trees are recorded in the database?
+
+What are the data types contained in this dataset?
+
+---
+
+### Code answer
+
+```{r}
+#Calculate the number od rows in the dataframe
+nrow(street_trees['tree_id'])
+
+#List the structure of the dataframe
+str(street_trees)
+# Your answer here
+```
+
+
+### Written answer
+
+a) 146730 trees are recorded in the database
+
+b) Data types are numeric (tree_id, height_rank, diameter_in, year_planted) and character (street, neighbourhood, species, common_name)
+
+
+## Question 5
+
+The diameter of trees recorded in the column `diameter_in` is in inches.
+
+Create a new column `diameter_cm` with tree diameter stored in cm.
+
+*Tip 1*: 1 cm = 2.54 in
+
+If you look at the structure of the data frame, you will see that the height rank is stored as a numeric variable. However, height rank is actually an ordered categorical data. This means that the height rank can only be a discrete value (e.g. 1 or 2 but not 1.5) and that the height rank 1 (1 - 2 ft) is lower than the height rank 2 (2 - 3 ft). 
+
+Using the `unique()` function, create the object `height_rank_unique` that contains the unique values of the `height_rank` variable of `street_trees`. 
+
+Then, use the function `sort()` to reorder the values of `height_rank_unique` so that they are in ascending order. Store the ordered vector in an object called `height_rank_ordered`. 
+
+Finally, convert the column `height_rank` from a `numeric` to a `factor`. Use `height_rank_ordered` to specify the `levels` of the `factor` and make sure that `ordered = TRUE`. 
+
+---
+
+### Code answer
+
+```{r}
+#Create a new column with the diameter in cm
+street_trees <- mutate(street_trees, diameter_cm = diameter_in*2.54) 
+
+#List the unique values of the height_rank column
+height_rank_unique <- unique(street_trees['height_rank'])
+
+#Reorder the height rank in ascending order
+height_rank_ordered <- sort(height_rank_unique$height_rank)
+
+#Convert the ordered height rank to factor
+street_trees$height_rank <- factor(street_trees$height_rank, 
+                                   levels = height_rank_ordered, ordered = TRUE)
+
+str(street_trees)
+
+```
+
+
+## Question 6
+
+The dataset contains some trees for which the diameter is equal to 0 and some for which the diameter is unrealistically big.
+
+How many trees have a diameter equal to 0 and how many have a diameter of more than 3 meters(300cm)?
+
+Make a new dataset called `trees_clean` where the observations for which the diameter is equal to 0 or more than 3 meters have been removed.
+
+---
+
+### Code answer
+
+```{r}
+#Number of trees with a diameter equal to 0
+nrow(filter(street_trees, diameter_cm == 0))
+
+#Number of trees with a diameter equal > 300
+nrow(filter(street_trees, diameter_cm > 300))
+
+#observations with diameter not equal to 0 or less than 3 meters. 
+trees_clean <- street_trees %>% 
+  filter(diameter_cm != 0 & diameter_cm <=300)
+
+head(trees_clean)
+```
+
+
+### Written answer
+
+91 trees have a diameter = 0
+
+9 trees have a diameter > 3m (300cm)
+
+
+## Question 7
+
+Now that the dataset has been cleaned, create the variable `n_trees` and assign it the number of observation in `trees_clean`
+
+How many trees remain in the data after filtering for unrealistic trees?
+
+---
+
+### Code answer
+
+```{r}
+#No of trees that remain after removing the unrealistic trees
+n_trees <- nrow(trees_clean)
+n_trees
+```
+
+
+### Written answer
+
+146630 Trees remain after removing the unrealistic trees
+
+
+## Question 8
+
+Make the data frame `trees_summary_all` that contains the number of trees, mean, min, max and standard deviation of the diameter (in cm) of all trees combined. Use the `trees_clean` data frame for the data summary.
+
+---
+
+### Code answer
+
+```{r}
+#Dataframe that contains the summary statistics of all trees combined.
+trees_summary_all <- trees_clean %>%
+    summarize(diameter_mean = mean(diameter_cm),
+             diameter_min = min(diameter_cm),
+             diameter_max = max(diameter_cm),
+             diameter_sd = sd(diameter_cm),
+             n_obs = n()) 
+
+trees_summary_all
+```
+
+
+
+## Question 9
+
+Make the data frame `trees_summary_sp` that contains the number of trees, mean, min, max and standard deviation of trees diameter (in cm) by species common name. Use the `trees_clean` data frame for the data summary.
+
+---
+
+### Code answer
+
+```{r}
+# Dataframe that contains the summary statistics of all trees combined by 
+# species common name.
+trees_summary_sp <- trees_clean %>%
+  group_by(common_name) %>%
+  summarize(diameter_mean = mean(diameter_cm),
+            diameter_min = min(diameter_cm),
+            diameter_max = max(diameter_cm),
+            diameter_sd = sd(diameter_cm),
+            n_obs = n())
+
+head(trees_summary_sp) 
+```
+
+
+## Question 10
+
+Make the data frame called `top_5_sp` which contains the 5 species with the largest number of street trees. Also create a new column `ntree_per` that contains the percentage of trees of each species compared to all the trees recorded in `trees_clean`
+
+-   What is the most common street tree species in Vancouver and what percentage of the total number of trees does it represent?
+
+-   What is the cumulative percentage of the 5 most common street tree species in Vancouver?
+
+---
+
+### Code answer
+
+```{r}
+#dataframe that contains the 5 species with the largest number of street trees
+top_5_sp <- trees_clean %>%
+  count(common_name) %>% 
+  arrange(desc(n)) 
+  slice_head(top_5_sp,n=5)
+
+# dataframe that contains the percentage of trees of each species compared to 
+# all the trees recorded
+ntree_per <- mutate(top_5_sp, percentage = (n/sum(n))*100) 
+             slice_head(ntree_per,n=5)
+             
+#cumulative percentage of the 5 most common street tree species
+sum(slice_head(ntree_per,n=5)$percentage)
+```
+
+
+### Written answer
+
+KWANZAN FLOWERING CHERRY is the most common street tree species in Vancouver and it represents 7.151333 percentage of the total number of trees 
+
+22.24852 percent is the cumulative percentage of the 5 most common street tree species in Vancouver
+
+
+## Question 11
+
+Make the data frame `trees_summary_sp_h` that contains the number of trees, mean, min, max and standard deviation of trees diameter by both species common name and height rank. Use the `trees_clean` data frame for the data summary.
+
+---
+
+### Code answer
+
+```{r}
+#dataframe containing summary statistics grouped by species and height rank
+trees_summary_sp_h <- trees_clean %>%
+  group_by(common_name, height_rank) %>%
+  summarize(tree_mean = mean(diameter_cm),
+            tree_min = min(diameter_cm),
+            tree_max = max(diameter_cm),
+            tree_sd = sd(diameter_cm),
+            n_obs=n())
+
+head(trees_summary_sp_h)
+```
+
+
+## Question 12
+
+Create the data frame `trees_summary_trg`, a subset of `trees_summary_sp_h` that only contains the tree diameter summary of the top 5 most common species **AND** with a height rank between 1 (included) and 6 (included).
+
+Note that if we hadn't ordered the factor variable `height_rank`, we could not use relational operator (e.g. `>`, `<`, etc.) on `height_rank` as there would be no way for R to know which level of a factor variable is greater or lower than another level. This is illustrated in the example below.
+
+```{r, echo = TRUE}
+# Make a vector
+vec <- c(2, 4, 1, 3, 5, 6)
+
+# Create one unordered and one ordered factor from vec
+unordered_fac <- factor(vec, levels = 1:6)
+ordered_fac <- factor(vec, levels = 1:6, ordered = TRUE)
+
+# Use relational operators on the factors
+unordered_fac > 3 # Does not work
+ordered_fac > 3 # Works
+```
+
+---
+
+### Code answer
+
+```{r}
+# dataframe that contains the tree diameter summary of the top 5 most common 
+# species with a height rank between 1 (included) and 6 (included).
+trees_summary_trg <- trees_summary_sp_h %>%
+  filter(height_rank >=1 & height_rank <= 6, 
+         common_name %in% slice_head(top_5_sp, n = 5)$common_name)
+  head(trees_summary_trg)
+
+```
+
+
+## Question 13
+
+Using ggplot2, make a scatter plot of the `trees_summary_trg` data with the height rank on the x axis and mean diameter on the y axis. Each point should be colored by common species name and a line (same color as the points) should be drawn between each point belonging to the same species.
+
+Change the x axis, y axis and legend labels to meaningful ones. Use the `theme_bw()` to apply the default black and white theme of `ggplot2`. You can also place the legend at the bottom of the plot with the following code: `theme(legend.position = "bottom")`
+
+---
+
+### Code answer
+
+```{r}
+#Scatterplot and line curve of height rank vs mean tree diameter
+ggplot(trees_summary_trg) + 
+  geom_point() + 
+  geom_line() + 
+  aes (x=height_rank , y=tree_mean, color=common_name, group = common_name) +
+  labs(x = "tree height rank", y = "mean tree diameter(cm)", 
+       color = "common name") + 
+  theme_bw() +
+  theme(legend.position = "bottom", legend.direction = "vertical")
+
+                  
+```
+
+
+## Question 14
+
+Using `ggplot2`, make a stacked barplot (`geom_bar()`) showing the number of trees per height rank for the 5 most common tree species. The bars should be **filled** by species common name. By default, the `geom_bar()` function stacks bars on top of each other for a given height rank.
+
+For reference, this is what a stacked barplot can look like:
+  
+
+Based on the graph, describe in a few words the number of trees per height rank and per species. For example: do all species have the same number of trees in each height class? Are there species that tend to have taller / smaller trees compared to others?
+
+---
+
+### Code answer
+
+```{r}
+ggplot(trees_summary_trg) + 
+  geom_bar(position="stack", stat="identity") + 
+  aes (x = as.factor(height_rank), y = n_obs, fill = common_name)+
+  labs(x = "tree height rank", y = "Number of Observations")
+```
+
+
+### Written answer
+Based on the graph, describe in a few words the number of trees per height rank and per species. For example: do all species have the same number of trees in each height class? Are there species that tend to have taller / smaller trees compared to others?
+
+The bar chart shows the number of observations for each tree species across different height ranks. While the number of observations for each species varies across height ranks, there are general trends:
+
+Pissard Plum and Kwanzan Flowering Cherry have a higher number of observations in the lower height ranks (1-3) and fewer in the higher ranks (4-6).
+
+Norway Maple has a relatively consistent number of observations across ranks 4-6.
+
+Pyramidal European Hornbeam tends to have a decreasing trend of number of tress as the heights increase from 1-6
+
+Crimean Linden has most of its tall trees in the middle height ranks and very few trees in the extreme height ranks 1 and 6
+
+
+## Question 15
+
+Create the data frame `street_trees_trg`, a subset of `trees_clean` that only contains the trees of the top 5 most common species in the streets of Vancouver.
+
+---
+
+### Code answer
+
+```{r}
+#dataframe that contains the trees of the top 5 most common species
+street_trees_trg <- trees_clean %>%
+  filter(common_name %in% slice_head(top_5_sp, n = 5)$common_name)
+
+head(street_trees_trg)
+```
+
+
+## Question 16
+
+Use the `geom_density()` function of the `ggplot2` package to show the distribution of trees **diameter** by species common name. Note that the `geom_density()` function only requires the `x` aesthetic to be mapped to a variable because the `y` aesthetics are calculated by the function (i.e. density/frequency values). The density curves should be *filled* with one color per species common name. Because some density curves overlap, you can set the `alpha` argument of the `geom_density()` function to `alpha = 0.4` to add some transparency to the `fill` colors.
+
+Use the `xlim()` function to only display diameter values ranging between 0 and 100 cm (`c(0, 100)`). Because some trees have a diameter > 100 cm, a warning will be displayed in the console to inform you that some data was removed from the plot.
+
+Use clean and meaningful labels of the x axis, y axis and the legend. Use the `theme_bw()` to apply the default black and white theme of `ggplot2`. You can also place the legend at the bottom of the plot with the following code: `theme(legend.position = "bottom")`.
+
+For reference, this is what a `geom_density` plot with overlapping distributions and alpha transparency can look like:
+  
+
+-   Which species has its distribution skewed towards small diameter?
+
+-   Which species tend to have trees with a wide range of diameter?
+
+---
+
+### Code answer
+
+```{r}
+#Density plot showing the distribution of tree diameter by species common name
+ggplot(street_trees_trg)+
+  #xlim(c(0,100))
+  geom_density()+
+  aes(x=diameter_cm, fill = common_name, alpha = 0.4)+
+  coord_cartesian(xlim = c(0, 100))
+```
+
+
+### Written answer
+
+PYRAMIDAL EUROPEAN HORNBEAM has its distribution skewed towards small diameter
+
+KWANZAN FLOWERING CHERRY and NORWAYMAPLE have trees with a wide range of diameter
+
+
+## Question 17
+
+Open the `public_street_length.csv` file as a data frame called `street_length`. The column `street_length` stores the length of each tree in **meters**.
+
+Create the data frame `street_length_tot` that summarizes the total length of streets in each neighbourhood, **in km**.
+
+---
+
+### Code answer
+
+```{r}
+#Load the street length dataset
+street_length <- data.frame(read_csv("public_street_length.csv", 
+                                     show_col_types = FALSE))
+#summarizes the total length of streets in each neighbourhood
+street_length_tot <- street_length %>%
+  group_by(neighbourhood) %>%
+  summarize(total_length = sum(street_length*0.001))
+
+head(street_length_tot)
+```
+
+
+## Question 18
+
+Make the data frame `trees_summary_nei` that contains the number of trees, mean, min, max and standard deviation of trees diameter by neighbourhood. Use the `trees_clean` data frame for the data summary.
+
+---
+
+### Code answer
+
+```{r}
+# Create the summary data frame by neighborhood
+trees_summary_nei <- trees_clean %>%
+  group_by(neighbourhood) %>%  # Group by neighborhood
+  summarize(
+    n_trees = n(),               # Count of trees
+    mean_diameter = mean(diameter_cm, na.rm = TRUE),  # Mean diameter
+    min_diameter = min(diameter_cm, na.rm = TRUE),    # Minimum diameter
+    max_diameter = max(diameter_cm, na.rm = TRUE),    # Maximum diameter
+    sd_diameter = sd(diameter_cm, na.rm = TRUE))        # Standard deviation
+
+head(trees_summary_nei)
+```
+
+
+## Question 19
+
+Make an inner join on the data frames `trees_summary_nei` and `street_length_tot` using the column `neighbourhood` that is in both datasets.
+
+Create a new column `tree_dens` storing the number of street trees per km of streets for each neighbourhood.
+
+---
+
+### Code answer
+
+```{r}
+# Join the data frames
+joined_data <- trees_summary_nei %>%
+  inner_join(street_length_tot, by = "neighbourhood") %>%
+  mutate(tree_dens = n_trees/total_length)
+
+head(joined_data)
+         
+```
+
+
+## Question 20
+
+Open the `local_area_areakm2.csv` file as a data frame called `nei_area`. The name of each neighbourhood is stored in the column named `area_name`. 
+
+Make a new data frame containing the mean diameter, number of street trees per km and neighbourhood area (in km^2^) for each neighbourhood.
+
+---
+
+### Code answer
+```{r}
+#Load the dataframe
+nei_area <- data.frame(read_csv("local_area_areakm2.csv", 
+                                show_col_types = FALSE)) 
+
+#Rename the column area_name
+nei_area <- nei_area %>%
+  rename(neighbourhood = area_name)
+
+# Join the data frames
+joined_data2 <- nei_area %>%
+  inner_join(joined_data, by = "neighbourhood") %>%
+  select( neighbourhood , mean_diameter , tree_dens , area_km2)
+
+head(joined_data2)
+```
+
+## Question 21
+
+Using `ggplot`, make a scatter plot of the number of street trees per km of street (x-axis) against the neighbourhood total area (y-axis). Each point should be *sized* according to the mean diameter. Additionally, *color* each point by neighbourhood name for clarity. Use the `geom_text()` to *label* each point based on the neighbourhood name. The label should also be colored in the same color as its corresponding point.
+
+Optional: You can also use the function `geom_text_repel()` from the `ggrepel` package instead of `ggplot2::geom_text()` to automatically place the labels and avoid overlap between them. If you decide to use `geom_text_repel()`, you will need to install and attach the `ggrepel` package.
+
+Use meaningful axis and legend names. Since the neighourhood names are labeled on the plot, you can hide the legend that maps each color to a name. If the aesthetic `fill` would be displayed in the legend, you could hide it by adding `guides(fill = FALSE)` to your ggplot2 call. 
+
+Use the `theme_bw()` to apply the default black and white theme of `ggplot2`. You can also place the legend at the bottom of the plot with the following code: `theme(legend.position = "bottom")`
+
+- What is the neigbourhood with the highest street trees density? Do you think that this neighbourhood contributes a lot to the overall number of street trees in Vancouver compared to the other neighbourhoods?  
+
+- Which neighbourhoods have more than 100 street trees per km of street and an area larger than 8 km^2^? 
+
+- If you are interested in living in a neighbourhood with street trees of large diameter, what would be the least interesting neighbourhood to leave into?
+
+---
+
+### Code answer
+
+```{r}
+ggplot(joined_data2)+
+  geom_point()+
+  aes(x=tree_dens, y=area_km2,size = mean_diameter, color = neighbourhood)+
+  geom_text_repel(aes(label = neighbourhood), size = 2, nudge_y = -0.1)+
+  guides(colour = FALSE)+
+  labs(x = "Tree Density", y = "Area (sq km)")+
+  theme_bw()+
+  theme(legend.position = "bottom")
+  
+
+```
+
+
+### Written answer
+
+a) What is the neigbourhood with the highest street trees density? 
+South Cambie is the neighborhood with the highest tree density. It's located furthest to the right on the x-axis, indicating the highest density of trees.
+
+Do you think that this neighbourhood contributes a lot to the overall number of street trees in Vancouver compared to the other neighbourhoods?  
+South Cambie might not necessarily contribute a lot to the overall number of trees in Vancouver, given that it covers the lowest area coverage in square kilometers in vancouver, compared to the other neighborhoods. Approximately, 2.178092 percent of the total tree cover
+
+b) Which neighbourhoods have more than 100 street trees per km of street and an area larger than 8 km^2^? 
+To identify these neighborhoods, we need to look for data points that are both above the 100 tree density line (on the x-axis) and to the right of the 8 km^2 line (on the y-axis).
+
+renfrew-collingwood, hastings-sunrise and dunbar-southlands
+
+c) If you are interested in living in a neighbourhood with street trees of large diameter, what would be the least interesting neighbourhood to leave into?
+
+The size of the point indicates the mean diameter of the trees within the neighborhood. Therefore, smaller points are trees with smaller diameters while larger points are trees with larger diameters. The least interesting neighborhood would be that with a smaller diameter - Downtown.
+
+
+
+
+
