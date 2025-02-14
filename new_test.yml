@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: C:/Users/mdaisy1.stu/OneDrive/Documents/GitHub/Daisy Mboya-Personal Portfolio
+
+website:
+  title: "Home"
+  navbar:
+    left:
+      - #href: index.qmd
+        #text: Home
+      - #href: resume.qmd
+        #text: Resume
+      - #href: publications.qmd
+        #text: Publications
+      - href: content.qmd
+        text: Content & Deliverables
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+
+editor: visual
+
