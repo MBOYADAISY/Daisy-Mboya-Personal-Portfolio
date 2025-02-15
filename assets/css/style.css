@@ -885,6 +885,10 @@ main {
 .filter-select-box {
   position: relative;
   margin-bottom: 25px;
+  display: block !important; 
+  width: 100%; 
+  max-width: 300px; 
+  margin: 0 auto;
 }
 
 .filter-select {
@@ -1605,7 +1609,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .article-title { padding-bottom: 20px; }
 
-  .filter-select-box { display: none; }
+  .filter-select-box { display: block; }
 
   .filter-list {
     display: flex;
