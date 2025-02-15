@@ -842,37 +842,39 @@
           
           <!-- Second dropdown -->
           <div class="filter-select-box">
-            <details>
-              <summary>Select project</summary>
-        
+            <button class="filter-select" data-select>
+              <div class="select-value" data-select-value>Select project</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
             <ul class="select-list" id="project-list">
-              <li class="select-item">
-                <a href="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" target="_blank">Introduction to Tidyverse</a>
+              <!-- Options will be dynamically populated based on category -->
+              <!-- Projects for Remote Sensing -->
+              <li class="select-item" data-category="remote-sensing">
+                <a href="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html">
+                  <button data-select-item>Introduction to Tidyverse</button>
+                </a>
               </li>
-              <li class="select-item">
-                <a href="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" target="_blank">Image Classification</a>
+              <li class="select-item" data-category="remote-sensing">
+                <a href="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html">
+                  <button data-select-item>Image Classification</button>
+                </a>
               </li>
             </ul>
           </div>
 
-         
 
 
 
+
+
+
+
+
+        
 
           <ul class="project-list">
-
-            <li class="project-item" data-category="spatial-data-analysis">
-              <a href="#">Spatial Data Analysis Project 1</a>
-            </li>
-            <li class="project-item" data-category="remote-sensing">
-              <a href="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html">Remote Sensing Project 1</a>
-            </li>
-            <li class="project-item" data-category="remote-sensing">
-              <a href="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html">Remote Sensing Project 2</a>
-            </li>
-
-
             
             <li class="project-item  active" data-filter-item data-category="remote sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
