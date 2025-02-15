@@ -880,12 +880,9 @@ main {
   #PORTFOLIO
 \*-----------------------------------*/
 
-.filter-list { display: flex; }
+.filter-list { display: none; }
 
 .filter-select-box {
-
-  display: block !important; /* Ensures it's always visible */
-  max-width: 300px; /* Adjust as needed */
   position: relative;
   margin-bottom: 25px;
 }
@@ -1608,13 +1605,15 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .article-title { padding-bottom: 20px; }
 
-  .filter-select-box { display: block; 
-    max-width: 300px; /* Adjust as needed */
-    margin: 0 auto;
-  }
+  .filter-select-box { display: none; }
 
   .filter-list {
-    display: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    padding-left: 5px;
+    margin-bottom: 30px;
   }
 
   .filter-item button {
@@ -1655,11 +1654,6 @@ textarea.form-input::-webkit-resizer { display: none; }
  */
 
 @media (min-width: 1024px) {
-  
-
-  .filter-select-box {
-    display: block;
-  }
 
   /**
    * CUSTOM PROPERTY
