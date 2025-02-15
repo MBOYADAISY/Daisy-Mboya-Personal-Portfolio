@@ -760,13 +760,111 @@
         - #PORTFOLIO
       -->
 
-      <article class="portfolio" data-page="portfolio">
+    <article class="portfolio" data-page="portfolio">
 
-        <header>
+      <header>
           <h2 class="h2 article-title">Portfolio</h2>
-        </header>
+      </header>
 
-        <section class="projects">
+      <section class="projects">
+
+        
+
+
+        
+        
+        <!-- Dropdown for selecting projects -->
+        <div class="dropdown">
+          <button class="dropdown-button">Select a Project</button>
+          <div class="dropdown-content">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">Introduction to Tidyverse</a>
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">Image Classification</a>
+              <!-- Add more project links here -->
+          </div>
+        </div>
+
+        <!-- The project categories filter section -->
+        <ul class="filter-list">
+          <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+          </li>
+          <li class="filter-item">
+              <button data-filter-btn>Spatial Data Analysis</button>
+          </li>
+          <li class="filter-item">
+              <button data-filter-btn>Remote Sensing</button>
+          </li>
+        </ul>
+
+        <!-- Container for the project content below the project list -->
+        <div id="qmd-container" style="display:none; padding-top: 20px;">
+          <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+        </div>
+
+        <ul class="project-list">
+          <!-- Example project items (can be customized as needed) -->
+          <li class="project-item active" data-filter-item data-category="remote sensing">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                  <figure class="project-img">
+                      <div class="project-item-icon-box">
+                          <ion-icon name="eye-outline"></ion-icon>
+                      </div>
+                      <img src="./assets/images/project-1.jpg" alt="introduction to tidyverse" loading="lazy">
+                  </figure>
+                  <h3 class="project-title">Introduction to Tidyverse</h3>
+                  <p class="project-category">Remote Sensing</p>
+              </a>
+          </li>
+
+          <li class="project-item active" data-filter-item data-category="remote sensing">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                  <figure class="project-img">
+                      <div class="project-item-icon-box">
+                          <ion-icon name="eye-outline"></ion-icon>
+                      </div>
+                      <img src="./assets/images/project-1.jpg" alt="image classification" loading="lazy">
+                  </figure>
+                  <h3 class="project-title">Image Classification</h3>
+                  <p class="project-category">Remote Sensing</p>
+              </a>
+          </li>
+        </ul>
+
+        <script>
+          function loadQMDContent(url) {
+              // Get the iframe element
+              var iframe = document.getElementById('qmd-iframe');
+      
+              // Set the iframe source to the .qmd HTML file
+              iframe.src = url;
+      
+              // Show the iframe container
+              var container = document.getElementById('qmd-container');
+              container.style.display = 'block';
+      
+              // Optionally, scroll to the container when it's displayed
+              container.scrollIntoView({behavior: "smooth"});
+          }
+        </script>
+
+      </section>
+
+    </article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           <ul class="filter-list">
 
@@ -1027,7 +1125,7 @@
 
           <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="600px" frameborder="0"></iframe>
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
 
           <script>
