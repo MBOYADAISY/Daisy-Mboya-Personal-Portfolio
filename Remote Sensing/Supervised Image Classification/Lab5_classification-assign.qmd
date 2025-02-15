@@ -1,8 +1,10 @@
 ---
 title: "Supervised Image Classification"
-author: Mboya Daisy
-date: 26 October 2024
+author: "Mboya Daisy"
+date: "26 October 2024"
 format: html
+toc: true
+toc-depth: 5
 editor: visual
 ---
 
