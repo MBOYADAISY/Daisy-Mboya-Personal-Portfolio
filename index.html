@@ -158,53 +158,6 @@
 
         </ul>
 
-                <!-- CATEGORY SELECTION -->
-        <div class="filter-select-box">
-          <input type="radio" id="all" name="category" class="category-radio" checked>
-          <label for="all" class="filter-select">All</label>
-
-          <input type="radio" id="spatial" name="category" class="category-radio">
-          <label for="spatial" class="filter-select">Spatial Data Analysis</label>
-
-          <input type="radio" id="remote" name="category" class="category-radio">
-          <label for="remote" class="filter-select">Remote Sensing</label>
-
-          <input type="radio" id="web-design" name="category" class="category-radio">
-          <label for="web-design" class="filter-select">Web Design</label>
-
-          <input type="radio" id="applications" name="category" class="category-radio">
-          <label for="applications" class="filter-select">Applications</label>
-
-          <input type="radio" id="web-dev" name="category" class="category-radio">
-          <label for="web-dev" class="filter-select">Web Development</label>
-        </div>
-
-        <!-- PROJECT LIST - Populates Based on Category Selection -->
-        <ul class="select-list project-list" id="all-projects">
-          <li><label for="default" class="project-link">Welcome to My Portfolio</label></li>
-        </ul>
-
-        <ul class="select-list project-list" id="spatial-projects">
-          <li><label for="spatial1" class="project-link">Spatial Data Visualization</label></li>
-        </ul>
-
-        <ul class="select-list project-list" id="remote-projects">
-          <li><label for="remote1" class="project-link">Introduction to Tidyverse</label></li>
-          <li><label for="remote2" class="project-link">Image Classification</label></li>
-        </ul>
-
-        <ul class="select-list project-list" id="web-design-projects">
-          <li><label for="webdesign1" class="project-link">UI/UX Case Study</label></li>
-        </ul>
-
-        <ul class="select-list project-list" id="applications-projects">
-          <li><label for="app1" class="project-link">GIS App Development</label></li>
-        </ul>
-
-        <ul class="select-list project-list" id="web-dev-projects">
-          <li><label for="webdev1" class="project-link">Portfolio Website</label></li>
-        </ul>
-
       </div>
 
     </aside>
@@ -806,6 +759,107 @@
       <!--
         - #PORTFOLIO
       -->
+
+      <article class="portfolio" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+      
+        <section class="projects">
+      
+          <div class="filter-select-box">
+            <label for="category-filter">Select category:</label>
+            <select id="category-filter">
+              <option value="All">All</option>
+              <option value="Spatial Data Analysis">Spatial Data Analysis</option>
+              <option value="Remote Sensing">Remote Sensing</option>
+              <option value="Web design">Web design</option>
+              <option value="Applications">Applications</option>
+              <option value="Web development">Web development</option>
+            </select>
+          </div>
+      
+      
+          <ul class="project-list">
+      
+            <li class="project-item  active" data-filter-item data-category="remote sensing">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+      
+                <h3 class="project-title">Introduction to Tidyverse</h3>
+              </a>
+            </li>
+      
+            <li class="project-item  active" data-filter-item data-category="remote sensing">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+      
+                <h3 class="project-title">Image Classification</h3>
+              </a>
+            </li>
+      
+      
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+      
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+      
+                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
+                </figure>
+      
+                <h3 class="project-title">Orizon</h3>
+      
+                <p class="project-category">Web development</p>
+      
+              </a>
+            </li>
+      
+            <!-- More project items here -->
+      
+          </ul>
+      
+          <!-- Container for the project content below the project list -->
+          <div id="qmd-container" style="display:none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+          </div>
+      
+          <script>
+            function loadQMDContent(url) {
+              // Get the iframe element
+              var iframe = document.getElementById('qmd-iframe');
+      
+              // Set the iframe source to the .qmd HTML file
+              iframe.src = url;
+      
+              // Show the iframe container
+              var container = document.getElementById('qmd-container');
+              container.style.display = 'block';
+      
+              // Optionally, scroll to the container when it's displayed
+              container.scrollIntoView({
+                behavior: "smooth"
+              });
+            }
+          </script>
+      
+        </section>
+      
+      </article>
+      
+
+
+
+
+
+
+
+
+
+
+
+
 
     <article class="portfolio" data-page="portfolio">
 
