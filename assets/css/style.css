@@ -116,6 +116,7 @@
 
 
 
+
 /*-----------------------------------*\
   #RESET
 \*-----------------------------------*/
@@ -878,13 +879,6 @@ main {
 /*-----------------------------------*\
   #PORTFOLIO
 \*-----------------------------------*/
-
-
-.sub-select-list {
-      display: none; /* Hide submenus by default */
-      padding-left: 20px; /* Indent submenus */
-  }
-
 
 .filter-list { display: none; }
 
@@ -1890,4 +1884,3 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
-
