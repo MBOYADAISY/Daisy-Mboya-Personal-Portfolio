@@ -158,6 +158,53 @@
 
         </ul>
 
+                <!-- CATEGORY SELECTION -->
+        <div class="filter-select-box">
+          <input type="radio" id="all" name="category" class="category-radio" checked>
+          <label for="all" class="filter-select">All</label>
+
+          <input type="radio" id="spatial" name="category" class="category-radio">
+          <label for="spatial" class="filter-select">Spatial Data Analysis</label>
+
+          <input type="radio" id="remote" name="category" class="category-radio">
+          <label for="remote" class="filter-select">Remote Sensing</label>
+
+          <input type="radio" id="web-design" name="category" class="category-radio">
+          <label for="web-design" class="filter-select">Web Design</label>
+
+          <input type="radio" id="applications" name="category" class="category-radio">
+          <label for="applications" class="filter-select">Applications</label>
+
+          <input type="radio" id="web-dev" name="category" class="category-radio">
+          <label for="web-dev" class="filter-select">Web Development</label>
+        </div>
+
+        <!-- PROJECT LIST - Populates Based on Category Selection -->
+        <ul class="select-list project-list" id="all-projects">
+          <li><label for="default" class="project-link">Welcome to My Portfolio</label></li>
+        </ul>
+
+        <ul class="select-list project-list" id="spatial-projects">
+          <li><label for="spatial1" class="project-link">Spatial Data Visualization</label></li>
+        </ul>
+
+        <ul class="select-list project-list" id="remote-projects">
+          <li><label for="remote1" class="project-link">Introduction to Tidyverse</label></li>
+          <li><label for="remote2" class="project-link">Image Classification</label></li>
+        </ul>
+
+        <ul class="select-list project-list" id="web-design-projects">
+          <li><label for="webdesign1" class="project-link">UI/UX Case Study</label></li>
+        </ul>
+
+        <ul class="select-list project-list" id="applications-projects">
+          <li><label for="app1" class="project-link">GIS App Development</label></li>
+        </ul>
+
+        <ul class="select-list project-list" id="web-dev-projects">
+          <li><label for="webdev1" class="project-link">Portfolio Website</label></li>
+        </ul>
+
       </div>
 
     </aside>
