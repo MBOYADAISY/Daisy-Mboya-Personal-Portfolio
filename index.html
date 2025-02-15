@@ -815,6 +815,40 @@
                 <button data-select-item>All</button>
               </li>
 
+
+
+
+
+              <li class="select-item">
+                <button data-select-item onclick="toggleSubmenu('spatial-data')">Spatial Data Analysis</button>
+                <ul class="sub-select-list" id="spatial-data">
+                    <li class="select-item">
+                        <button data-select-item>Data Visualization</button>
+                    </li>
+                    <li class="select-item">
+                        <button data-select-item>Remote Sensing</button>
+                    </li>
+                </ul>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item onclick="toggleSubmenu('web-design')">Web Design</button>
+                <ul class="sub-select-list" id="web-design">
+                    <li class="select-item">
+                        <button data-select-item>UI/UX Design</button>
+                    </li>
+                    <li class="select-item">
+                        <button data-select-item>Responsive Design</button>
+                    </li>
+                </ul>
+              </li>
+
+             
+              
+
+
+
+
               <li class="select-item">
                 <button data-select-item>Spatial Data Analysis</button>
               </li>
@@ -840,6 +874,9 @@
             
           </div>         
         
+
+
+
 
           <ul class="project-list">
             
@@ -1310,6 +1347,13 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    function toggleSubmenu(id) {
+        const submenu = document.getElementById(id);
+        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
 
 </body>
 </html>
