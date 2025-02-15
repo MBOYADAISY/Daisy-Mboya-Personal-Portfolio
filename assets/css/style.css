@@ -885,10 +885,6 @@ main {
 .filter-select-box {
   position: relative;
   margin-bottom: 25px;
-  display: block !important; 
-  width: 100%; 
-  max-width: 300px; 
-  margin: 0 auto;
 }
 
 .filter-select {
