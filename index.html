@@ -861,8 +861,8 @@
             </li>
 
             <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" tclass="load-content">
-
+              <a href="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" class="load-content">
+                
                 <figure class="project-img">
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
@@ -874,9 +874,11 @@
                 <h3 class="project-title">Image Classification</h3>
 
                 <p class="project-category">Remote Sensing</p>
+                <div id="content-container"></div>
 
               </a>
             </li>
+
               
              <li class="project-item  active" data-filter-item data-category="web development">
               <a href="#">
@@ -1287,6 +1289,26 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all links with the 'load-content' class
+        document.querySelectorAll(".load-content").forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+    
+                let contentUrl = this.getAttribute("href"); // Get the link URL
+    
+                // Fetch the HTML file and insert it into the container
+                fetch(contentUrl)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("content-container").innerHTML = data;
+                    })
+                    .catch(error => console.error("Error loading content:", error));
+            });
+        });
+    });
+    </script>
+    
 </body>
-
 </html>
