@@ -550,94 +550,168 @@
       </article>
 
 
-      <!--
-        - #PORTFOLIO
-      -->
-        
-
       <article class="portfolio" data-page="portfolio">
 
         <header>
-            <h2 class="h2 article-title">Portfolio</h2>
+          <h2 class="h2 article-title">Portfolio</h2>
         </header>
-  
+      
         <section class="projects">
-            
-            <div class="filter-select-box">
-  
-              <button class="filter-select" data-select>
-  
-                <div class="select-value" data-selecct-value>Select category</div>
-  
-                <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-                </div>
-  
-              </button>
-  
-              <ul class="select-list">
-  
-                <li class="select-item">
-                  <button data-select-item>All</button>
-                </li>
-  
-                <li class="select-item">
-                  <button data-select-item>Spatial Data Analysis</button>
-                </li>
-  
-                <li class="select-item">
-                  <button data-select-item>Remote Sensing</button>
-                </li>
-                
-              </ul>
-              
-            </div>  
-            
-          
-  
-            <ul class="project-list">
-              
-              <li class="project-item  active" data-filter-item data-category="remote sensing">
-                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                  
-                  <h3 class="project-title">Introduction to Tidyverse</h3>
-                  </a>
+      
+          <div class="filter-select-box">
+      
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value>Select category</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
+      
+            <ul class="select-list" id="category-select">
+              <li class="select-item">
+                <button data-select-item data-category="all">All</button>
               </li>
-  
-              <li class="project-item  active" data-filter-item data-category="remote sensing">
-                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                  
-                  <h3 class="project-title">Image Classification</h3>                             
-                </a>
+              <li class="select-item">
+                <button data-select-item data-category="spatial">Spatial Data Analysis</button>
               </li>
-                          
+              <li class="select-item">
+                <button data-select-item data-category="remote">Remote Sensing</button>
+              </li>
             </ul>
-  
-            <!-- Container for the project content below the project list -->
-            <div id="qmd-container" style="display:none; padding-top: 20px;">
-              <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-            </div>
-  
-            <script>
-              function loadQMDContent(url) {
-                // Get the iframe element
-                var iframe = document.getElementById('qmd-iframe');
       
-                // Set the iframe source to the .qmd HTML file
-                iframe.src = url;
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value id="subcategory-value">Select Subcategory</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
       
-                // Show the iframe container
-                var container = document.getElementById('qmd-container');
-                container.style.display = 'block';
+            <ul class="select-list" id="subcategory-select">
+              </ul>
       
-                // Optionally, scroll to the container when it's displayed
-                container.scrollIntoView({behavior: "smooth"});
+          </div>
+      
+      
+          <ul class="project-list" id="project-list">
+            </ul>
+      
+          <div id="qmd-container" style="display:none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+          </div>
+      
+          <script>
+            const categorySelect = document.getElementById('category-select');
+            const subcategorySelect = document.getElementById('subcategory-select');
+            const subcategoryValue = document.getElementById('subcategory-value');
+            const projectList = document.getElementById('project-list');
+      
+            const projects = {
+              all: [
+                { title: "Introduction to Tidyverse", url: 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html', category: 'remote', subcategory: 'Tidyverse'},
+                { title: "Image Classification", url: 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html', category: 'remote', subcategory: 'Classification' },
+                { title: "Spatial Project 1", url: 'Spatial/project1.html', category: 'spatial', subcategory: 'Analysis' },
+                { title: "Spatial Project 2", url: 'Spatial/project2.html', category: 'spatial', subcategory: 'Mapping' },
+              ],
+              remote: [
+                { title: "Introduction to Tidyverse", url: 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html', category: 'remote', subcategory: 'Tidyverse'},
+                { title: "Image Classification", url: 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html', category: 'remote', subcategory: 'Classification' },
+              ],
+              spatial: [
+                { title: "Spatial Project 1", url: 'Spatial/project1.html', category: 'spatial', subcategory: 'Analysis' },
+                { title: "Spatial Project 2", url: 'Spatial/project2.html', category: 'spatial', subcategory: 'Mapping' },
+              ],
+            };
+      
+            function populateSubcategories(category) {
+              subcategorySelect.innerHTML = ''; // Clear existing subcategories
+              subcategoryValue.textContent = "Select Subcategory"
+      
+              if (category === 'all') {
+                const allSubcategories = [...new Set(projects.all.map(p => p.subcategory))]; // Get unique subcategories
+                allSubcategories.forEach(subcategory => {
+                  const li = document.createElement('li');
+                  li.className = 'select-item';
+                  const button = document.createElement('button');
+                  button.dataset.selectItem = '';
+                  button.dataset.subcategory = subcategory;
+                  button.textContent = subcategory;
+                  li.appendChild(button);
+                  subcategorySelect.appendChild(li);
+      
+                  button.addEventListener('click', () => {
+                      filterProjects(category, subcategory)
+                      subcategoryValue.textContent = subcategory;
+                  })
+                })
+              } else {
+                const categoryProjects = projects[category];
+                if (categoryProjects) {
+                    const categorySubcategories = [...new Set(categoryProjects.map(p => p.subcategory))];
+                    categorySubcategories.forEach(subcategory => {
+                      const li = document.createElement('li');
+                      li.className = 'select-item';
+                      const button = document.createElement('button');
+                      button.dataset.selectItem = '';
+                      button.dataset.subcategory = subcategory;
+                      button.textContent = subcategory;
+                      li.appendChild(button);
+                      subcategorySelect.appendChild(li);
+      
+                      button.addEventListener('click', () => {
+                          filterProjects(category, subcategory)
+                          subcategoryValue.textContent = subcategory;
+                      })
+                    })
+                }
               }
-            </script>
-  
-          </section>
-  
-        </article>
+            }
+      
+            function filterProjects(category, subcategory) {
+              projectList.innerHTML = ''; // Clear existing projects
+      
+              const filteredProjects = projects[category] === undefined ? projects.all : projects[category]; //if category is all, use all projects
+      
+              filteredProjects.filter(project => subcategory === undefined || project.subcategory === subcategory).forEach(project => {
+                const li = document.createElement('li');
+                li.className = 'project-item active'; // Add active class if needed
+                li.dataset.filterItem = '';
+                li.dataset.category = project.category;
+                li.dataset.subcategory = project.subcategory;
+      
+                const a = document.createElement('a');
+                a.href = '#';
+                a.onclick = () => loadQMDContent(project.url);
+                a.innerHTML = `<h3 class="project-title">${project.title}</h3>`;
+                li.appendChild(a);
+                projectList.appendChild(li);
+              });
+            }
+      
+            categorySelect.addEventListener('click', (event) => {
+              if (event.target.dataset.selectItem !== undefined) {
+                const selectedCategory = event.target.dataset.category;
+                populateSubcategories(selectedCategory);
+                filterProjects(selectedCategory); // Filter projects based on the initial category selection
+              }
+            });
+      
+            // Initialize with all projects and subcategories
+            populateSubcategories('all');
+            filterProjects('all');
+      
+      
+            function loadQMDContent(url) {
+              var iframe = document.getElementById('qmd-iframe');
+              iframe.src = url;
+              var container = document.getElementById('qmd-container');
+              container.style.display = 'block';
+              container.scrollIntoView({ behavior: "smooth" });
+            }
+          </script>
+      
+        </section>
+      
+      </article>
       
       
 
