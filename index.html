@@ -831,6 +831,7 @@
           // Clear old options
           projectSelect.innerHTML = '<li class="select-item"><button data-select-item>Select a project</button></li>';
       
+          // Define the projects for each category
           var projects = {
             "spatial-data-analysis": [
               { name: "Project A", url: "SpatialData/ProjectA.html" },
@@ -838,10 +839,11 @@
             ],
             "remote-sensing": [
               { name: "Introduction to Tidyverse", url: "RemoteSensing/Tidyverse.html" },
-              { name: "Image Classification", url: "RemoteSensing/ImageClassification.html" }
+              { name: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" }
             ]
           };
       
+          // Check if category exists and populate dropdown
           if (category in projects) {
             projects[category].forEach(project => {
               var listItem = document.createElement("li");
@@ -866,12 +868,13 @@
       
           if (projectUrl) {
             iframe.src = projectUrl;
-            iframeContainer.style.display = "block";
+            iframeContainer.style.display = "block";  // Show the iframe container
           } else {
-            iframeContainer.style.display = "none";
+            iframeContainer.style.display = "none";  // Hide the iframe container if no URL
           }
         }
       </script>
+      
       
       
 
