@@ -156,3 +156,61 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+
+
+
+
+
+
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const selectButtons = document.querySelectorAll(".filter-select");
+    
+    selectButtons.forEach(button => {
+      button.addEventListener("click", function() {
+        this.nextElementSibling.classList.toggle("show");
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function(event) {
+      selectButtons.forEach(button => {
+        if (!button.contains(event.target) && !button.nextElementSibling.contains(event.target)) {
+          button.nextElementSibling.classList.remove("show");
+        }
+      });
+    });
+
+    // Project filtering logic
+    const projectItems = document.querySelectorAll(".project-item");
+    const categoryButtons = document.querySelectorAll("[data-project-category]");
+    const typeButtons = document.querySelectorAll("[data-project-type]");
+    
+    let selectedCategory = "all";
+    let selectedType = "all";
+
+    function filterProjects() {
+      projectItems.forEach(item => {
+        const matchesCategory = selectedCategory === "all" || item.classList.contains(selectedCategory);
+        const matchesType = selectedType === "all" || item.classList.contains(selectedType);
+        item.style.display = matchesCategory && matchesType ? "block" : "none";
+      });
+    }
+
+    categoryButtons.forEach(button => {
+      button.addEventListener("click", function() {
+        selectedCategory = this.getAttribute("data-project-category");
+        filterProjects();
+      });
+    });
+
+    typeButtons.forEach(button => {
+      button.addEventListener("click", function() {
+        selectedType = this.getAttribute("data-project-type");
+        filterProjects();
+      });
+    });
+  });
