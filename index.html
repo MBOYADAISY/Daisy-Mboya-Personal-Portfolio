@@ -614,22 +614,6 @@
       
       <!-- JavaScript to handle dropdown and project filtering -->
       <script>
-        // Sample project URLs by category
-        const projectsByCategory = {
-          'remote-sensing': [
-            { name: 'Introduction to Tidyverse', url: 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html' },
-            { name: 'Image Classification', url: 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html' },
-          ],
-          'spatial-data-analysis': [
-            { name: 'Spatial Analysis Techniques', url: '#' },
-          ],
-          'all': [
-            { name: 'Introduction to Tidyverse', url: 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html' },
-            { name: 'Image Classification', url: 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html' },
-            { name: 'Spatial Analysis Techniques', url: '#' },
-          ],
-        };
-      
         // Handle category dropdown selection
         document.querySelectorAll('[data-select-item]').forEach(function(item) {
           item.addEventListener('click', function(e) {
@@ -689,19 +673,26 @@
           const selectTypeList = document.getElementById('select-type-list');
           selectTypeList.innerHTML = ''; // Clear existing options
       
-          const projects = projectsByCategory[category] || projectsByCategory['all'];
+          // Get the projects from the project list based on category selection
+          const projectItems = document.querySelectorAll('.project-item');
+          
+          projectItems.forEach(function(project) {
+            if (category === 'all' || project.classList.contains(category)) {
+              const listItem = document.createElement('li');
+              listItem.classList.add('select-item');
+              listItem.setAttribute('data-project-type', project.className);
+              
+              const button = document.createElement('button');
+              button.textContent = project.querySelector('.project-title').textContent;
+              button.setAttribute('data-select-item', '');
+              
+              // Add onclick to load content when clicked
+              const link = project.querySelector('a');
+              button.onclick = () => loadQMDContent(link.getAttribute('onclick').split("'")[1]);
       
-          // Create new options in the dropdown
-          projects.forEach(project => {
-            const listItem = document.createElement('li');
-            listItem.classList.add('select-item');
-            listItem.setAttribute('data-project-type', project.name.toLowerCase().replace(/\s+/g, '-'));
-            const button = document.createElement('button');
-            button.textContent = project.name;
-            button.setAttribute('data-select-item', '');
-            button.onclick = () => loadQMDContent(project.url);
-            listItem.appendChild(button);
-            selectTypeList.appendChild(listItem);
+              listItem.appendChild(button);
+              selectTypeList.appendChild(listItem);
+            }
           });
         }
       
@@ -714,6 +705,7 @@
           container.scrollIntoView({ behavior: "smooth" });
         }
       </script>
+      
 
 
 
