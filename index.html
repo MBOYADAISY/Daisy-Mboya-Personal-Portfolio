@@ -764,89 +764,89 @@
 
 
 
-      <article class="portfolio" data-page="portfolio">
+        <article class="portfolio" data-page="portfolio">
 
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-      
-        <section class="projects">
-      
-          <!-- First Dropdown: Select Category -->
-          <div class="filter-select-box">
-            <label for="category-select">Select Category:</label>
-            <select id="category-select" onchange="updateProjectDropdown()">
-              <option value="">Select a category</option>
-              <option value="spatial-data-analysis">Spatial Data Analysis</option>
-              <option value="remote-sensing">Remote Sensing</option>
-            </select>
-          </div>
-      
-          <!-- Second Dropdown: Select Project -->
-          <div class="filter-select-box" style="margin-top: 10px;">
-            <label for="project-select">Select Project:</label>
-            <select id="project-select" onchange="loadProjectContent()">
-              <option value="">Select a project</option>
-            </select>
-          </div>
-      
-          <!-- Container for Project Content -->
-          <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-          </div>
-      
-        </section>
-      
-      </article>
-      
-      <script>
-        // Function to update the projects dropdown based on the selected category
-        function updateProjectDropdown() {
-          var category = document.getElementById("category-select").value;
-          var projectSelect = document.getElementById("project-select");
-      
-          // Clear existing options
-          projectSelect.innerHTML = '<option value="">Select a project</option>';
-      
-          // Define projects for each category
-          var projects = {
-            "spatial-data-analysis": [
-              { name: "Project A", url: "SpatialData/ProjectA.html" },
-              { name: "Project B", url: "SpatialData/ProjectB.html" }
-            ],
-            "remote-sensing": [
-              { name: "Introduction to Tidyverse", url: "RemoteSensing/Tidyverse.html" },
-              { name: "Image Classification", url: "RemoteSensing/ImageClassification.html" }
-            ]
-          };
-      
-          // Add projects based on the selected category
-          if (category in projects) {
-            projects[category].forEach(project => {
-              var option = document.createElement("option");
-              option.value = project.url;
-              option.textContent = project.name;
-              projectSelect.appendChild(option);
-            });
+          <header>
+            <h2 class="h2 article-title">Portfolio</h2>
+          </header>
+        
+          <section class="projects">
+        
+            <!-- First Dropdown: Select Category -->
+            <div class="filter-select-box">
+              <label for="category-select">Select Category:</label>
+              <select id="category-select" onchange="updateProjectDropdown()">
+                <option value="">Select a category</option>
+                <option value="spatial-data-analysis">Spatial Data Analysis</option>
+                <option value="remote-sensing">Remote Sensing</option>
+              </select>
+            </div>
+        
+            <!-- Second Dropdown: Select Project -->
+            <div class="filter-select-box" style="margin-top: 10px;">
+              <label for="project-select">Select Project:</label>
+              <select id="project-select" onchange="loadProjectContent()">
+                <option value="">Select a project</option>
+              </select>
+            </div>
+        
+            <!-- Container for Project Content -->
+            <div id="qmd-container" style="display:none; padding-top: 20px;">
+              <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+            </div>
+        
+          </section>
+        
+        </article>
+        
+        <script>
+          // Function to update the projects dropdown based on the selected category
+          function updateProjectDropdown() {
+            var category = document.getElementById("category-select").value;
+            var projectSelect = document.getElementById("project-select");
+        
+            // Clear existing options
+            projectSelect.innerHTML = '<option value="">Select a project</option>';
+        
+            // Define projects for each category
+            var projects = {
+              "spatial-data-analysis": [
+                { name: "Project A", url: "SpatialData/ProjectA.html" },
+                { name: "Project B", url: "SpatialData/ProjectB.html" }
+              ],
+              "remote-sensing": [
+                { name: "Introduction to Tidyverse", url: "RemoteSensing/Tidyverse.html" },
+                { name: "Image Classification", url: "RemoteSensing/ImageClassification.html" }
+              ]
+            };
+        
+            // Add projects based on the selected category
+            if (category in projects) {
+              projects[category].forEach(project => {
+                var option = document.createElement("option");
+                option.value = project.url;
+                option.textContent = project.name;
+                projectSelect.appendChild(option);
+              });
+            }
           }
-        }
-      
-        // Function to load project content when a project is selected
-        function loadProjectContent() {
-          var projectSelect = document.getElementById("project-select");
-          var selectedProjectUrl = projectSelect.value;
-      
-          var iframeContainer = document.getElementById("qmd-container");
-          var iframe = document.getElementById("qmd-iframe");
-      
-          if (selectedProjectUrl) {
-            iframe.src = selectedProjectUrl;
-            iframeContainer.style.display = "block";
-          } else {
-            iframeContainer.style.display = "none";
+        
+          // Function to load project content when a project is selected
+          function loadProjectContent() {
+            var projectSelect = document.getElementById("project-select");
+            var selectedProjectUrl = projectSelect.value;
+        
+            var iframeContainer = document.getElementById("qmd-container");
+            var iframe = document.getElementById("qmd-iframe");
+        
+            if (selectedProjectUrl) {
+              iframe.src = selectedProjectUrl;
+              iframeContainer.style.display = "block";
+            } else {
+              iframeContainer.style.display = "none";
+            }
           }
-        }
-      </script>
+        </script>
       
       
       
