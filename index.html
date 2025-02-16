@@ -584,8 +584,8 @@
             </ul>
           </div>
       
-          <!-- Second dropdown for subcategory selection -->
-          <div class="filter-select-box">
+          <!-- Second dropdown for subcategory selection, initially hidden -->
+          <div class="filter-select-box" style="display:none;">
             <button class="filter-select" data-select>
               <div class="select-value" data-selecct-value>Select subcategory</div>
               <div class="select-icon">
@@ -660,6 +660,9 @@
                 // Update the category value
                 document.querySelector('.filter-select[data-select] .select-value').textContent = category;
                 
+                // Show the second dropdown after category selection
+                document.querySelector('.filter-select-box:nth-child(2)').style.display = 'block';
+      
                 // Filter projects based on category
                 filterProjects(category);
       
@@ -716,6 +719,7 @@
         </section>
       
       </article>
+      
       
       
       
