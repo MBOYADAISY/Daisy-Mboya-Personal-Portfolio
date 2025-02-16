@@ -576,47 +576,35 @@
                 <button data-select-item>All</button>
               </li>
               <li class="select-item">
-                <button data-select-item>Spatial Data Analysis</button>
-              </li>
-              <li class="select-item">
                 <button data-select-item>Remote Sensing</button>
               </li>
-            </ul>
-          </div>
-      
-          <!-- Second dropdown for project types (additional filter) -->
-          <div class="filter-select-box">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select project type</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-            <ul class="select-list">
               <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Fieldwork</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Labwork</button>
+                <button data-select-item>Spatial Data Analysis</button>
               </li>
             </ul>
           </div>
       
           <!-- Project List -->
           <ul class="project-list">
-            <li class="project-item  active" data-filter-item data-category="remote sensing" data-type="fieldwork">
+            <!-- Remote Sensing Projects -->
+            <li class="project-item active" data-filter-item data-category="remote sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
                 <h3 class="project-title">Introduction to Tidyverse</h3>
               </a>
             </li>
-            <li class="project-item  active" data-filter-item data-category="remote sensing" data-type="labwork">
+            <li class="project-item active" data-filter-item data-category="remote sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
                 <h3 class="project-title">Image Classification</h3>
               </a>
             </li>
+      
+            <!-- Spatial Data Analysis Projects (empty for now) -->
+            <li class="project-item" data-filter-item data-category="spatial data analysis">
+              <a href="#">
+                <h3 class="project-title">(No projects available)</h3>
+              </a>
+            </li>
+      
           </ul>
       
           <!-- Container for the project content below the project list -->
@@ -642,25 +630,22 @@
               });
             });
       
-            // Add event listeners for both dropdowns
+            // Add event listeners for dropdown items
             document.querySelectorAll('[data-select-item]').forEach(function(item) {
               item.addEventListener('click', function() {
                 var selectedCategory = document.querySelector('.filter-select[data-select] .select-value').textContent.trim();
-                var selectedType = document.querySelector('.filter-select[data-select] + .filter-select .select-value').textContent.trim();
-                filterProjects(selectedCategory, selectedType);
+                filterProjects(selectedCategory);
               });
             });
       
-            // Function to filter projects based on both dropdown selections
-            function filterProjects(category, type) {
+            // Function to filter projects based on category selection
+            function filterProjects(category) {
               var projects = document.querySelectorAll('.project-item');
               projects.forEach(function(project) {
                 var projectCategory = project.getAttribute('data-category');
-                var projectType = project.getAttribute('data-type');
       
-                // Filter based on both category and type
-                if ((category === "All" || projectCategory === category) &&
-                    (type === "All" || projectType === type)) {
+                // Show or hide based on category
+                if (category === "All" || projectCategory === category) {
                   project.classList.add('active');
                 } else {
                   project.classList.remove('active');
@@ -672,6 +657,7 @@
         </section>
       
       </article>
+      
       
 
 
