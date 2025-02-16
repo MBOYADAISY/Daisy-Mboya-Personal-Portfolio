@@ -550,8 +550,78 @@
       </article>
 
 
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Portfolio</title>
+          <style>
+              /* Basic Styling - Customize as needed */
+              .filter-select-box {
+                  display: flex; /* Arrange dropdowns horizontally */
+                  gap: 10px; /* Add spacing between dropdowns */
+              }
+              .filter-select {
+                  /* Style your dropdown buttons */
+                  padding: 8px 12px;
+                  border: 1px solid #ccc;
+                  cursor: pointer;
+              }
+      
+              .select-list {
+                  position: absolute; /* Needed for dropdown positioning */
+                  background-color: #fff;
+                  border: 1px solid #ccc;
+                  list-style: none;
+                  padding: 0;
+                  margin: 0;
+                  z-index: 1; /* Ensure it's on top */
+                  display: none; /* Hidden by default */
+              }
+      
+              .filter-select:hover .select-list, .select-list:hover{
+                  display: block;
+              }
+      
+              .select-item {
+                  padding: 8px 12px;
+                  cursor: pointer;
+              }
+      
+              .select-item button{
+                  border: none;
+                  background: none;
+                  padding: 0;
+                  cursor: pointer;
+              }
+              .select-item:hover {
+                  background-color: #f0f0f0;
+              }
+              #project-select{
+                  display: none;
+              }
+              #project-select li{
+                  padding: 5px;
+              }
+              #project-select button{
+                  width: 100%;
+                  text-align: left;
+              }
+              #qmd-container{
+                  padding-top: 20px;
+              }
+              #qmd-iframe{
+                  width: 100%;
+                  height: 800px;
+                  border: none;
+              }
+          </style>
+      </head>
+      <body>
+      
       <article class="portfolio" data-page="portfolio">
-
+      
         <header>
           <h2 class="h2 article-title">Portfolio</h2>
         </header>
@@ -589,20 +659,21 @@
             <ul class="select-list" id="subcategory-select">
             </ul>
       
-            <ul class="select-list" id="project-select" style="display:none;"> </ul>
+            <ul class="select-list" id="project-select">
+            </ul>
       
           </div>
       
       
-          <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+          <div id="qmd-container" style="display:none;">
+            <iframe id="qmd-iframe"></iframe>
           </div>
       
           <script>
             const categorySelect = document.getElementById('category-select');
             const subcategorySelect = document.getElementById('subcategory-select');
             const subcategoryValue = document.getElementById('subcategory-value');
-            const projectSelect = document.getElementById('project-select'); // Get the new project select element
+            const projectSelect = document.getElementById('project-select');
       
             const projects = {
               all: [
@@ -624,61 +695,43 @@
             function populateSubcategories(category) {
               subcategorySelect.innerHTML = '';
               subcategoryValue.textContent = "Select Subcategory";
-              projectSelect.style.display = 'none'; // Hide the project list initially
+              projectSelect.style.display = 'none';
       
-              if (category === 'all') {
-                const allSubcategories = [...new Set(projects.all.map(p => p.subcategory))];
-                allSubcategories.forEach(subcategory => {
-                  const li = document.createElement('li');
-                  li.className = 'select-item';
-                  const button = document.createElement('button');
-                  button.dataset.selectItem = '';
-                  button.dataset.subcategory = subcategory;
-                  button.textContent = subcategory;
-                  li.appendChild(button);
-                  subcategorySelect.appendChild(li);
+              const relevantProjects = category === 'all' ? projects.all : projects[category];
+              const uniqueSubcategories = [...new Set(relevantProjects.map(p => p.subcategory))];
       
-                  button.addEventListener('click', () => {
-                      populateProjects(category, subcategory)
-                      subcategoryValue.textContent = subcategory;
-                  })
-                })
-              } else {
-                const categoryProjects = projects[category];
-                if (categoryProjects) {
-                    const categorySubcategories = [...new Set(categoryProjects.map(p => p.subcategory))];
-                    categorySubcategories.forEach(subcategory => {
-                      const li = document.createElement('li');
-                      li.className = 'select-item';
-                      const button = document.createElement('button');
-                      button.dataset.selectItem = '';
-                      button.dataset.subcategory = subcategory;
-                      button.textContent = subcategory;
-                      li.appendChild(button);
-                      subcategorySelect.appendChild(li);
+              uniqueSubcategories.forEach(subcategory => {
+                const li = document.createElement('li');
+                li.className = 'select-item';
+                const button = document.createElement('button');
+                button.dataset.selectItem = '';
+                button.dataset.subcategory = subcategory;
+                button.textContent = subcategory;
+                li.appendChild(button);
+                subcategorySelect.appendChild(li);
       
-                      button.addEventListener('click', () => {
-                          populateProjects(category, subcategory)
-                          subcategoryValue.textContent = subcategory;
-                      })
-                    })
-                }
-              }
+                button.addEventListener('click', function(event) {
+                  event.preventDefault();
+                  populateProjects(category, subcategory);
+                  subcategoryValue.textContent = subcategory;
+                });
+              });
             }
       
             function populateProjects(category, subcategory) {
-              projectSelect.innerHTML = ''; // Clear existing projects
-              projectSelect.style.display = 'block'; // Show the project list
+              projectSelect.innerHTML = '';
+              projectSelect.style.display = 'block';
       
-              const filteredProjects = projects[category] === undefined ? projects.all : projects[category];
+              const relevantProjects = category === 'all' ? projects.all : projects[category];
+              const filteredProjects = relevantProjects.filter(project => project.subcategory === subcategory);
       
-              filteredProjects.filter(project => subcategory === undefined || project.subcategory === subcategory).forEach(project => {
+              filteredProjects.forEach(project => {
                 const li = document.createElement('li');
-                li.className = 'select-item'; // Use select-item class for styling consistency
+                li.className = 'select-item';
                 const button = document.createElement('button');
                 button.dataset.selectItem = '';
                 button.textContent = project.title;
-                button.onclick = () => loadQMDContent(project.url); // Directly load content on project click
+                button.onclick = () => loadQMDContent(project.url);
                 li.appendChild(button);
                 projectSelect.appendChild(li);
               });
@@ -692,7 +745,6 @@
               }
             });
       
-            // Initialize with all projects and subcategories
             populateSubcategories('all');
       
       
@@ -708,6 +760,9 @@
         </section>
       
       </article>
+      
+      </body>
+      </html>
       
 
 
