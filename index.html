@@ -558,7 +558,7 @@
       <article class="portfolio" data-page="portfolio">
 
         <header>
-            <h2 class="h2 article-title">Portfolio</h2>
+          <h2 class="h2 article-title">Portfolio</h2>
         </header>
       
         <section class="projects">
@@ -584,15 +584,36 @@
             </ul>
           </div>
       
+          <!-- Second dropdown for subcategory selection (filter by subcategory) -->
+          <div class="filter-select-box">
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value>Select subcategory</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
+            <ul class="select-list">
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Introduction to Tidyverse</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Image Classification</button>
+              </li>
+            </ul>
+          </div>
+      
           <!-- Project List -->
           <ul class="project-list">
             <!-- Remote Sensing Projects -->
-            <li class="project-item active" data-filter-item data-category="remote sensing">
+            <li class="project-item active" data-filter-item data-category="remote sensing" data-subcategory="Introduction to Tidyverse">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
                 <h3 class="project-title">Introduction to Tidyverse</h3>
               </a>
             </li>
-            <li class="project-item active" data-filter-item data-category="remote sensing">
+            <li class="project-item active" data-filter-item data-category="remote sensing" data-subcategory="Image Classification">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
                 <h3 class="project-title">Image Classification</h3>
               </a>
@@ -604,7 +625,6 @@
                 <h3 class="project-title">(No projects available)</h3>
               </a>
             </li>
-      
           </ul>
       
           <!-- Container for the project content below the project list -->
@@ -634,18 +654,21 @@
             document.querySelectorAll('[data-select-item]').forEach(function(item) {
               item.addEventListener('click', function() {
                 var selectedCategory = document.querySelector('.filter-select[data-select] .select-value').textContent.trim();
-                filterProjects(selectedCategory);
+                var selectedSubcategory = this.textContent.trim();
+                filterProjects(selectedCategory, selectedSubcategory);
               });
             });
       
-            // Function to filter projects based on category selection
-            function filterProjects(category) {
+            // Function to filter projects based on category and subcategory selection
+            function filterProjects(category, subcategory) {
               var projects = document.querySelectorAll('.project-item');
               projects.forEach(function(project) {
                 var projectCategory = project.getAttribute('data-category');
+                var projectSubcategory = project.getAttribute('data-subcategory');
       
-                // Show or hide based on category
-                if (category === "All" || projectCategory === category) {
+                // Show or hide based on category and subcategory
+                if ((category === "All" || projectCategory === category) &&
+                    (subcategory === "All" || projectSubcategory === subcategory)) {
                   project.classList.add('active');
                 } else {
                   project.classList.remove('active');
@@ -657,6 +680,7 @@
         </section>
       
       </article>
+      
       
       
       
