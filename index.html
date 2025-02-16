@@ -555,56 +555,56 @@
       -->
         
 
-<!-- Portfolio Section with Cascading Dropdowns -->
-<article class="portfolio" data-page="portfolio">
-  <header>
-    <h2 class="h2 article-title">Portfolio</h2>
-  </header>
+      <!-- Portfolio Section with Cascading Dropdowns -->
+      <article class="portfolio" data-page="portfolio">
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
 
-  <section class="projects">
-    <!-- First Dropdown: Category Selection -->
-    <div class="filter-select-box">
-      <button class="filter-select" id="category-select">
-        <div class="select-value">Select category</div>
-        <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
-      </button>
-      <ul class="select-list" id="category-list">
-        <li class="select-item" data-category="all">All</li>
-        <li class="select-item" data-category="spatial-data-analysis">Spatial Data Analysis</li>
-        <li class="select-item" data-category="remote-sensing">Remote Sensing</li>
-      </ul>
-    </div>
+        <section class="projects">
+          <!-- First Dropdown: Category Selection -->
+          <div class="filter-select-box">
+            <button class="filter-select" id="category-select">
+              <div class="select-value">Select category</div>
+              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
+            </button>
+            <ul class="select-list" id="category-list">
+              <li class="select-item" data-category="all">All</li>
+              <li class="select-item" data-category="spatial-data-analysis">Spatial Data Analysis</li>
+              <li class="select-item" data-category="remote-sensing">Remote Sensing</li>
+            </ul>
+          </div>
 
-    <!-- Second Dropdown: Subcategory Selection (Initially Hidden) -->
-    <div class="filter-select-box" id="subcategory-box" style="display: none;">
-      <button class="filter-select" id="subcategory-select">
-        <div class="select-value">Select subcategory</div>
-        <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
-      </button>
-      <ul class="select-list" id="subcategory-list"></ul>
-    </div>
+          <!-- Second Dropdown: Subcategory Selection (Initially Hidden) -->
+          <div class="filter-select-box" id="subcategory-box" style="display: none;">
+            <button class="filter-select" id="subcategory-select">
+              <div class="select-value">Select subcategory</div>
+              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
+            </button>
+            <ul class="select-list" id="subcategory-list"></ul>
+          </div>
 
-    <!-- Project List -->
-    <ul class="project-list" id="project-list">
-      <li class="project-item" data-category="remote-sensing" data-subcategory="tidyverse">
-        <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-          <h3 class="project-title">Introduction to Tidyverse</h3>
-        </a>
-      </li>
-      <li class="project-item" data-category="remote-sensing" data-subcategory="classification">
-        <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-          <h3 class="project-title">Image Classification</h3>
-        </a>
-      </li>
-    </ul>
+          <!-- Project List -->
+          <ul class="project-list" id="project-list">
+            <li class="project-item" data-category="remote-sensing" data-subcategory="tidyverse">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                <h3 class="project-title">Introduction to Tidyverse</h3>
+              </a>
+            </li>
+            <li class="project-item" data-category="remote-sensing" data-subcategory="classification">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                <h3 class="project-title">Image Classification</h3>
+              </a>
+            </li>
+          </ul>
 
-    <!-- Project Display Container -->
-    <div id="qmd-container" style="display:none; padding-top: 20px;">
-      <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-    </div>
-  </section>
-</article>
-      
+          <!-- Project Display Container -->
+          <div id="qmd-container" style="display:none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+          </div>
+        </section>
+      </article>
+            
       
 
 
