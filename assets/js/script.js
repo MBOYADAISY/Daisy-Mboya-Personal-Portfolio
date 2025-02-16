@@ -135,6 +135,7 @@ for (let i = 0; i < formInputs.length; i++) {
 }
 
 
+
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
@@ -156,5 +157,3 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
-
-
