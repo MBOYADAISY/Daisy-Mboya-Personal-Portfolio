@@ -550,6 +550,7 @@
       </article>
 
 
+
       <!-- #PORTFOLIO -->
       <article class="portfolio" data-page="portfolio">
 
@@ -559,24 +560,24 @@
 
         <section class="projects">
 
-          <!-- Category Filter -->
+          <!-- Category Filter Dropdown -->
           <div class="filter-select-box">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-select-value>Select category</div>
+            <button class="filter-select" id="category-button">
+              <div class="select-value" id="category-select-value">Select category</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
             <ul class="select-list" id="category-list">
-              <li class="select-item"><button data-select-item onclick="filterProjects('all')">All</button></li>
-              <li class="select-item"><button data-select-item onclick="filterProjects('spatial data analysis')">Spatial Data Analysis</button></li>
-              <li class="select-item"><button data-select-item onclick="filterProjects('remote sensing')">Remote Sensing</button></li>
+              <li class="select-item"><button onclick="filterProjects('all', 'All')">All</button></li>
+              <li class="select-item"><button onclick="filterProjects('spatial data analysis', 'Spatial Data Analysis')">Spatial Data Analysis</button></li>
+              <li class="select-item"><button onclick="filterProjects('remote sensing', 'Remote Sensing')">Remote Sensing</button></li>
             </ul>
           </div>
 
           <!-- Project Selection Dropdown -->
           <div class="filter-select-box">
-            <button class="filter-select" data-select>
+            <button class="filter-select" id="project-button">
               <div class="select-value" id="project-select-value">Select project</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
@@ -604,11 +605,21 @@
               ]
             };
 
-            function filterProjects(category) {
-              const projectList = document.getElementById("project-list");
-              projectList.innerHTML = ""; // Clear previous options
+            function filterProjects(category, displayName) {
+              // Update category dropdown text
+              document.getElementById("category-select-value").innerText = displayName;
+              
+              // Close category dropdown
+              document.getElementById("category-list").style.display = "none";
 
-              if (category === "all") return;
+              // Clear and update project dropdown
+              const projectList = document.getElementById("project-list");
+              projectList.innerHTML = "";
+
+              if (category === "all") {
+                document.getElementById("project-select-value").innerText = "Select project";
+                return;
+              }
 
               if (projects[category]) {
                 projects[category].forEach(project => {
@@ -618,6 +629,9 @@
                   projectList.appendChild(li);
                 });
               }
+
+              // Reset project selection text
+              document.getElementById("project-select-value").innerText = "Select project";
             }
 
             function loadQMDContent(url, title) {
@@ -625,12 +639,38 @@
               document.getElementById('qmd-container').style.display = 'block';
               document.getElementById("project-select-value").innerText = title;
               document.getElementById('qmd-container').scrollIntoView({ behavior: "smooth" });
+
+              // Close project dropdown after selection
+              document.getElementById("project-list").style.display = "none";
             }
+
+            // Toggle dropdown visibility
+            document.getElementById("category-button").addEventListener("click", function() {
+              toggleDropdown("category-list");
+            });
+
+            document.getElementById("project-button").addEventListener("click", function() {
+              toggleDropdown("project-list");
+            });
+
+            function toggleDropdown(id) {
+              let dropdown = document.getElementById(id);
+              dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+            }
+
+            // Close dropdowns when clicking outside
+            document.addEventListener("click", function(event) {
+              if (!event.target.closest(".filter-select-box")) {
+                document.getElementById("category-list").style.display = "none";
+                document.getElementById("project-list").style.display = "none";
+              }
+            });
           </script>
 
         </section>
 
       </article>
+
 
       
       
