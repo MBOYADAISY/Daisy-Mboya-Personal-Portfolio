@@ -541,34 +541,37 @@
             
           </div>  
           
-          <button class="filter-select" data-select>
+          <div class="filter-select-box">
+            <button class="filter-select" data-select>
 
-            <div class="select-value" data-selecct-value>Select project</div>
+              <div class="select-value" data-selecct-value>Select project</div>
 
-            <div class="select-icon">
-              <ion-icon name="chevron-down"></ion-icon>
-            </div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
 
-          </button>                 
+            </button>                 
 
-          <ul class="project-list">
-            
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                
-                <h3 class="project-title">Introduction to Tidyverse</h3>
+            <ul class="project-list">
+              
+              <li class="project-item  active" data-filter-item data-category="remote sensing">
+                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                  
+                  <h3 class="project-title">Introduction to Tidyverse</h3>
+                  </a>
+              </li>
+
+              <li class="project-item  active" data-filter-item data-category="remote sensing">
+                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                  
+                  <h3 class="project-title">Image Classification</h3>                             
                 </a>
-            </li>
+              </li>
 
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                
-                <h3 class="project-title">Image Classification</h3>                             
-              </a>
-            </li>
-
-                        
-          </ul>
+                          
+            </ul>
+            
+          </div>
 
           <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
