@@ -157,3 +157,72 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const categorySelect = document.getElementById("category-select");
+  const categoryList = document.getElementById("category-list");
+  const subcategoryContainer = document.getElementById("subcategory-container");
+  const subcategorySelect = document.getElementById("subcategory-select");
+  const subcategoryList = document.getElementById("subcategory-list");
+  const projects = document.querySelectorAll(".project-item");
+
+  const subcategories = {
+    "remote-sensing": ["tidyverse", "classification"],
+    "spatial-data-analysis": ["spatial-statistics", "network-analysis"]
+  };
+
+  categoryList.addEventListener("click", function (e) {
+    if (e.target.tagName === "LI") {
+      categorySelect.querySelector(".select-value").textContent = e.target.textContent;
+      const selectedCategory = e.target.getAttribute("data-category");
+      filterProjects(selectedCategory, null);
+
+      if (subcategories[selectedCategory]) {
+        subcategoryContainer.style.display = "block";
+        subcategoryList.innerHTML = "";
+        subcategories[selectedCategory].forEach(sub => {
+          let li = document.createElement("li");
+          li.classList.add("select-item");
+          li.textContent = sub;
+          li.setAttribute("data-subcategory", sub);
+          subcategoryList.appendChild(li);
+        });
+      } else {
+        subcategoryContainer.style.display = "none";
+      }
+    }
+  });
+
+  subcategoryList.addEventListener("click", function (e) {
+    if (e.target.tagName === "LI") {
+      subcategorySelect.querySelector(".select-value").textContent = e.target.textContent;
+      const selectedSubcategory = e.target.getAttribute("data-subcategory");
+      filterProjects(categorySelect.querySelector(".select-value").textContent.toLowerCase().replace(/ /g, '-'), selectedSubcategory);
+    }
+  });
+
+  function filterProjects(category, subcategory) {
+    projects.forEach(project => {
+      let matchesCategory = category === "all" || project.getAttribute("data-category") === category;
+      let matchesSubcategory = !subcategory || project.getAttribute("data-subcategory") === subcategory;
+      if (matchesCategory && matchesSubcategory) {
+        project.style.display = "block";
+      } else {
+        project.style.display = "none";
+      }
+    });
+  }
+
+  function loadQMDContent(url) {
+    var iframe = document.getElementById('qmd-iframe');
+    iframe.src = url;
+    document.getElementById('qmd-container').style.display = 'block';
+    document.getElementById('qmd-container').scrollIntoView({ behavior: "smooth" });
+  }
+});
+
