@@ -157,3 +157,90 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const categoryButton = document.querySelector("[data-select-category]");
+    const categoryValue = document.querySelector("[data-select-value-category]");
+    const categoryList = document.getElementById("category-list");
+
+    const typeButton = document.querySelector("[data-select-type]");
+    const typeValue = document.querySelector("[data-select-value-type]");
+    const typeList = document.getElementById("type-list");
+
+    // Define available types for each category
+    const typeOptions = {
+      "all": ["All Types"],
+      "remote-sensing": ["All", "Tidyverse", "Classification"],
+      "spatial-data-analysis": ["All", "Geospatial Modeling", "Data Processing"]
+    };
+
+    // Function to update Type dropdown based on Category selection
+    function updateTypeDropdown(category) {
+      typeList.innerHTML = ""; // Clear existing options
+
+      (typeOptions[category] || ["All"]).forEach(type => {
+        const li = document.createElement("li");
+        li.classList.add("select-item");
+        li.dataset.type = type.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase-hyphen format
+        li.innerHTML = `<button data-select-item>${type}</button>`;
+        typeList.appendChild(li);
+      });
+
+      // Set default type value
+      typeValue.textContent = "Select type";
+
+      // Re-attach event listener for type selection
+      attachTypeSelection();
+    }
+
+    // Function to filter projects based on category and type
+    function filterProjects() {
+      const selectedCategory = categoryValue.dataset.selected || "all";
+      const selectedType = typeValue.dataset.selected || "all";
+
+      document.querySelectorAll(".project-item").forEach(item => {
+        const categoryMatch = selectedCategory === "all" || item.classList.contains(selectedCategory);
+        const typeMatch = selectedType === "all" || item.classList.contains(selectedType);
+        item.style.display = categoryMatch && typeMatch ? "block" : "none";
+      });
+    }
+
+    // Attach event listener for category selection
+    categoryList.addEventListener("click", (event) => {
+      if (event.target.closest("button")) {
+        const selectedCategory = event.target.textContent;
+        categoryValue.textContent = selectedCategory;
+        categoryValue.dataset.selected = event.target.parentElement.dataset.category;
+
+        updateTypeDropdown(categoryValue.dataset.selected);
+        filterProjects();
+      }
+    });
+
+    // Attach event listener for type selection
+    function attachTypeSelection() {
+      typeList.addEventListener("click", (event) => {
+        if (event.target.closest("button")) {
+          const selectedType = event.target.textContent;
+          typeValue.textContent = selectedType;
+          typeValue.dataset.selected = event.target.parentElement.dataset.type;
+
+          filterProjects();
+        }
+      });
+    }
+
+    attachTypeSelection();
+
+    // Load QMD content into iframe
+    window.loadQMDContent = function (url) {
+      var iframe = document.getElementById("qmd-iframe");
+      iframe.src = url;
+      document.getElementById("qmd-container").style.display = "block";
+      document.getElementById("qmd-container").scrollIntoView({ behavior: "smooth" });
+    };
+});
+
