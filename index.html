@@ -850,28 +850,29 @@
               button.setAttribute("data-select-item", "");
               button.setAttribute("value", project.url);
               button.textContent = project.name;
+              button.onclick = function () {
+                loadProjectContent(project.url);
+              };
               listItem.appendChild(button);
               projectSelect.appendChild(listItem);
             });
           }
         }
       
-        // Listen for project selection and load content
-        document.getElementById("project-list").addEventListener('click', function (e) {
-          if (e.target.tagName === 'BUTTON' && e.target.getAttribute('data-select-item')) {
-            var projectUrl = e.target.getAttribute('value');
-            var iframeContainer = document.getElementById("qmd-container");
-            var iframe = document.getElementById("qmd-iframe");
+        // Function to load project content when a project is selected
+        function loadProjectContent(projectUrl) {
+          var iframeContainer = document.getElementById("qmd-container");
+          var iframe = document.getElementById("qmd-iframe");
       
-            if (projectUrl) {
-              iframe.src = projectUrl;
-              iframeContainer.style.display = "block";
-            } else {
-              iframeContainer.style.display = "none";
-            }
+          if (projectUrl) {
+            iframe.src = projectUrl;
+            iframeContainer.style.display = "block";
+          } else {
+            iframeContainer.style.display = "none";
           }
-        });
+        }
       </script>
+      
       
 
 
