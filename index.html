@@ -774,41 +774,24 @@
       
           <!-- First Dropdown: Select Category -->
           <div class="filter-select-box">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select category</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-      
-            <ul class="select-list">
-              <li class="select-item">
-                <button data-select-item value="spatial-data-analysis" onclick="updateProjectDropdown('spatial-data-analysis')">Spatial Data Analysis</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item value="remote-sensing" onclick="updateProjectDropdown('remote-sensing')">Remote Sensing</button>
-              </li>
-            </ul>
+            <label for="category-select">Select Category:</label>
+            <select id="category-select" onchange="updateProjectDropdown()">
+              <option value="">Select a category</option>
+              <option value="spatial-data-analysis">Spatial Data Analysis</option>
+              <option value="remote-sensing">Remote Sensing</option>
+            </select>
           </div>
       
           <!-- Second Dropdown: Select Project -->
           <div class="filter-select-box" style="margin-top: 10px;">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select project</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-      
-            <ul class="select-list" id="project-list">
-              <li class="select-item">
-                <button data-select-item>Select a project</button>
-              </li>
-            </ul>
+            <label for="project-select">Select Project:</label>
+            <select id="project-select">
+              <option value="">Select a project</option>
+            </select>
           </div>
       
-          <!-- Project Display -->
-          <div id="qmd-container" style="display:none;">
+          <!-- Container for Project Content -->
+          <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
       
@@ -817,61 +800,37 @@
       </article>
       
       <script>
-        // Toggle dropdown visibility when clicked
-        document.querySelectorAll('.filter-select').forEach(function (button) {
-          button.addEventListener('click', function () {
-            this.nextElementSibling.classList.toggle('active');
-          });
-        });
+        function updateProjectDropdown() {
+          var category = document.getElementById("category-select").value;
+          var projectSelect = document.getElementById("project-select");
       
-        // Update the projects dropdown based on selected category
-        function updateProjectDropdown(category) {
-          var projectSelect = document.getElementById("project-list");
+          // Clear existing options
+          projectSelect.innerHTML = '<option value="">Select a project</option>';
       
-          // Clear old options
-          projectSelect.innerHTML = '<li class="select-item"><button data-select-item>Select a project</button></li>';
-      
+          // Define projects for each category
           var projects = {
             "spatial-data-analysis": [
               { name: "Project A", url: "SpatialData/ProjectA.html" },
               { name: "Project B", url: "SpatialData/ProjectB.html" }
             ],
             "remote-sensing": [
-              { name: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
-              { name: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" }
+              { name: "Introduction to Tidyverse", url: "Remote Sensing/Tidyverse/GEM520_Lab4-assign.html" },
+              { name: "Image Classification", url: "Remote Sensing/Supervised Image Classification/Lab5_classification-assign.html" }
             ]
           };
       
+          // Add projects based on the selected category
           if (category in projects) {
             projects[category].forEach(project => {
-              var listItem = document.createElement("li");
-              listItem.classList.add("select-item");
-              var button = document.createElement("button");
-              button.setAttribute("data-select-item", "");
-              button.setAttribute("value", project.url);
-              button.textContent = project.name;
-              listItem.appendChild(button);
-              projectSelect.appendChild(listItem);
+              var option = document.createElement("option");
+              option.value = project.url;
+              option.textContent = project.name;
+              projectSelect.appendChild(option);
             });
           }
         }
-      
-        // Listen for project selection and load content
-        document.getElementById("project-list").addEventListener('click', function (e) {
-          if (e.target.tagName === 'BUTTON' && e.target.getAttribute('data-select-item')) {
-            var projectUrl = e.target.getAttribute('value');
-            var iframeContainer = document.getElementById("qmd-container");
-            var iframe = document.getElementById("qmd-iframe");
-      
-            if (projectUrl) {
-              iframe.src = projectUrl;
-              iframeContainer.style.display = "block";
-            } else {
-              iframeContainer.style.display = "none";
-            }
-          }
-        });
       </script>
+      
       
 
 
