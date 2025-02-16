@@ -556,167 +556,146 @@
         
 
       <article class="portfolio" data-page="portfolio">
-
         <header>
           <h2 class="h2 article-title">Portfolio</h2>
         </header>
       
         <section class="projects">
-          
-          <!-- First dropdown for category selection -->
           <div class="filter-select-box">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select category</div>
+            <!-- First Dropdown (Select Category) -->
+            <button class="filter-select" id="category-select">
+              <div class="select-value" id="category-value">Select category</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-            <ul class="select-list">
+      
+            <ul class="select-list" id="category-list">
               <li class="select-item">
-                <button data-select-item>All</button>
+                <button data-select-item id="all-category">All</button>
               </li>
               <li class="select-item">
-                <button data-select-item>Remote Sensing</button>
+                <button data-select-item id="remote-sensing">Remote Sensing</button>
               </li>
               <li class="select-item">
-                <button data-select-item>Spatial Data Analysis</button>
+                <button data-select-item id="spatial-data">Spatial Data Analysis</button>
               </li>
             </ul>
           </div>
       
-          <!-- Second dropdown for subcategory selection (hidden by default) -->
-          <div class="filter-select-box" style="display:none;">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select subcategory</div>
+          <!-- Second Dropdown (Select Subcategory) -->
+          <div class="filter-select-box" id="subcategory-box" style="display: none;">
+            <button class="filter-select" id="subcategory-select">
+              <div class="select-value" id="subcategory-value">Select subcategory</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-            <ul class="select-list">
-              <li class="select-item remote-sensing">
-                <button data-select-item>Introduction to Tidyverse</button>
-              </li>
-              <li class="select-item remote-sensing">
-                <button data-select-item>Image Classification</button>
-              </li>
-              <li class="select-item spatial-data">
-                <button data-select-item>(No projects available)</button>
-              </li>
+      
+            <ul class="select-list" id="subcategory-list">
+              <!-- Subcategory options will be added dynamically -->
             </ul>
           </div>
       
           <!-- Project List -->
-          <ul class="project-list">
-            <!-- Remote Sensing Projects -->
-            <li class="project-item active" data-filter-item data-category="remote sensing" data-subcategory="Introduction to Tidyverse">
+          <ul class="project-list" id="project-list">
+            <li class="project-item" data-category="remote-sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
                 <h3 class="project-title">Introduction to Tidyverse</h3>
               </a>
             </li>
-            <li class="project-item active" data-filter-item data-category="remote sensing" data-subcategory="Image Classification">
+            <li class="project-item" data-category="remote-sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
                 <h3 class="project-title">Image Classification</h3>
               </a>
             </li>
-      
-            <!-- Spatial Data Analysis Projects (empty for now) -->
-            <li class="project-item" data-filter-item data-category="spatial data analysis">
-              <a href="#">
-                <h3 class="project-title">(No projects available)</h3>
+            <!-- Placeholder for Spatial Data Analysis projects -->
+            <li class="project-item" data-category="spatial-data">
+              <a href="#" onclick="loadQMDContent('Spatial%20Data%20Analysis/Example%20Project.html')">
+                <h3 class="project-title">Example Spatial Data Project</h3>
               </a>
             </li>
           </ul>
       
-          <!-- Container for the project content below the project list -->
+          <!-- Container for the project content -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
       
-          <script>
-            // Load content into iframe when project is clicked
-            function loadQMDContent(url) {
-              var iframe = document.getElementById('qmd-iframe');
-              iframe.src = url;
-              var container = document.getElementById('qmd-container');
-              container.style.display = 'block';
-              container.scrollIntoView({behavior: "smooth"});
-            }
-      
-            // Toggle the active class for the dropdown on click
-            document.querySelectorAll('.filter-select').forEach(function(selectButton) {
-              selectButton.addEventListener('click', function() {
-                this.classList.toggle('active');
-                this.nextElementSibling.classList.toggle('active');
-              });
-            });
-      
-            // Add event listeners for category selection
-            document.querySelectorAll('[data-select-item]').forEach(function(item) {
-              item.addEventListener('click', function() {
-                var category = this.textContent.trim();
-                // Update the category value
-                document.querySelector('.filter-select[data-select] .select-value').textContent = category;
-      
-                // Show the second dropdown after category selection
-                var secondDropdown = document.querySelector('.filter-select-box:nth-child(2)');
-                secondDropdown.style.display = 'block';
-      
-                // Filter projects based on category
-                filterProjects(category);
-      
-                // Show the relevant subcategory items based on selected category
-                if (category === "Remote Sensing") {
-                  document.querySelectorAll('.select-item.remote-sensing').forEach(function(el) {
-                    el.style.display = 'block';
-                  });
-                  document.querySelectorAll('.select-item.spatial-data').forEach(function(el) {
-                    el.style.display = 'none';
-                  });
-                } else if (category === "Spatial Data Analysis") {
-                  document.querySelectorAll('.select-item.spatial-data').forEach(function(el) {
-                    el.style.display = 'block';
-                  });
-                  document.querySelectorAll('.select-item.remote-sensing').forEach(function(el) {
-                    el.style.display = 'none';
-                  });
-                } else {
-                  document.querySelectorAll('.select-item').forEach(function(el) {
-                    el.style.display = 'block';
-                  });
-                }
-              });
-            });
-      
-            // Add event listeners for subcategory selection
-            document.querySelectorAll('.select-item button').forEach(function(item) {
-              item.addEventListener('click', function() {
-                var selectedCategory = document.querySelector('.filter-select[data-select] .select-value').textContent.trim();
-                var selectedSubcategory = this.textContent.trim();
-                filterProjects(selectedCategory, selectedSubcategory);
-              });
-            });
-      
-            // Function to filter projects based on category and subcategory selection
-            function filterProjects(category, subcategory = "All") {
-              var projects = document.querySelectorAll('.project-item');
-              projects.forEach(function(project) {
-                var projectCategory = project.getAttribute('data-category');
-                var projectSubcategory = project.getAttribute('data-subcategory');
-      
-                // Show or hide based on category and subcategory
-                if ((category === "All" || projectCategory === category) &&
-                    (subcategory === "All" || projectSubcategory === subcategory)) {
-                  project.classList.add('active');
-                } else {
-                  project.classList.remove('active');
-                }
-              });
-            }
-          </script>
-      
         </section>
-      
       </article>
+      
+      <!-- JavaScript to handle dropdown and project filtering -->
+      <script>
+        // Handle the Category Dropdown
+        document.getElementById('category-select').addEventListener('click', function() {
+          document.getElementById('category-list').classList.toggle('active');
+        });
+      
+        // Handle category selection
+        document.querySelectorAll('[data-select-item]').forEach(function(item) {
+          item.addEventListener('click', function(e) {
+            var category = e.target.textContent;
+            document.getElementById('category-value').textContent = category;
+            document.getElementById('category-list').classList.remove('active');
+            filterProjects(category);
+          });
+        });
+      
+        // Handle the Subcategory Dropdown visibility based on Category selection
+        function filterProjects(category) {
+          // Show/hide subcategory dropdown
+          if (category === 'Remote Sensing') {
+            // Show subcategory options for remote sensing
+            var subcategories = ['Tidyverse', 'Image Classification'];
+            showSubcategoryDropdown(subcategories);
+          } else if (category === 'Spatial Data Analysis') {
+            // Show subcategory options for spatial data analysis
+            var subcategories = ['Example Spatial Project'];
+            showSubcategoryDropdown(subcategories);
+          } else {
+            // Hide subcategory box for 'All' or invalid categories
+            document.getElementById('subcategory-box').style.display = 'none';
+          }
+      
+          // Filter project list based on category
+          document.querySelectorAll('.project-item').forEach(function(project) {
+            if (category === 'All' || project.getAttribute('data-category') === category.toLowerCase()) {
+              project.style.display = 'block';
+            } else {
+              project.style.display = 'none';
+            }
+          });
+        }
+      
+        // Show the subcategory dropdown and populate the options
+        function showSubcategoryDropdown(subcategories) {
+          var subcategoryList = document.getElementById('subcategory-list');
+          subcategoryList.innerHTML = ''; // Clear previous subcategories
+          subcategories.forEach(function(subcategory) {
+            var li = document.createElement('li');
+            li.className = 'select-item';
+            var button = document.createElement('button');
+            button.textContent = subcategory;
+            button.addEventListener('click', function() {
+              document.getElementById('subcategory-value').textContent = subcategory;
+              document.getElementById('subcategory-box').style.display = 'none';
+            });
+            li.appendChild(button);
+            subcategoryList.appendChild(li);
+          });
+          document.getElementById('subcategory-box').style.display = 'block';
+        }
+      
+        // Function to load project content in iframe
+        function loadQMDContent(url) {
+          var iframe = document.getElementById('qmd-iframe');
+          iframe.src = url;
+          var container = document.getElementById('qmd-container');
+          container.style.display = 'block';
+          container.scrollIntoView({ behavior: "smooth" });
+        }
+      </script>
       
       
       
