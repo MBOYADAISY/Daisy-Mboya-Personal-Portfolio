@@ -502,247 +502,94 @@
       -->
         
 
-    <article class="portfolio" data-page="portfolio">
-
-      <header>
+      <article class="portfolio" data-page="portfolio">
+        <header>
           <h2 class="h2 article-title">Portfolio</h2>
-      </header>
-
-      <section class="projects">
-
+        </header>
+      
+        <section class="projects">
+      
           <div class="filter-select-box">
-
             <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
+              <div class="select-value" data-select-value>Select category</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
-
             </button>
-
+      
             <ul class="select-list">
-
               <li class="select-item">
-                <button data-select-item>All</button>
+                <button data-select-item data-category="all">All</button>
               </li>
-
               <li class="select-item">
-                <button data-select-item>Spatial Data Analysis</button>
+                <button data-select-item data-category="spatial-data-analysis">Spatial Data Analysis</button>
               </li>
-
               <li class="select-item">
-                <button data-select-item>Remote Sensing</button>
+                <button data-select-item data-category="remote-sensing">Remote Sensing</button>
               </li>
-              
-              
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
-              
             </ul>
-            
-          </div>         
-          
-        
-
-          <ul class="project-list">
-            
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
+          </div>
+      
+          <!-- This is where the project list will appear, below the filter dropdown -->
+          <ul class="project-list" id="project-list">
+            <li class="project-item remote-sensing active" data-filter-item>
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                
                 <h3 class="project-title">Introduction to Tidyverse</h3>
-                </a>
+              </a>
             </li>
-
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
+            <li class="project-item remote-sensing active" data-filter-item>
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                
-                <h3 class="project-title">Image Classification</h3>                             
+                <h3 class="project-title">Image Classification</h3>
               </a>
             </li>
-
-           
-             <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Orizon</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Fundo</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Brawlhalla</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
-                </figure>
-
-                <h3 class="project-title">DSM.</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">MetaSpark</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Summary</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Task Manager</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Arrival</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-                        
+            <!-- More projects can be added here with respective categories -->
           </ul>
-
+      
           <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
-
+      
           <script>
             function loadQMDContent(url) {
               // Get the iframe element
               var iframe = document.getElementById('qmd-iframe');
-    
+      
               // Set the iframe source to the .qmd HTML file
               iframe.src = url;
-    
+      
               // Show the iframe container
               var container = document.getElementById('qmd-container');
               container.style.display = 'block';
-    
+      
               // Optionally, scroll to the container when it's displayed
               container.scrollIntoView({behavior: "smooth"});
             }
+      
+            // Category selection and filtering
+            const selectItems = document.querySelectorAll('[data-select-item]');
+            const projectItems = document.querySelectorAll('.project-item');
+            const projectList = document.getElementById('project-list');
+            
+            selectItems.forEach(item => {
+              item.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Clear existing project list
+                projectList.innerHTML = '';
+      
+                // Filter projects based on selected category and display
+                projectItems.forEach(project => {
+                  if (category === 'all' || project.classList.contains(category)) {
+                    projectList.appendChild(project);
+                  }
+                });
+              });
+            });
           </script>
-
         </section>
-
       </article>
+      
 
 
       <!--
