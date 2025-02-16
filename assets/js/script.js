@@ -1,12 +1,21 @@
 "use strict";
 
 // Helper function for toggling the 'active' class
-const toggleActiveClass = (element) => element.classList.toggle("active");
+const toggleActiveClass = (element) => {
+  element.classList.toggle("active");
+  console.log(`Toggled 'active' class on ${element}`);
+};
 
 // Sidebar toggle functionality for mobile
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-sidebarBtn.addEventListener("click", () => toggleActiveClass(sidebar));
+if (sidebar && sidebarBtn) {
+  sidebarBtn.addEventListener("click", () => {
+    toggleActiveClass(sidebar);
+  });
+} else {
+  console.log("Sidebar or Sidebar button not found");
+}
 
 // Modal variables for testimonials
 const testimonialsItems = document.querySelectorAll("[data-testimonials-item]");
@@ -21,6 +30,7 @@ const modalText = document.querySelector("[data-modal-text]");
 const toggleModal = () => {
   modalContainer.classList.toggle("active");
   overlay.classList.toggle("active");
+  console.log("Modal toggled");
 };
 
 // Open modal on testimonial item click
@@ -35,8 +45,17 @@ testimonialsItems.forEach((item) => {
 });
 
 // Close modal on overlay or close button click
-modalCloseBtn.addEventListener("click", toggleModal);
-overlay.addEventListener("click", toggleModal);
+if (modalCloseBtn) {
+  modalCloseBtn.addEventListener("click", toggleModal);
+} else {
+  console.log("Modal close button not found");
+}
+
+if (overlay) {
+  overlay.addEventListener("click", toggleModal);
+} else {
+  console.log("Overlay not found");
+}
 
 // Custom select functionality
 const select = document.querySelector("[data-select]");
@@ -45,7 +64,11 @@ const selectValue = document.querySelector("[data-selecct-value]");
 const filterBtns = document.querySelectorAll("[data-filter-btn]");
 
 // Toggle select visibility
-select.addEventListener("click", () => toggleActiveClass(select));
+if (select) {
+  select.addEventListener("click", () => toggleActiveClass(select));
+} else {
+  console.log("Select dropdown not found");
+}
 
 // Update selected value and filter projects
 selectItems.forEach((item) => {
@@ -87,11 +110,15 @@ const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
-formInputs.forEach((input) => {
-  input.addEventListener("input", () => {
-    formBtn.disabled = !form.checkValidity();
+if (form && formInputs && formBtn) {
+  formInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      formBtn.disabled = !form.checkValidity();
+    });
   });
-});
+} else {
+  console.log("Form or inputs not found");
+}
 
 // Page navigation functionality
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
