@@ -1,69 +1,149 @@
 'use strict';
 
-// Element toggle function
+
+
+// element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
-// Custom select variables for category filter
-const selectCategory = document.querySelector("[data-select]");
-const selectItemsCategory = document.querySelectorAll("[data-select-item][data-project-category]");
-const selectValueCategory = document.querySelector("[data-selecct-value]");
 
-// Add event listener for category selection dropdown
-selectCategory.addEventListener("click", function () { elementToggleFunc(this); });
 
-// Handle project category selection
-selectItemsCategory.forEach(item => {
-  item.addEventListener("click", function () {
-    const selectedCategory = this.getAttribute('data-project-category');
-    selectValueCategory.innerText = this.innerText;
-    elementToggleFunc(selectCategory);
-    filterProjects(selectedCategory, selectedType);
+// sidebar variables
+const sidebar = document.querySelector("[data-sidebar]");
+const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+
+// sidebar toggle functionality for mobile
+sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+
+
+
+// testimonials variables
+const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
+const modalContainer = document.querySelector("[data-modal-container]");
+const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
+const overlay = document.querySelector("[data-overlay]");
+
+// modal variable
+const modalImg = document.querySelector("[data-modal-img]");
+const modalTitle = document.querySelector("[data-modal-title]");
+const modalText = document.querySelector("[data-modal-text]");
+
+// modal toggle function
+const testimonialsModalFunc = function () {
+  modalContainer.classList.toggle("active");
+  overlay.classList.toggle("active");
+}
+
+// add click event to all modal items
+for (let i = 0; i < testimonialsItem.length; i++) {
+
+  testimonialsItem[i].addEventListener("click", function () {
+
+    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
+    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
+    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
+    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
+
+    testimonialsModalFunc();
+
   });
-});
 
-// Custom select variables for project type filter
-const selectType = document.querySelector("[data-select-type]");
-const selectItemsType = document.querySelectorAll("[data-select-item][data-project-type]");
-const selectValueType = document.querySelector("[data-selecct-value-type]");
+}
 
-// Add event listener for project type selection dropdown
-selectType.addEventListener("click", function () { elementToggleFunc(this); });
+// add click event to modal close button
+modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+overlay.addEventListener("click", testimonialsModalFunc);
 
-// Handle project type selection
-let selectedType = 'all';  // Default to "all"
-selectItemsType.forEach(item => {
-  item.addEventListener("click", function () {
-    selectedType = this.getAttribute('data-project-type');
-    selectValueType.innerText = this.innerText;
-    elementToggleFunc(selectType);
-    filterProjects(selectedCategory, selectedType);
-  });
-});
 
-// Filter variables for project items
-const projectItems = document.querySelectorAll('.project-item');
 
-// Filter function to show/hide project items based on selected category and type
-function filterProjects(selectedCategory, selectedType) {
-  projectItems.forEach(project => {
-    const isCategoryMatch = selectedCategory === 'all' || project.classList.contains(selectedCategory);
-    const isTypeMatch = selectedType === 'all' || project.classList.contains(selectedType);
+// custom select variables
+const select = document.querySelector("[data-select]");
+const selectItems = document.querySelectorAll("[data-select-item]");
+const selectValue = document.querySelector("[data-selecct-value]");
+const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-    if (isCategoryMatch && isTypeMatch) {
-      project.style.display = 'block';
-    } else {
-      project.style.display = 'none';
-    }
+select.addEventListener("click", function () { elementToggleFunc(this); });
+
+// add event in all select items
+for (let i = 0; i < selectItems.length; i++) {
+  selectItems[i].addEventListener("click", function () {
+
+    let selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText;
+    elementToggleFunc(select);
+    filterFunc(selectedValue);
+
   });
 }
 
-// Page navigation variables (optional, if needed for other parts of your page)
+// filter variables
+const filterItems = document.querySelectorAll("[data-filter-item]");
+
+const filterFunc = function (selectedValue) {
+
+  for (let i = 0; i < filterItems.length; i++) {
+
+    if (selectedValue === "all") {
+      filterItems[i].classList.add("active");
+    } else if (selectedValue === filterItems[i].dataset.category) {
+      filterItems[i].classList.add("active");
+    } else {
+      filterItems[i].classList.remove("active");
+    }
+
+  }
+
+}
+
+// add event in all filter button items for large screen
+let lastClickedBtn = filterBtn[0];
+
+for (let i = 0; i < filterBtn.length; i++) {
+
+  filterBtn[i].addEventListener("click", function () {
+
+    let selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText;
+    filterFunc(selectedValue);
+
+    lastClickedBtn.classList.remove("active");
+    this.classList.add("active");
+    lastClickedBtn = this;
+
+  });
+
+}
+
+
+
+// contact form variables
+const form = document.querySelector("[data-form]");
+const formInputs = document.querySelectorAll("[data-form-input]");
+const formBtn = document.querySelector("[data-form-btn]");
+
+// add event to all form input field
+for (let i = 0; i < formInputs.length; i++) {
+  formInputs[i].addEventListener("input", function () {
+
+    // check form validation
+    if (form.checkValidity()) {
+      formBtn.removeAttribute("disabled");
+    } else {
+      formBtn.setAttribute("disabled", "");
+    }
+
+  });
+}
+
+
+
+// page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// Add event to all nav link
+// add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
+
     for (let i = 0; i < pages.length; i++) {
       if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
         pages[i].classList.add("active");
@@ -74,14 +154,6 @@ for (let i = 0; i < navigationLinks.length; i++) {
         navigationLinks[i].classList.remove("active");
       }
     }
-  });
-}
 
-// Function to load project content (optional, if you have iframe content)
-function loadQMDContent(url) {
-  var iframe = document.getElementById('qmd-iframe');
-  iframe.src = url;
-  var container = document.getElementById('qmd-container');
-  container.style.display = 'block';
-  container.scrollIntoView({behavior: "smooth"});
+  });
 }
