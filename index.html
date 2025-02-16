@@ -777,25 +777,19 @@
         <section class="projects">
       
           <!-- First Dropdown: Select Category -->
-          <div class="filter-select-box">
-            <label for="category-select">Select Category:</label>
-            <select id="category-select" onchange="updateProjectDropdown()">
-              <option value="">Select a category</option>
-              <option value="spatial-data-analysis">Spatial Data Analysis</option>
-              <option value="remote-sensing">Remote Sensing</option>
-            </select>
-          </div>
+          <select id="category-select" onchange="updateProjectDropdown()">
+            <option value="">Select a category</option>
+            <option value="spatial-data-analysis">Spatial Data Analysis</option>
+            <option value="remote-sensing">Remote Sensing</option>
+          </select>
       
           <!-- Second Dropdown: Select Project -->
-          <div class="filter-select-box" style="margin-top: 10px;">
-            <label for="project-select">Select Project:</label>
-            <select id="project-select">
-              <option value="">Select a project</option>
-            </select>
-          </div>
+          <select id="project-select" onchange="loadProject()">
+            <option value="">Select a project</option>
+          </select>
       
-          <!-- Container for Project Content -->
-          <div id="qmd-container" style="display:none; padding-top: 20px;">
+          <!-- Project Display -->
+          <div id="qmd-container" style="display:none;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
       
@@ -808,22 +802,19 @@
           var category = document.getElementById("category-select").value;
           var projectSelect = document.getElementById("project-select");
       
-          // Clear existing options
-          projectSelect.innerHTML = '<option value="">Select a project</option>';
+          projectSelect.innerHTML = '<option value="">Select a project</option>'; // Clear old options
       
-          // Define projects for each category
           var projects = {
             "spatial-data-analysis": [
               { name: "Project A", url: "SpatialData/ProjectA.html" },
               { name: "Project B", url: "SpatialData/ProjectB.html" }
             ],
             "remote-sensing": [
-              { name: "Introduction to Tidyverse", url: "Remote Sensing/Tidyverse/GEM520_Lab4-assign.html" },
-              { name: "Image Classification", url: "Remote Sensing/Supervised Image Classification/Lab5_classification-assign.html" }
+              { name: "Introduction to Tidyverse", url: "RemoteSensing/Tidyverse.html" },
+              { name: "Image Classification", url: "RemoteSensing/ImageClassification.html" }
             ]
           };
       
-          // Add projects based on the selected category
           if (category in projects) {
             projects[category].forEach(project => {
               var option = document.createElement("option");
@@ -833,7 +824,21 @@
             });
           }
         }
+      
+        function loadProject() {
+          var projectUrl = document.getElementById("project-select").value;
+          var iframeContainer = document.getElementById("qmd-container");
+          var iframe = document.getElementById("qmd-iframe");
+      
+          if (projectUrl) {
+            iframe.src = projectUrl;
+            iframeContainer.style.display = "block";
+          } else {
+            iframeContainer.style.display = "none";
+          }
+        }
       </script>
+      
       
       
       
