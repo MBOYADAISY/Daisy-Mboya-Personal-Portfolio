@@ -776,7 +776,7 @@
           <div class="filter-select-box">
             <label for="category-select">Select Category:</label>
             <select id="category-select" onchange="updateProjectDropdown()">
-              <option value="">Select a category</option>
+              <option value="all">All</option>
               <option value="spatial-data-analysis">Spatial Data Analysis</option>
               <option value="remote-sensing">Remote Sensing</option>
             </select>
@@ -787,6 +787,18 @@
             <label for="project-select">Select Project:</label>
             <select id="project-select">
               <option value="">Select a project</option>
+      
+              <!-- Spatial Data Analysis Projects -->
+              <optgroup label="Spatial Data Analysis" class="spatial-data-analysis">
+                <option value="SpatialData/ProjectA.html">Project A</option>
+                <option value="SpatialData/ProjectB.html">Project B</option>
+              </optgroup>
+      
+              <!-- Remote Sensing Projects -->
+              <optgroup label="Remote Sensing" class="remote-sensing">
+                <option value="Remote Sensing/Tidyverse/GEM520_Lab4-assign.html">Introduction to Tidyverse</option>
+                <option value="Remote Sensing/Supervised Image Classification/Lab5_classification-assign.html">Image Classification</option>
+              </optgroup>
             </select>
           </div>
       
@@ -798,38 +810,6 @@
         </section>
       
       </article>
-      
-      <script>
-        function updateProjectDropdown() {
-          var category = document.getElementById("category-select").value;
-          var projectSelect = document.getElementById("project-select");
-      
-          // Clear existing options
-          projectSelect.innerHTML = '<option value="">Select a project</option>';
-      
-          // Define projects for each category
-          var projects = {
-            "spatial-data-analysis": [
-              { name: "Project A", url: "SpatialData/ProjectA.html" },
-              { name: "Project B", url: "SpatialData/ProjectB.html" }
-            ],
-            "remote-sensing": [
-              { name: "Introduction to Tidyverse", url: "Remote Sensing/Tidyverse/GEM520_Lab4-assign.html" },
-              { name: "Image Classification", url: "Remote Sensing/Supervised Image Classification/Lab5_classification-assign.html" }
-            ]
-          };
-      
-          // Add projects based on the selected category
-          if (category in projects) {
-            projects[category].forEach(project => {
-              var option = document.createElement("option");
-              option.value = project.url;
-              option.textContent = project.name;
-              projectSelect.appendChild(option);
-            });
-          }
-        }
-      </script>
       
       
 
