@@ -502,92 +502,45 @@
       -->
         
 
-    <article class="portfolio" data-page="portfolio">
+      <article class="portfolio" data-page="portfolio">
 
-      <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-      </header>
-
-      <section class="projects">
-
+        <header>
+            <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+      
+        <section class="projects">
+      
           <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
+      
+            <!-- Category Dropdown -->
+            <button class="filter-select" id="category-select" onclick="elementToggleFunc(categoryList)">
+              <div class="select-value" id="selected-category">Select category</div>
+              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
             </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Spatial Data Analysis</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Remote Sensing</button>
-              </li>
-              
-              
-                            
+            <ul class="select-list" id="category-list" style="display: none;">
+              <li class="select-item"><button data-category="all">All</button></li>
+              <li class="select-item"><button data-category="spatial-data-analysis">Spatial Data Analysis</button></li>
+              <li class="select-item"><button data-category="remote-sensing">Remote Sensing</button></li>
             </ul>
-            
-          </div>         
           
-        
-
-          <ul class="project-list">
-            
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                
-                <h3 class="project-title">Introduction to Tidyverse</h3>
-                </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                
-                <h3 class="project-title">Image Classification</h3>                             
-              </a>
-            </li>
-
-                        
-          </ul>
-
-          <!-- Container for the project content below the project list -->
+            <!-- Project Dropdown (Cascading) -->
+            <button class="filter-select" id="project-select" disabled onclick="elementToggleFunc(projectList)">
+              <div class="select-value" id="selected-project">Select project</div>
+              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
+            </button>
+            <ul class="select-list" id="project-list" style="display: none;"></ul>
+          
+          </div>
+          
+          <!-- Container for project content -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
-
-          <script>
-            function loadQMDContent(url) {
-              // Get the iframe element
-              var iframe = document.getElementById('qmd-iframe');
-    
-              // Set the iframe source to the .qmd HTML file
-              iframe.src = url;
-    
-              // Show the iframe container
-              var container = document.getElementById('qmd-container');
-              container.style.display = 'block';
-    
-              // Optionally, scroll to the container when it's displayed
-              container.scrollIntoView({behavior: "smooth"});
-            }
-          </script>
-
+      
         </section>
-
+      
       </article>
+      
 
 
       <!--
