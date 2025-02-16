@@ -439,7 +439,7 @@
 
             <button class="filter-select" data-select>
 
-              <div class="select-value" data-selecct-value>Select category</div>
+              <div class="select-value" data-select-value>Select category</div>
 
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
@@ -467,23 +467,28 @@
           
         
 
-          <ul class="project-list">
+          <div class="filter-select-box">
+            <button class="filter-select" data-select>
+              <div class="select-value" data-select-value>Select project</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
             
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                
-                <h3 class="project-title">Introduction to Tidyverse</h3>
-                </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                
-                <h3 class="project-title">Image Classification</h3>                             
-              </a>
-            </li>
-                      
-          </ul>
+            <ul class="select-list">
+              <li class="select-item">
+                <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                  Introduction to Tidyverse
+                </button>
+              </li>
+              <li class="select-item">
+                <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                  Image Classification
+                </button>
+              </li>
+            </ul>
+          </div>
+          
 
           <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
