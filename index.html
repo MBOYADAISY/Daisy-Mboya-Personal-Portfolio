@@ -779,7 +779,7 @@
           <!-- First Dropdown: Select Category -->
           <div class="filter-select-box">
             <label for="category-select">Select Category:</label>
-            <select id="category-select">
+            <select id="category-select" onchange="updateProjectDropdown()">
               <option value="all">All</option>
               <option value="spatial-data-analysis">Spatial Data Analysis</option>
               <option value="remote-sensing">Remote Sensing</option>
@@ -791,8 +791,18 @@
             <label for="project-select">Select Project:</label>
             <select id="project-select">
               <option value="">Select a project</option>
-              <option value="Remote Sensing/Tidyverse/GEM520_Lab4-assign.html">Introduction to Tidyverse</option>
-              <option value="Remote Sensing/Supervised Image Classification/Lab5_classification-assign.html">Image Classification</option>
+      
+              <!-- Spatial Data Analysis Projects -->
+              <optgroup label="Spatial Data Analysis" class="spatial-data-analysis">
+                <option value="SpatialData/ProjectA.html">Project A</option>
+                <option value="SpatialData/ProjectB.html">Project B</option>
+              </optgroup>
+      
+              <!-- Remote Sensing Projects -->
+              <optgroup label="Remote Sensing" class="remote-sensing">
+                <option value="Remote Sensing/Tidyverse/GEM520_Lab4-assign.html">Introduction to Tidyverse</option>
+                <option value="Remote Sensing/Supervised Image Classification/Lab5_classification-assign.html">Image Classification</option>
+              </optgroup>
             </select>
           </div>
       
@@ -804,6 +814,7 @@
         </section>
       
       </article>
+      
       
 
       
