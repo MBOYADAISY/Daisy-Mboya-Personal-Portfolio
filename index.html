@@ -502,43 +502,54 @@
       -->
         
 
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-            <h2 class="h2 article-title">Portfolio</h2>
-        </header>
+        <article class="portfolio" data-page="portfolio">
+          <header>
+              <h2 class="h2 article-title">Portfolio</h2>
+          </header>
       
-        <section class="projects">
+          <section class="projects">
       
-          <div class="filter-select-box">
+              <!-- Category Dropdown -->
+              <div class="filter-select-box">
+                  <button class="filter-select" onclick="toggleDropdown('category-list')">
+                      <div class="select-value" id="category-selected">Select category</div>
+                      <div class="select-icon">
+                          <ion-icon name="chevron-down"></ion-icon>
+                      </div>
+                  </button>
       
-            <!-- Category Dropdown -->
-            <button class="filter-select" id="category-select" onclick="elementToggleFunc(categoryList)">
-              <div class="select-value" id="selected-category">Select category</div>
-              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
-            </button>
-            <ul class="select-list" id="category-list" style="display: none;">
-              <li class="select-item"><button data-category="all">All</button></li>
-              <li class="select-item"><button data-category="spatial-data-analysis">Spatial Data Analysis</button></li>
-              <li class="select-item"><button data-category="remote-sensing">Remote Sensing</button></li>
-            </ul>
-          
-            <!-- Project Dropdown (Cascading) -->
-            <button class="filter-select" id="project-select" disabled onclick="elementToggleFunc(projectList)">
-              <div class="select-value" id="selected-project">Select project</div>
-              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
-            </button>
-            <ul class="select-list" id="project-list" style="display: none;"></ul>
-          
-          </div>
-          
-          <!-- Container for project content -->
-          <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-          </div>
+                  <ul class="select-list" id="category-list" style="display: none;">
+                      <li class="select-item"><button onclick="selectCategory('All')">All</button></li>
+                      <li class="select-item"><button onclick="selectCategory('Spatial Data Analysis')">Spatial Data Analysis</button></li>
+                      <li class="select-item"><button onclick="selectCategory('Remote Sensing')">Remote Sensing</button></li>
+                  </ul>
+              </div>  
       
-        </section>
+              <!-- Project Dropdown -->
+              <div class="filter-select-box">
+                  <button class="filter-select" onclick="toggleDropdown('project-list')">
+                      <div class="select-value" id="project-selected">Select project</div>
+                      <div class="select-icon">
+                          <ion-icon name="chevron-down"></ion-icon>
+                      </div>
+                  </button>                 
       
+                  <ul class="select-list" id="project-list" style="display: none;">
+                      <li class="select-item project-item" data-category="remote-sensing">
+                          <button onclick="loadProject('Introduction to Tidyverse', 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">Introduction to Tidyverse</button>
+                      </li>
+                      <li class="select-item project-item" data-category="remote-sensing">
+                          <button onclick="loadProject('Image Classification', 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">Image Classification</button>
+                      </li>
+                  </ul>
+              </div>
+      
+              <!-- Container for the project content -->
+              <div id="qmd-container" style="display:none; padding-top: 20px;">
+                  <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+              </div>
+      
+          </section>
       </article>
       
 
