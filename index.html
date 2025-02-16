@@ -658,13 +658,46 @@
               dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
             }
 
-            // Close dropdowns when clicking outside
-            document.addEventListener("click", function(event) {
-              if (!event.target.closest(".filter-select-box")) {
-                document.getElementById("category-list").style.display = "none";
-                document.getElementById("project-list").style.display = "none";
+            document.addEventListener("DOMContentLoaded", function () {
+              const selectButton = document.querySelector("[data-select]");
+              const selectValue = document.querySelector("[data-selecct-value]");
+              const selectList = document.querySelector(".select-list");
+              const selectItems = document.querySelectorAll("[data-select-item]");
+
+              // Toggle dropdown when clicking the button
+              selectButton.addEventListener("click", function () {
+                selectList.classList.toggle("active");
+              });
+
+              // Close dropdown when clicking outside
+              document.addEventListener("click", function (event) {
+                if (!selectButton.contains(event.target) && !selectList.contains(event.target)) {
+                  selectList.classList.remove("active");
+                }
+              });
+
+              // Handle selection of an item
+              selectItems.forEach((item) => {
+                item.addEventListener("click", function () {
+                  selectValue.textContent = this.textContent; // Update the button text
+                  selectList.classList.remove("active"); // Close the dropdown
+                  filterProjects(this.textContent.toLowerCase()); // Call function to filter projects
+                });
+              });
+
+              function filterProjects(category) {
+                const projectItems = document.querySelectorAll(".project-item");
+                projectItems.forEach((item) => {
+                  const itemCategory = item.getAttribute("data-category");
+                  if (category === "all" || itemCategory === category) {
+                    item.style.display = "block";
+                  } else {
+                    item.style.display = "none";
+                  }
+                });
               }
             });
+
           </script>
 
         </section>
