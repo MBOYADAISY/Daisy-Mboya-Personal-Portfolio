@@ -856,24 +856,19 @@
           }
         }
       
-        // Load project when selected from the dropdown
-        function loadProject(event) {
-          var projectUrl = event.target.value;
-          var iframeContainer = document.getElementById("qmd-container");
-          var iframe = document.getElementById("qmd-iframe");
-      
-          if (projectUrl) {
-            iframe.src = projectUrl;
-            iframeContainer.style.display = "block";
-          } else {
-            iframeContainer.style.display = "none";
-          }
-        }
-      
-        // Listen for project selection
+        // Listen for project selection and load content
         document.getElementById("project-list").addEventListener('click', function (e) {
-          if (e.target.tagName === 'BUTTON') {
-            loadProject(e);
+          if (e.target.tagName === 'BUTTON' && e.target.getAttribute('data-select-item')) {
+            var projectUrl = e.target.getAttribute('value');
+            var iframeContainer = document.getElementById("qmd-container");
+            var iframe = document.getElementById("qmd-iframe");
+      
+            if (projectUrl) {
+              iframe.src = projectUrl;
+              iframeContainer.style.display = "block";
+            } else {
+              iframeContainer.style.display = "none";
+            }
           }
         });
       </script>
