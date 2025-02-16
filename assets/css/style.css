@@ -880,7 +880,7 @@ main {
   #PORTFOLIO
 \*-----------------------------------*/
 
-.filter-list { display: block; }
+.filter-list { display: none; }
 
 .filter-select-box {
   position: relative;
