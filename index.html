@@ -550,60 +550,155 @@
       </article>
 
 
-      <!-- Portfolio Section with Cascading Dropdowns -->
+      <!--
+        - #PORTFOLIO
+      -->
+        
+
       <article class="portfolio" data-page="portfolio">
+
         <header>
-          <h2 class="h2 article-title">Portfolio</h2>
+            <h2 class="h2 article-title">Portfolio</h2>
         </header>
 
         <section class="projects">
-          <!-- Main Category Dropdown -->
+          
           <div class="filter-select-box">
-            <button class="filter-select" id="category-select">
-              <div class="select-value">Select category</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-            <ul class="select-list" id="category-list">
-              <li class="select-item" data-category="all">All</li>
-              <li class="select-item" data-category="spatial-data-analysis">Spatial Data Analysis</li>
-              <li class="select-item" data-category="remote-sensing">Remote Sensing</li>
-            </ul>
-          </div>
 
-          <!-- Subcategory Dropdown (Dynamic) -->
-          <div class="filter-select-box" id="subcategory-container" style="display: none;">
-            <button class="filter-select" id="subcategory-select">
-              <div class="select-value">Select subcategory</div>
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Spatial Data Analysis</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Remote Sensing</button>
+              </li>
+              
+            </ul>
+            
+          </div>
+          
+
+          <!-- Second dropdown for project types (additional filter) -->
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value>Select project type</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-            <ul class="select-list" id="subcategory-list"></ul>
+          
+            <ul class="select-list">
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Fieldwork</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Labwork</button>
+              </li>
+            </ul>
+            
           </div>
 
           <!-- Project List -->
           <ul class="project-list">
-            <li class="project-item active" data-filter-item data-category="remote-sensing" data-subcategory="tidyverse">
+            
+            <!-- Project Item 1 -->
+            <li class="project-item  active" data-filter-item data-category="remote sensing" data-type="fieldwork">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
                 <h3 class="project-title">Introduction to Tidyverse</h3>
               </a>
             </li>
-            <li class="project-item active" data-filter-item data-category="remote-sensing" data-subcategory="classification">
+
+            <!-- Project Item 2 -->
+            <li class="project-item  active" data-filter-item data-category="remote sensing" data-type="labwork">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
                 <h3 class="project-title">Image Classification</h3>
               </a>
             </li>
+
+            <!-- Additional project items can be added here -->
           </ul>
 
-          <!-- Container for the project content below the project list -->
+              <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
+
+          <script>
+            function loadQMDContent(url) {
+              var iframe = document.getElementById('qmd-iframe');
+              iframe.src = url;
+              var container = document.getElementById('qmd-container');
+              container.style.display = 'block';
+              container.scrollIntoView({behavior: "smooth"});
+            }
+      
+            // Add event listeners for both dropdowns
+            document.querySelectorAll('[data-select-item]').forEach(function(item) {
+              item.addEventListener('click', function() {
+                var selectedCategory = document.querySelector('[data-selecct-value]').textContent.trim();
+                var selectedType = document.querySelector('[data-selecct-value]').textContent.trim();
+                filterProjects(selectedCategory, selectedType);
+              });
+            });
+      
+            // Function to filter projects based on both dropdown selections
+            function filterProjects(category, type) {
+              var projects = document.querySelectorAll('.project-item');
+              projects.forEach(function(project) {
+                var projectCategory = project.getAttribute('data-category');
+                var projectType = project.getAttribute('data-type');
+                
+                // Filter based on both category and type
+                if ((category === "All" || projectCategory === category) &&
+                    (type === "All" || projectType === type)) {
+                  project.style.display = 'block';
+                } else {
+                  project.style.display = 'none';
+                }
+              });
+            }
+          </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </section>
+
       </article>
-            
+      
 
 
       <!--
