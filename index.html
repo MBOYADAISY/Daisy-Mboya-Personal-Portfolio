@@ -617,6 +617,23 @@
             <div id="qmd-container" style="display:none; padding-top: 20px;">
               <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
             </div>
+
+            <script>
+              function loadQMDContent(url) {
+                // Get the iframe element
+                var iframe = document.getElementById('qmd-iframe');
+      
+                // Set the iframe source to the .qmd HTML file
+                iframe.src = url;
+      
+                // Show the iframe container
+                var container = document.getElementById('qmd-container');
+                container.style.display = 'block';
+      
+                // Optionally, scroll to the container when it's displayed
+                container.scrollIntoView({behavior: "smooth"});
+              }
+            </script>
       
         </section>
       </article>
