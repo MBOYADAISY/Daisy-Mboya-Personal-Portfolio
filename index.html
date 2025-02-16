@@ -550,161 +550,76 @@
       </article>
 
 
+      <!--
+        - #PORTFOLIO
+      -->
+        
 
-      <!-- #PORTFOLIO -->
       <article class="portfolio" data-page="portfolio">
-
         <header>
-          <h2 class="h2 article-title">Portfolio</h2>
+            <h2 class="h2 article-title">Projects</h2>
         </header>
-
+      
         <section class="projects">
-
-          <!-- Category Filter Dropdown -->
-          <div class="filter-select-box">
-            <button class="filter-select" id="category-button">
-              <div class="select-value" id="category-select-value">Select category</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-            <ul class="select-list" id="category-list">
-              <li class="select-item"><button onclick="filterProjects('all', 'All')">All</button></li>
-              <li class="select-item"><button onclick="filterProjects('spatial data analysis', 'Spatial Data Analysis')">Spatial Data Analysis</button></li>
-              <li class="select-item"><button onclick="filterProjects('remote sensing', 'Remote Sensing')">Remote Sensing</button></li>
+      
+            <!-- Category Dropdown -->
+            <div class="filter-select-box">
+              <button class="filter-select" data-select>
+                <div class="select-value" data-selecct-value>Select category</div>
+                <div class="select-icon">
+                  <ion-icon name="chevron-down"></ion-icon>
+                </div>
+              </button>
+      
+              <ul class="select-list">
+                <li class="select-item" data-project-category="all"><button data-select-item>All</button></li>
+                <li class="select-item" data-project-category="remote-sensing"><button data-select-item>Remote Sensing</button></li>
+                <li class="select-item" data-project-category="spatial-data-analysis"><button data-select-item>Spatial Data Analysis</button></li>
+              </ul>
+            </div>
+      
+            <!-- Type Dropdown -->
+            <div class="filter-select-box">
+              <button class="filter-select" data-select-type>
+                <div class="select-value" data-selecct-value-type>Select project</div>
+                <div class="select-icon">
+                  <ion-icon name="chevron-down"></ion-icon>
+                </div>
+              </button>
+      
+              <ul class="select-list">
+                <li class="select-item" data-project-type="all"><button data-select-item>All</button></li>
+                <li class="select-item" data-project-type="tidyverse"><button data-select-item>Tidyverse</button></li>
+                <li class="select-item" data-project-type="classification"><button data-select-item>Image Classification</button></li>
+              </ul>
+            </div>
+      
+            <ul class="project-list">
+              <li class="project-item remote-sensing tidyverse">
+                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                  <h3 class="project-title">Introduction to Tidyverse</h3>
+                </a>
+              </li>
+              <li class="project-item remote-sensing classification">
+                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                  <h3 class="project-title">Image Classification</h3>
+                </a>
+              </li>
+              <li class="project-item spatial-data-analysis">
+                <a href="#">
+                  <h3 class="project-title">Spatial Analysis Techniques</h3>
+                </a>
+              </li>
+              <!-- Add more project items as needed -->
             </ul>
-          </div>
-
-          <!-- Project Selection Dropdown -->
-          <div class="filter-select-box">
-            <button class="filter-select" id="project-button">
-              <div class="select-value" id="project-select-value">Select project</div>
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-            </button>
-            <ul class="select-list" id="project-list">
-              <!-- Projects will be populated dynamically -->
-            </ul>
-          </div>
-
-          <!-- Container for project content -->
-          <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-          </div>
-
-          <script>
-            // Project Data
-            const projects = {
-              "remote sensing": [
-                { title: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
-                { title: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" }
-              ],
-              "spatial data analysis": [
-                { title: "GIS and Spatial Analysis", url: "Spatial%20Data%20Analysis/GIS_Analysis.html" }
-              ]
-            };
-
-            function filterProjects(category, displayName) {
-              // Update category dropdown text
-              document.getElementById("category-select-value").innerText = displayName;
-              
-              // Close category dropdown
-              document.getElementById("category-list").style.display = "none";
-
-              // Clear and update project dropdown
-              const projectList = document.getElementById("project-list");
-              projectList.innerHTML = "";
-
-              if (category === "all") {
-                document.getElementById("project-select-value").innerText = "Select project";
-                return;
-              }
-
-              if (projects[category]) {
-                projects[category].forEach(project => {
-                  let li = document.createElement("li");
-                  li.className = "select-item";
-                  li.innerHTML = `<button onclick="loadQMDContent('${project.url}', '${project.title}')">${project.title}</button>`;
-                  projectList.appendChild(li);
-                });
-              }
-
-              // Reset project selection text
-              document.getElementById("project-select-value").innerText = "Select project";
-            }
-
-            function loadQMDContent(url, title) {
-              document.getElementById('qmd-iframe').src = url;
-              document.getElementById('qmd-container').style.display = 'block';
-              document.getElementById("project-select-value").innerText = title;
-              document.getElementById('qmd-container').scrollIntoView({ behavior: "smooth" });
-
-              // Close project dropdown after selection
-              document.getElementById("project-list").style.display = "none";
-            }
-
-            // Toggle dropdown visibility
-            document.getElementById("category-button").addEventListener("click", function() {
-              toggleDropdown("category-list");
-            });
-
-            document.getElementById("project-button").addEventListener("click", function() {
-              toggleDropdown("project-list");
-            });
-
-            function toggleDropdown(id) {
-              let dropdown = document.getElementById(id);
-              dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-            }
-
-            document.addEventListener("DOMContentLoaded", function () {
-              const selectButton = document.querySelector("[data-select]");
-              const selectValue = document.querySelector("[data-selecct-value]");
-              const selectList = document.querySelector(".select-list");
-              const selectItems = document.querySelectorAll("[data-select-item]");
-
-              // Toggle dropdown when clicking the button
-              selectButton.addEventListener("click", function () {
-                selectList.classList.toggle("active");
-              });
-
-              // Close dropdown when clicking outside
-              document.addEventListener("click", function (event) {
-                if (!selectButton.contains(event.target) && !selectList.contains(event.target)) {
-                  selectList.classList.remove("active");
-                }
-              });
-
-              // Handle selection of an item
-              selectItems.forEach((item) => {
-                item.addEventListener("click", function () {
-                  selectValue.textContent = this.textContent; // Update the button text
-                  selectList.classList.remove("active"); // Close the dropdown
-                  filterProjects(this.textContent.toLowerCase()); // Call function to filter projects
-                });
-              });
-
-              function filterProjects(category) {
-                const projectItems = document.querySelectorAll(".project-item");
-                projectItems.forEach((item) => {
-                  const itemCategory = item.getAttribute("data-category");
-                  if (category === "all" || itemCategory === category) {
-                    item.style.display = "block";
-                  } else {
-                    item.style.display = "none";
-                  }
-                });
-              }
-            });
-
-          </script>
-
+      
+            <!-- Container for the project content below the project list -->
+            <div id="qmd-container" style="display:none; padding-top: 20px;">
+              <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+            </div>
+      
         </section>
-
       </article>
-
-
       
       
 
