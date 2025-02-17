@@ -1034,7 +1034,6 @@ main {
 
 
 
-
 /*-----------------------------------*\
   #BLOG
 \*-----------------------------------*/
@@ -1807,7 +1806,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   main {
-    max-width: 1800px;
+    max-width: 1200px;
     margin-inline: auto;
     display: flex;
     justify-content: center;
