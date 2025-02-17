@@ -57,7 +57,7 @@ overlay.addEventListener("click", testimonialsModalFunc);
 
 // custom select variables
 const select = document.querySelector("[data-select]");
-
+const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
@@ -176,7 +176,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
 const filterSelectBox = document.querySelector(".filter-select-box");
 const filterSelect = document.querySelector(".filter-select");
 const selectList = document.querySelector(".select-list");
-const selectItems = document.querySelectorAll(".select-item");
+
 const projectItems = document.querySelectorAll(".project-item");
 
 // Toggle dropdown visibility
