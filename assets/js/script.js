@@ -1,7 +1,7 @@
 'use strict';
 
 // element toggle function
-const elementToggleFunc = function (elem) {
+const elementToggleFunc = function(elem) {
   elem.classList.toggle("active");
 }
 
@@ -10,7 +10,7 @@ const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 // sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () {
+sidebarBtn.addEventListener("click", function() {
   elementToggleFunc(sidebar);
 });
 
@@ -26,7 +26,7 @@ const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
 
 // modal toggle function
-const testimonialsModalFunc = function () {
+const testimonialsModalFunc = function() {
   modalContainer.classList.toggle("active");
   overlay.classList.toggle("active");
 }
@@ -34,7 +34,7 @@ const testimonialsModalFunc = function () {
 // add click event to all modal items
 for (let i = 0; i < testimonialsItem.length; i++) {
 
-  testimonialsItem[i].addEventListener("click", function () {
+  testimonialsItem[i].addEventListener("click", function() {
 
     modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
     modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
@@ -61,6 +61,31 @@ const selectProject = document.querySelector("[data-select-project]");
 const selectProjectList = document.getElementById('project-list');
 const selectProjectValue = document.querySelector("[data-selecct-value-project]");
 
+// Data for projects (replace with your actual data)
+const projectData = {
+  "all": [{
+    name: "Introduction to Tidyverse",
+    url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html"
+  }, {
+    name: "Image Classification",
+    url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html"
+  }, {
+    name: "Spatial Analysis Techniques",
+    url: "#"
+  }],
+  "remote-sensing": [{
+    name: "Introduction to Tidyverse",
+    url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html"
+  }, {
+    name: "Image Classification",
+    url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html"
+  }],
+  "spatial-data-analysis": [{
+    name: "Spatial Analysis Techniques",
+    url: "#"
+  }]
+};
+
 // Function to load project content in iframe
 function loadQMDContent(url) {
   var iframe = document.getElementById('qmd-iframe');
@@ -74,13 +99,11 @@ function loadQMDContent(url) {
 
 // Handle category dropdown selection
 selectCategoryItems.forEach(item => {
-  item.addEventListener('click', function (e) {
+  item.addEventListener('click', function(e) {
     const selectedCategory = this.parentNode.getAttribute('data-category');
     selectCategoryValue.textContent = this.textContent;
+    elementToggleFunc(selectCategory); // Toggle the category dropdown
 
-    elementToggleFunc(selectCategory);
-
-    // Populate project dropdown based on selected category
     populateProjectDropdown(selectedCategory);
   });
 });
@@ -90,35 +113,38 @@ function populateProjectDropdown(category) {
   selectProjectList.innerHTML = ''; // Clear existing options
   selectProjectValue.textContent = 'Select project'; // Reset project selection
 
-  const projects = document.querySelectorAll('.project-item');
+  // Get projects for the selected category
+  const projects = projectData[category];
 
-  projects.forEach(project => {
-    if (category === 'all' || project.classList.contains(category)) {
-      const projectType = project.getAttribute('data-project-type');
-      const projectName = project.querySelector('.project-title').textContent;
-
+  if (projects) {
+    projects.forEach(project => {
       const listItem = document.createElement('li');
       listItem.classList.add('select-item');
 
       const button = document.createElement('button');
       button.setAttribute('data-select-item', '');
-      button.textContent = projectName;
-      button.addEventListener('click', function () {
-        // Load the content when the project is clicked
-        const onclick = project.querySelector('a').getAttribute('onclick');
-        loadQMDContent(onclick.split("'")[1]);
+      button.textContent = project.name;
+      button.addEventListener('click', function() {
+        loadQMDContent(project.url);
       });
 
       listItem.appendChild(button);
       selectProjectList.appendChild(listItem);
-    }
-  });
+    });
+  }
+
+  elementToggleFunc(selectProject); // Toggle the project dropdown
 }
+
+//Click event for the dropdown.
+selectProject.addEventListener("click", function() {
+    elementToggleFunc(selectProject);
+});
 
 // filter variables
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
-const filterFunc = function (selectedValue) {
+const filterFunc = function(selectedValue) {
 
   for (let i = 0; i < filterItems.length; i++) {
 
@@ -139,7 +165,7 @@ let lastClickedBtn = filterBtn[0];
 
 for (let i = 0; i < filterBtn.length; i++) {
 
-  filterBtn[i].addEventListener("click", function () {
+  filterBtn[i].addEventListener("click", function() {
 
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
@@ -160,7 +186,7 @@ const formBtn = document.querySelector("[data-form-btn]");
 
 // add event to all form input field
 for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
+  formInputs[i].addEventListener("input", function() {
 
     // check form validation
     if (form.checkValidity()) {
@@ -178,7 +204,7 @@ const pages = document.querySelectorAll("[data-page]");
 
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
+  navigationLinks[i].addEventListener("click", function() {
 
     for (let i = 0; i < pages.length; i++) {
       if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
@@ -192,9 +218,10 @@ for (let i = 0; i < navigationLinks.length; i++) {
     }
 
   });
+
 }
 
 // Initialize the project dropdown with all projects on page load
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
   populateProjectDropdown('all');
 });
