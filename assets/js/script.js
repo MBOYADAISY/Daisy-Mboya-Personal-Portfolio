@@ -1,130 +1,107 @@
 'use strict';
 
-// element toggle function
-const elementToggleFunc = function(elem) {
+// Element toggle function
+const elementToggleFunc = function (elem) {
   elem.classList.toggle("active");
-}
+};
 
-// sidebar variables
+// Sidebar toggle for mobile
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function() {
+sidebarBtn.addEventListener("click", function () {
   elementToggleFunc(sidebar);
 });
 
-// testimonials variables
+// Testimonials modal functionality
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
 const modalContainer = document.querySelector("[data-modal-container]");
 const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
 const overlay = document.querySelector("[data-overlay]");
 
-// modal variable
+// Modal variables
 const modalImg = document.querySelector("[data-modal-img]");
 const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
 
-// modal toggle function
-const testimonialsModalFunc = function() {
+const testimonialsModalFunc = function () {
   modalContainer.classList.toggle("active");
   overlay.classList.toggle("active");
-}
+};
 
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
-
-  testimonialsItem[i].addEventListener("click", function() {
-
+// Open modal on testimonial click
+testimonialsItem.forEach(item => {
+  item.addEventListener("click", function () {
     modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
     modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
     modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
     modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
     testimonialsModalFunc();
-
   });
+});
 
-}
-
-// add click event to modal close button
+// Close modal on button or overlay click
 modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
-// custom select variables for category
+// Dropdown functionality for categories
 const selectCategory = document.querySelector("[data-select-category]");
 const selectCategoryItems = document.querySelectorAll("#category-list [data-select-item]");
-const selectCategoryValue = document.querySelector("[data-selecct-value-category]");
+const selectCategoryValue = document.querySelector("[data-select-value-category]");
 
-// custom select variables for project
+// Dropdown functionality for projects
 const selectProject = document.querySelector("[data-select-project]");
-const selectProjectList = document.getElementById('project-list');
-const selectProjectValue = document.querySelector("[data-selecct-value-project]");
+const selectProjectList = document.getElementById("project-list");
+const selectProjectValue = document.querySelector("[data-select-value-project]");
 
-// Data for projects (replace with your actual data)
+// Project data
 const projectData = {
-  "all": [{
-    name: "Introduction to Tidyverse",
-    url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html"
-  }, {
-    name: "Image Classification",
-    url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html"
-  }, {
-    name: "Spatial Analysis Techniques",
-    url: "#"
-  }],
-  "remote-sensing": [{
-    name: "Introduction to Tidyverse",
-    url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html"
-  }, {
-    name: "Image Classification",
-    url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html"
-  }],
-  "spatial-data-analysis": [{
-    name: "Spatial Analysis Techniques",
-    url: "#"
-  }]
+  "all": [
+    { name: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
+    { name: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" },
+    { name: "Spatial Analysis Techniques", url: "#" }
+  ],
+  "remote-sensing": [
+    { name: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
+    { name: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" }
+  ],
+  "spatial-data-analysis": [
+    { name: "Spatial Analysis Techniques", url: "#" }
+  ]
 };
 
-// Function to load project content in iframe
+// Function to load project in iframe
 function loadQMDContent(url) {
-  var iframe = document.getElementById('qmd-iframe');
+  const iframe = document.getElementById("qmd-iframe");
   iframe.src = url;
-  var container = document.getElementById('qmd-container');
-  container.style.display = 'block';
-  container.scrollIntoView({
-    behavior: "smooth"
-  });
+  document.getElementById("qmd-container").style.display = "block";
+  iframe.scrollIntoView({ behavior: "smooth" });
 }
 
-// Handle category dropdown selection
+// Handle category selection
 selectCategoryItems.forEach(item => {
-  item.addEventListener('click', function(e) {
-    const selectedCategory = this.parentNode.getAttribute('data-category');
+  item.addEventListener("click", function () {
+    const selectedCategory = this.dataset.category; // Get correct category
     selectCategoryValue.textContent = this.textContent;
-    elementToggleFunc(selectCategory); // Toggle the category dropdown
-
+    elementToggleFunc(selectCategory);
     populateProjectDropdown(selectedCategory);
   });
 });
 
-// Function to populate project dropdown based on selected category
+// Populate projects dropdown based on selected category
 function populateProjectDropdown(category) {
-  selectProjectList.innerHTML = ''; // Clear existing options
-  selectProjectValue.textContent = 'Select project'; // Reset project selection
+  selectProjectList.innerHTML = "";
+  selectProjectValue.textContent = "Select project";
 
-  // Get projects for the selected category
-  const projects = projectData[category];
+  if (projectData[category]) {
+    projectData[category].forEach(project => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("select-item");
 
-  if (projects) {
-    projects.forEach(project => {
-      const listItem = document.createElement('li');
-      listItem.classList.add('select-item');
-
-      const button = document.createElement('button');
-      button.setAttribute('data-select-item', '');
+      const button = document.createElement("button");
+      button.setAttribute("data-select-item", "");
       button.textContent = project.name;
-      button.addEventListener('click', function() {
+      button.addEventListener("click", function () {
         loadQMDContent(project.url);
       });
 
@@ -133,40 +110,30 @@ function populateProjectDropdown(category) {
     });
   }
 
-  elementToggleFunc(selectProject); // Toggle the project dropdown
+  elementToggleFunc(selectProject);
 }
 
-//Click event for the dropdown.
-selectProject.addEventListener("click", function() {
-    elementToggleFunc(selectProject);
+// Click event to toggle project dropdown
+selectProject.addEventListener("click", function () {
+  elementToggleFunc(selectProject);
 });
 
-// filter variables
+// Fix missing filter button variable
+const filterBtn = document.querySelectorAll("[data-filter-btn]");
 const filterItems = document.querySelectorAll("[data-filter-item]");
+const selectValue = document.querySelector("[data-select-value]");
 
-const filterFunc = function(selectedValue) {
+// Filtering function
+const filterFunc = function (selectedValue) {
+  filterItems.forEach(item => {
+    item.classList.toggle("active", selectedValue === "all" || selectedValue === item.dataset.category);
+  });
+};
 
-  for (let i = 0; i < filterItems.length; i++) {
-
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-
-  }
-
-}
-
-// add event in all filter button items for large screen
+// Handle filter button clicks
 let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function() {
-
+filterBtn.forEach(btn => {
+  btn.addEventListener("click", function () {
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
@@ -174,54 +141,36 @@ for (let i = 0; i < filterBtn.length; i++) {
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
-
   });
+});
 
-}
-
-// contact form variables
+// Contact form validation
 const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function() {
-
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-
+formInputs.forEach(input => {
+  input.addEventListener("input", function () {
+    formBtn.toggleAttribute("disabled", !form.checkValidity());
   });
-}
+});
 
-// page navigation variables
+// Page navigation
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function() {
-
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
-
+navigationLinks.forEach(link => {
+  link.addEventListener("click", function () {
+    pages.forEach(page => {
+      const isActive = this.innerHTML.toLowerCase() === page.dataset.page;
+      page.classList.toggle("active", isActive);
+      link.classList.toggle("active", isActive);
+    });
+    window.scrollTo(0, 0);
   });
+});
 
-}
-
-// Initialize the project dropdown with all projects on page load
-document.addEventListener('DOMContentLoaded', function() {
-  populateProjectDropdown('all');
+// Initialize dropdown with all projects on page load
+document.addEventListener("DOMContentLoaded", function () {
+  populateProjectDropdown("all");
 });
