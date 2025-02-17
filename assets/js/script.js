@@ -55,63 +55,85 @@ overlay.addEventListener("click", testimonialsModalFunc);
 
 
 
-// custom select variables
+// Custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
+const subSelect = document.querySelector(".sub-filter-select");
+const subSelectItems = document.querySelectorAll("[data-select-sub-item]");
+const subSelectValue = document.querySelector(".sub-select-value");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
+// Filter variables
+const filterItems = document.querySelectorAll("[data-filter-item]");
 
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
+// Event listener for main category select
+select.addEventListener("click", function () {
+  elementToggleFunc(this);
+});
 
-    let selectedValue = this.innerText.toLowerCase();
+// Event listener for all main category select items
+selectItems.forEach(item => {
+  item.addEventListener("click", function () {
+    let selectedValue = this.value.toLowerCase();
     selectValue.innerText = this.innerText;
     elementToggleFunc(select);
     filterFunc(selectedValue);
-
+    resetSubFilter(); // Reset sub filter when main category changes
   });
-}
+});
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+// Event listener for subcategory select
+subSelect.addEventListener("click", function () {
+  elementToggleFunc(this);
+});
 
-const filterFunc = function (selectedValue) {
+// Event listener for all subcategory select items
+subSelectItems.forEach(item => {
+  item.addEventListener("click", function () {
+    let selectedSubValue = this.value.toLowerCase();
+    subSelectValue.innerText = this.innerText;
+    filterFunc(null, selectedSubValue);
+    elementToggleFunc(subSelect);
+  });
+});
 
-  for (let i = 0; i < filterItems.length; i++) {
+// Filter function
+const filterFunc = function (selectedValue, selectedSubValue) {
+  filterItems.forEach(item => {
+    const categoryMatch = selectedValue === "all" || selectedValue === item.dataset.category;
+    const subcategoryMatch = !selectedSubValue || selectedSubValue === item.dataset.subcategory;
 
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
+    if (categoryMatch && subcategoryMatch) {
+      item.classList.add("active");
     } else {
-      filterItems[i].classList.remove("active");
+      item.classList.remove("active");
     }
+  });
+};
 
-  }
+// Function to reset sub filter
+const resetSubFilter = function () {
+  subSelectValue.innerText = "Select subcategory";
+  subSelectItems.forEach(item => {
+    item.classList.remove("active");
+  });
+};
 
-}
-
-// add event in all filter button items for large screen
+// Add event in all filter button items for large screen
 let lastClickedBtn = filterBtn[0];
 
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function () {
-
+filterBtn.forEach(btn => {
+  btn.addEventListener("click", function () {
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
-
+    
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
-
   });
-
-}
+});
 
 
 
