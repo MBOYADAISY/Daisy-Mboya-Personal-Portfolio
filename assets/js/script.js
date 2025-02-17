@@ -61,7 +61,6 @@ const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-
 select.addEventListener("click", function () { elementToggleFunc(this); });
 
 // add event in all select items
@@ -159,57 +158,5 @@ for (let i = 0; i < navigationLinks.length; i++) {
   });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// Updated JavaScript for filtering projects based on the selected category
-
-const filterSelectBox = document.querySelector(".filter-select-box");
-const filterSelect = document.querySelector(".filter-select");
-const selectList = document.querySelector(".select-list");
-
-const projectItems = document.querySelectorAll(".project-item");
-
-// Toggle dropdown visibility
-filterSelect.addEventListener("click", function () {
-  this.classList.toggle("active");
-  selectList.classList.toggle("active");
-});
-
-// Handle category selection
-selectItems.forEach(item => {
-  item.addEventListener("click", function () {
-    const selectedCategory = this.innerText.toLowerCase();
-    filterSelect.innerText = this.innerText; // Update the filter select text
-
-    // Filter project items based on selected category
-    filterFunc(selectedCategory);
-
-    // Close dropdown after selection
-    filterSelect.classList.remove("active");
-    selectList.classList.remove("active");
-  });
-});
-
-// Filter function to show/hide projects based on category
-function filterFunc(selectedCategory) {
-  projectItems.forEach(item => {
-    // Show all projects if "all" is selected
-    if (selectedCategory === "all" || item.dataset.category === selectedCategory) {
-      item.classList.add("active");
-    } else {
-      item.classList.remove("active");
-    }
-  });
-}
 
 
