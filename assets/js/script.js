@@ -92,8 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
   populateProjectDropdown("All");
 });
 
-// Existing code starts here
-
 // sidebar variables
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
@@ -205,15 +203,16 @@ const pages = document.querySelectorAll("[data-page]");
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function (event) {
     event.preventDefault();
+    const targetPage = this.getAttribute("href").substring(1);
     for (let j = 0; j < pages.length; j++) {
-      if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
+      if (targetPage === pages[j].id) {
         pages[j].classList.add("active");
-        this.classList.add("active");
-        window.scrollTo(0, 0);
+        navigationLinks[j].classList.add("active");
       } else {
         pages[j].classList.remove("active");
         navigationLinks[j].classList.remove("active");
       }
     }
+    window.scrollTo(0, 0);
   });
 }
