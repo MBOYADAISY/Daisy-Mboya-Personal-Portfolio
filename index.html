@@ -612,63 +612,63 @@
       </article>
 
       <script>
-      const categorySelect = document.getElementById('category-select');
-      const typeSelect = document.getElementById('type-select');
-      const projectList = document.querySelector('.project-list');
+        const categorySelect = document.getElementById('category-select');
+        const typeSelect = document.getElementById('type-select');
+        const projectList = document.querySelector('.project-list');
 
-      const projects = {
-        'remote-sensing': [
-          { value: 'tidyverse', title: 'Introduction to Tidyverse', url: 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html' },
-          { value: 'classification', title: 'Image Classification', url: 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html' }
-        ],
-        'spatial-data-analysis': [
-          { value: 'spatial-analysis', title: 'Spatial Analysis Techniques', url: '#' }
-        ]
-      };
+        const projects = {
+          'remote-sensing': [
+            { value: 'tidyverse', title: 'Introduction to Tidyverse', url: 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html' },
+            { value: 'classification', title: 'Image Classification', url: 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html' }
+          ],
+          'spatial-data-analysis': [
+            { value: 'spatial-analysis', title: 'Spatial Analysis Techniques', url: '#' }
+          ]
+        };
 
-      categorySelect.addEventListener('change', function() {
-        const selectedCategory = this.value;
-        typeSelect.innerHTML = '<option value="">Select project type</option>';
-        
-        if (selectedCategory && selectedCategory !== 'all') {
-          projects[selectedCategory].forEach(project => {
-            const option = document.createElement('option');
-            option.value = project.value;
-            option.textContent = project.title;
-            typeSelect.appendChild(option);
-          });
-          typeSelect.disabled = false;
-        } else {
-          typeSelect.disabled = true;
-          showAllProjects();
-        }
-      });
-
-      typeSelect.addEventListener('change', function() {
-        const selectedType = this.value;
-        const selectedCategory = categorySelect.value;
-        
-        if (selectedType) {
-          const project = projects[selectedCategory].find(p => p.value === selectedType);
-          if (project) {
-            loadQMDContent(project.url);
+        categorySelect.addEventListener('change', function() {
+          const selectedCategory = this.value;
+          typeSelect.innerHTML = '<option value="">Select project type</option>';
+          
+          if (selectedCategory && selectedCategory !== 'all') {
+            projects[selectedCategory].forEach(project => {
+              const option = document.createElement('option');
+              option.value = project.value;
+              option.textContent = project.title;
+              typeSelect.appendChild(option);
+            });
+            typeSelect.disabled = false;
+          } else {
+            typeSelect.disabled = true;
+            showAllProjects();
           }
-        }
-      });
-
-      function showAllProjects() {
-        projectList.querySelectorAll('.project-item').forEach(item => {
-          item.style.display = 'block';
         });
-      }
 
-      function loadQMDContent(url) {
-        const iframe = document.getElementById('qmd-iframe');
-        iframe.src = url;
-        const container = document.getElementById('qmd-container');
-        container.style.display = 'block';
-        container.scrollIntoView({behavior: "smooth"});
-      }
+        typeSelect.addEventListener('change', function() {
+          const selectedType = this.value;
+          const selectedCategory = categorySelect.value;
+          
+          if (selectedType) {
+            const project = projects[selectedCategory].find(p => p.value === selectedType);
+            if (project) {
+              loadQMDContent(project.url);
+            }
+          }
+        });
+
+        function showAllProjects() {
+          projectList.querySelectorAll('.project-item').forEach(item => {
+            item.style.display = 'block';
+          });
+        }
+
+        function loadQMDContent(url) {
+          const iframe = document.getElementById('qmd-iframe');
+          iframe.src = url;
+          const container = document.getElementById('qmd-container');
+          container.style.display = 'block';
+          container.scrollIntoView({behavior: "smooth"});
+        }
       </script>
 
       
