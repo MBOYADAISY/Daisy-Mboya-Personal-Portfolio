@@ -42,100 +42,56 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
-// Custom select variables
+'use strict';
+
+// Main category and subcategory elements
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
-const subSelect = document.querySelector(".sub-filter-select-box");
+const selectValue = document.querySelector("[data-select-value]");
+const subSelect = document.querySelector("[data-sub-select]");
 const subSelectItems = document.querySelectorAll("[data-select-sub-item]");
 const subSelectValue = document.querySelector(".sub-select-value");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-// Filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+// Function to toggle elements' visibility
+const elementToggleFunc = function (elem) {
+  elem.classList.toggle("active");
+}
 
-// Event listener for main category select
+// Show and hide the category dropdown when clicked
 select.addEventListener("click", function () {
   elementToggleFunc(this);
-
-  // Show subcategory dropdown if category selected is "remote sensing" or "spatial data"
-  if (selectValue.innerText.toLowerCase() === "remote sensing" || selectValue.innerText.toLowerCase() === "spatial data") {
-    subSelect.style.display = "block";  // Show subcategory select
-  } else {
-    subSelect.style.display = "none";   // Hide subcategory select if no matching category
-  }
 });
 
-// Event listener for all main category select items
+// Handle selection of main category items
 selectItems.forEach(item => {
   item.addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
+    const selectedValue = this.innerText.trim().toLowerCase();  // Get selected category and trim whitespace
+    selectValue.innerText = this.innerText;  // Display selected value in the dropdown
+    elementToggleFunc(select);  // Hide the main category dropdown
 
-    // Show/hide subcategory dropdown based on selected main category
+    // Show or hide subcategory dropdown based on main category selection
     if (selectedValue === "remote sensing" || selectedValue === "spatial data") {
-      subSelect.style.display = "block";
+      subSelect.style.display = "block";  // Show subcategory dropdown
     } else {
-      subSelect.style.display = "none";
+      subSelect.style.display = "none";   // Hide subcategory dropdown
     }
-
-    filterFunc(selectedValue);
-    resetSubFilter(); // Reset sub filter when main category changes
   });
 });
 
-// Event listener for subcategory select
+// Show and hide the subcategory dropdown when clicked
 subSelect.addEventListener("click", function () {
   elementToggleFunc(this);
 });
 
-// Event listener for all subcategory select items
+// Handle selection of subcategory items
 subSelectItems.forEach(item => {
   item.addEventListener("click", function () {
-    let selectedSubValue = this.value.toLowerCase();
-    subSelectValue.innerText = this.innerText;
-    filterFunc(null, selectedSubValue);
-    elementToggleFunc(subSelect);
+    const subSelectedValue = this.innerText.trim(); // Get selected subcategory
+    subSelectValue.innerText = subSelectedValue;  // Display subcategory value
+    elementToggleFunc(subSelect);  // Hide the subcategory dropdown
   });
 });
 
-// Filter function
-const filterFunc = function (selectedValue, selectedSubValue) {
-  filterItems.forEach(item => {
-    const categoryMatch = selectedValue === "all" || selectedValue === item.dataset.category;
-    const subcategoryMatch = !selectedSubValue || selectedSubValue === item.dataset.subcategory;
-
-    if (categoryMatch && subcategoryMatch) {
-      item.classList.add("active");
-    } else {
-      item.classList.remove("active");
-    }
-  });
-};
-
-// Function to reset sub filter
-const resetSubFilter = function () {
-  subSelectValue.innerText = "Select subcategory";
-  subSelectItems.forEach(item => {
-    item.classList.remove("active");
-  });
-};
-
-// Add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-filterBtn.forEach(btn => {
-  btn.addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-    
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
-});
 
 // contact form variables
 const form = document.querySelector("[data-form]");
