@@ -563,69 +563,63 @@
       
 
 
-      <article class="portfolio" data-page="portfolio">
-        <header>
-            <h2 class="h2 article-title">Projects</h2>
-        </header>
+      <section class="projects">
+        
+        <!-- Category Dropdown -->
+        <div class="filter-select-box">
+            <button class="filter-select" data-select>
+                <div class="select-value" data-select-value>Select category</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
     
-        <section class="projects">
-            <!-- Category Dropdown -->
-            <div class="filter-select-box">
-                <button class="filter-select" data-select>
-                    <div class="select-value" data-select-value>Select category</div>
-                    <div class="select-icon">
-                        <ion-icon name="chevron-down"></ion-icon>
-                    </div>
-                </button>
-    
-                <ul class="select-list">
-                    <li class="select-item" data-project-category="all"><button data-select-item>All</button></li>
-                    <li class="select-item" data-project-category="remote-sensing"><button data-select-item>Remote Sensing</button></li>
-                    <li class="select-item" data-project-category="spatial-data-analysis"><button data-select-item>Spatial Data Analysis</button></li>
-                </ul>
-            </div>
-    
-            <!-- Type Dropdown -->
-            <div class="filter-select-box">
-                <button class="filter-select" data-select-type>
-                    <div class="select-value" data-select-value-type>Select project type</div>
-                    <div class="select-icon">
-                        <ion-icon name="chevron-down"></ion-icon>
-                    </div>
-                </button>
-    
-                <ul class="select-list" id="select-type-list">
-                    <!-- Dynamically populated project types -->
-                </ul>
-            </div>
-    
-            <!-- Project List -->
-            <ul class="project-list">
-                <li class="project-item remote-sensing tidyverse">
-                    <a href="#" data-qmd-url="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html">
-                        <h3 class="project-title">Introduction to Tidyverse</h3>
-                    </a>
-                </li>
-                <li class="project-item remote-sensing classification">
-                    <a href="#" data-qmd-url="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html">
-                        <h3 class="project-title">Image Classification</h3>
-                    </a>
-                </li>
-                <li class="project-item spatial-data-analysis">
-                    <a href="#" data-qmd-url="Spatial%20Data%20Analysis/SpatialTechniques.html">
-                        <h3 class="project-title">Spatial Analysis Techniques</h3>
-                    </a>
-                </li>
+            <ul class="select-list">
+                <li class="select-item" data-project-category="all"><button data-select-item>All</button></li>
+                <li class="select-item" data-project-category="remote-sensing"><button data-select-item>Remote Sensing</button></li>
+                <li class="select-item" data-project-category="spatial-data-analysis"><button data-select-item>Spatial Data Analysis</button></li>
             </ul>
+        </div>
     
-            <!-- Container for project content -->
-            <div id="qmd-container" style="display:none; padding-top: 20px;">
-                <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-            </div>
-        </section>
-    </article>
+        <!-- Type Dropdown -->
+        <div class="filter-select-box">
+            <button class="filter-select" data-select-type>
+                <div class="select-value" data-select-value-type>Select project type</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
     
-    <!-- JavaScript to handle dropdown and project filtering -->
+            <ul class="select-list" id="select-type-list">
+                <!-- Dynamically populated project types -->
+            </ul>
+        </div>
+    
+        <!-- Project List -->
+        <ul class="project-list">
+            <li class="project-item remote-sensing tidyverse">
+                <a href="#" data-qmd-url="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html">
+                    <h3 class="project-title">Introduction to Tidyverse</h3>
+                </a>
+            </li>
+            <li class="project-item remote-sensing classification">
+                <a href="#" data-qmd-url="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html">
+                    <h3 class="project-title">Image Classification</h3>
+                </a>
+            </li>
+            <li class="project-item spatial-data-analysis">
+                <a href="#" data-qmd-url="Spatial%20Data%20Analysis/SpatialTechniques.html">
+                    <h3 class="project-title">Spatial Analysis Techniques</h3>
+                </a>
+            </li>
+        </ul>
+    
+        <!-- Container for project content -->
+        <div id="qmd-container" style="display:none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+        </div>
+    </section>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Select elements
@@ -746,6 +740,7 @@
             }
         });
     </script>
+    
     
     
       
