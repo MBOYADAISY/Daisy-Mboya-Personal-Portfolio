@@ -7,13 +7,13 @@ const elementToggleFunc = function (elem) {
 
 // Dropdown functionality for categories
 const selectCategory = document.querySelector("[data-select-category]");
-const selectCategoryItems = document.querySelectorAll("#category-list [data-select-item]");
-const selectCategoryValue = document.querySelector("[data-select-value-category]");
+const selectCategoryList = document.getElementById("category-list");
+const selectCategoryValue = document.querySelector("[data-selecct-value-category]");
 
 // Dropdown functionality for projects
 const selectProject = document.querySelector("[data-select-project]");
 const selectProjectList = document.getElementById("project-list");
-const selectProjectValue = document.querySelector("[data-select-value-project]");
+const selectProjectValue = document.querySelector("[data-selecct-value-project]");
 
 // Project data
 const projectData = {
@@ -39,15 +39,23 @@ function loadQMDContent(url) {
   iframe.scrollIntoView({ behavior: "smooth" });
 }
 
-// Handle category selection
-selectCategoryItems.forEach(item => {
-  item.addEventListener("click", function () {
-    const selectedCategory = this.dataset.category;
-    selectCategoryValue.textContent = this.textContent;
-    elementToggleFunc(selectCategory);
-    populateProjectDropdown(selectedCategory);
+// Populate category dropdown
+function populateCategoryDropdown() {
+  Object.keys(projectData).forEach(category => {
+    const listItem = document.createElement("li");
+    listItem.classList.add("select-item");
+    const button = document.createElement("button");
+    button.setAttribute("data-select-item", "");
+    button.textContent = category;
+    button.addEventListener("click", function () {
+      selectCategoryValue.textContent = category;
+      elementToggleFunc(selectCategory);
+      populateProjectDropdown(category);
+    });
+    listItem.appendChild(button);
+    selectCategoryList.appendChild(listItem);
   });
-});
+}
 
 // Populate projects dropdown based on selected category
 function populateProjectDropdown(category) {
@@ -60,6 +68,7 @@ function populateProjectDropdown(category) {
       listItem.classList.add("select-item");
 
       const button = document.createElement("button");
+      button.setAttribute("data-select-item", "");
       button.textContent = project.name;
       button.addEventListener("click", function () {
         selectProjectValue.textContent = project.name;
@@ -74,29 +83,22 @@ function populateProjectDropdown(category) {
 }
 
 // Toggle dropdowns on click
-if (selectCategory) {
-  selectCategory.addEventListener("click", function () {
-    elementToggleFunc(selectCategory);
-  });
-}
+selectCategory.addEventListener("click", function () {
+  elementToggleFunc(selectCategory);
+});
 
-if (selectProject) {
-  selectProject.addEventListener("click", function () {
-    elementToggleFunc(selectProject);
-  });
-}
+selectProject.addEventListener("click", function () {
+  elementToggleFunc(selectProject);
+});
 
 // Close dropdowns when clicking outside
 document.addEventListener("click", function(event) {
-  if (selectCategory && !selectCategory.contains(event.target)) {
-    selectCategory.classList.remove("active");
-  }
-  if (selectProject && !selectProject.contains(event.target)) {
-    selectProject.classList.remove("active");
-  }
+  if (!selectCategory.contains(event.target)) selectCategory.classList.remove("active");
+  if (!selectProject.contains(event.target)) selectProject.classList.remove("active");
 });
 
-// Initialize dropdown with all projects on page load
+// Initialize dropdowns on page load
 document.addEventListener("DOMContentLoaded", function () {
+  populateCategoryDropdown();
   populateProjectDropdown("all");
 });
