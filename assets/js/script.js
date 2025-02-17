@@ -42,6 +42,7 @@ const filterFunc = function (selectedValue) {
     }
   }
   updateSecondFilterOptions(selectedValue);  // Update second filter based on category selection
+  resetButtonStates(); // Ensure buttons are enabled
 };
 
 // Handle the second filter (subcategory)
@@ -78,6 +79,7 @@ const filterFunc2 = function (selectedValue) {
       filterItems2[i].classList.remove("active");
     }
   }
+  resetButtonStates(); // Ensure buttons are enabled
 };
 
 // Reset second filter options
@@ -87,6 +89,15 @@ const resetSecondFilter = function () {
   for (let i = 0; i < filterItems2.length; i++) {
     filterItems2[i].classList.remove("hidden");
   }
+};
+
+// Reset button states to ensure they are enabled
+const resetButtonStates = function () {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    button.disabled = false;  // Enable all buttons
+    button.classList.remove('active'); // Remove active state if needed
+  });
 };
 
 // Handle project selection
@@ -119,4 +130,3 @@ for (let i = 0; i < navigationLinks.length; i++) {
     }
   });
 }
-</script>
