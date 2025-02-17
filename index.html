@@ -548,7 +548,7 @@
         </section>
 
       </article>
-      
+
 
 
       <!--
@@ -592,7 +592,28 @@
                
               </ul>
               
-            </div>         
+            </div>
+            
+            <!-- Second Filter Dropdown -->
+            <div class="filter-select-box">
+              <button class="filter-select" data-select2>
+                  <div class="select-value" data-selecct-value2>Select subcategory</div>
+                  <div class="select-icon">
+                      <ion-icon name="chevron-down"></ion-icon>
+                  </div>
+              </button>
+              <ul class="select-list" data-select2-list>
+                  <li class="select2-item">
+                      <button data-select2-item>All</button>
+                  </li>
+                  <li class="select2-item">
+                      <button data-select2-item>Introduction to Tidyverse</button>
+                  </li>
+                  <li class="select2-item">
+                      <button data-select2-item>Image Classification</button>
+                  </li>
+              </ul>
+            </div>
             
           
   
@@ -621,19 +642,12 @@
   
             <script>
               function loadQMDContent(url) {
-                // Get the iframe element
                 var iframe = document.getElementById('qmd-iframe');
-      
-                // Set the iframe source to the .qmd HTML file
                 iframe.src = url;
-      
-                // Show the iframe container
                 var container = document.getElementById('qmd-container');
                 container.style.display = 'block';
-      
-                // Optionally, scroll to the container when it's displayed
                 container.scrollIntoView({behavior: "smooth"});
-              }
+            }
             </script>
   
           </section>

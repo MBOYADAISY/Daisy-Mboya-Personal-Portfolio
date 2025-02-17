@@ -92,26 +92,42 @@ const filterFunc = function (selectedValue) {
 
   }
 
+};
+
+// Handle the second filter (based on first filter's selection)
+const select2 = document.querySelector("[data-select2]");
+const selectItems2 = document.querySelectorAll("[data-select2-item]");
+const selectValue2 = document.querySelector("[data-selecct-value2]");
+
+let selectedFirstFilterValue = "all";
+
+for (let i = 0; i < selectItems2.length; i++) {
+    selectItems2[i].addEventListener("click", function () {
+        let selectedSecondValue = this.innerText.toLowerCase();
+        selectValue2.innerText = this.innerText;
+        filterFunc2(selectedSecondValue);
+    });
 }
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
+const filterFunc2 = function (selectedValue) {
+    const filterItems2 = document.querySelectorAll("[data-filter-item]");
 
-for (let i = 0; i < filterBtn.length; i++) {
+    for (let i = 0; i < filterItems2.length; i++) {
+        if (selectedValue === "all") {
+            filterItems2[i].classList.add("active");
+        } else if (selectedValue === filterItems2[i].dataset.subcategory && selectedFirstFilterValue === filterItems2[i].dataset.category) {
+            filterItems2[i].classList.add("active");
+        } else {
+            filterItems2[i].classList.remove("active");
+        }
+    }
+};
 
-  filterBtn[i].addEventListener("click", function () {
 
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
 
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
 
-  });
 
-}
+
 
 
 
