@@ -1,14 +1,18 @@
 'use strict';
 
 // Element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+const elementToggleFunc = function (elem) { 
+  elem.classList.toggle("active"); 
+}
 
 // Sidebar variables
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 // Sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+sidebarBtn.addEventListener("click", function () { 
+  elementToggleFunc(sidebar); 
+});
 
 // Testimonials variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
@@ -97,10 +101,11 @@ formInputs.forEach(input => {
     // Check form validation
     if (form.checkValidity()) {
       formBtn.removeAttribute("disabled");
+      formBtn.classList.remove("disabled");  // Remove 'disabled' class if valid
     } else {
       formBtn.setAttribute("disabled", "");
+      formBtn.classList.add("disabled");  // Add 'disabled' class if not valid
     }
-
   });
 });
 
@@ -112,16 +117,21 @@ const pages = document.querySelectorAll("[data-page]");
 navigationLinks.forEach((link, index) => {
   link.addEventListener("click", function () {
 
+    // Reset all navigation buttons to inactive
+    navigationLinks.forEach(navLink => navLink.classList.add("inactive"));
+    
+    // Remove 'inactive' and add 'active' to the clicked button
+    link.classList.remove("inactive");
+    link.classList.add("active");
+
+    // Show the appropriate page
     pages.forEach((page, pageIndex) => {
       if (link.innerHTML.toLowerCase() === page.dataset.page) {
         page.classList.add("active");
-        navigationLinks[pageIndex].classList.add("active");
         window.scrollTo(0, 0);
       } else {
         page.classList.remove("active");
-        navigationLinks[pageIndex].classList.remove("active");
       }
     });
-
   });
 });
