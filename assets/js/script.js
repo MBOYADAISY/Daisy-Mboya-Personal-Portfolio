@@ -42,12 +42,15 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
-// custom select variables (fix for multiple dropdowns)
+// Custom select variables (fix for multiple dropdowns)
 const selectElements = document.querySelectorAll("[data-select]");
 const selectValues = document.querySelectorAll("[data-selecct-value]");
 const selectLists = document.querySelectorAll(".select-list");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
+
+// Added function to filter projects based on category
+const projectList = document.getElementById('projectList');
 
 // Function to toggle dropdowns
 selectElements.forEach((select, index) => {
@@ -63,19 +66,19 @@ selectItems.forEach(item => {
     let parentDropdown = this.closest(".filter-select-box").querySelector("[data-selecct-value]");
     parentDropdown.innerText = this.innerText;
     let dropdown = this.closest(".filter-select-box").querySelector("[data-select]");
-    elementToggleFunc(dropdown);
 
+    elementToggleFunc(dropdown);
+    
     // Apply filtering only if it's the category dropdown
-    if (dropdown.hasAttribute("data-select")) {
+    if (dropdown === document.querySelector('[data-select]')) {
       let selectedValue = this.innerText.toLowerCase();
       filterFunc(selectedValue);
+      filterProjectsByCategory(selectedValue);
     }
   });
 });
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
-
+// Function to filter portfolio items by category
 const filterFunc = function (selectedValue) {
   for (let i = 0; i < filterItems.length; i++) {
     if (selectedValue === "all") {
@@ -86,9 +89,21 @@ const filterFunc = function (selectedValue) {
       filterItems[i].classList.remove("active");
     }
   }
-}
+};
 
-// add event in all filter button items for large screen
+// Function to filter projects in the second dropdown based on selected category
+const filterProjectsByCategory = function (category) {
+  const projectItems = projectList.querySelectorAll('.select-item');
+  projectItems.forEach(item => {
+    if (item.dataset.category === category || category === 'all') {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+};
+
+// Add event in all filter button items for large screen
 let lastClickedBtn = filterBtn[0];
 
 for (let i = 0; i < filterBtn.length; i++) {
@@ -100,23 +115,6 @@ for (let i = 0; i < filterBtn.length; i++) {
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
-  });
-}
-
-// contact form variables
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
   });
 }
 

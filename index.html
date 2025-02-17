@@ -506,9 +506,9 @@
         <header>
           <h2 class="h2 article-title">Portfolio</h2>
         </header>
-
+      
         <section class="projects">
-
+      
           <div class="filter-select-box">
             <!-- First button (Category) -->
             <button class="filter-select" data-select>
@@ -517,20 +517,20 @@
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-
+      
             <ul class="select-list">
               <li class="select-item">
-                <button data-select-item>All</button>
+                <button data-select-item onclick="filterProjects('all')">All</button>
               </li>
               <li class="select-item">
-                <button data-select-item>Spatial Data Analysis</button>
+                <button data-select-item onclick="filterProjects('spatial data analysis')">Spatial Data Analysis</button>
               </li>
               <li class="select-item">
-                <button data-select-item>Remote Sensing</button>
+                <button data-select-item onclick="filterProjects('remote sensing')">Remote Sensing</button>
               </li>
             </ul>
           </div>
-
+      
           <!-- Second button (Project) -->
           <div class="filter-select-box">
             <button class="filter-select" data-select id="projectButton">
@@ -539,7 +539,7 @@
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-
+      
             <ul class="select-list" id="projectList" style="display: none;">
               <li class="select-item" data-category="remote sensing">
                 <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">Introduction to Tidyverse</button>
@@ -547,21 +547,26 @@
               <li class="select-item" data-category="remote sensing">
                 <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">Image Classification</button>
               </li>
+              <li class="select-item" data-category="spatial data analysis">
+                <button data-select-item onclick="loadQMDContent('Spatial%20Data%20Analysis/SomeOtherProject.html')">Spatial Analysis Example</button>
+              </li>
               <!-- Add more project options as needed -->
             </ul>
           </div>
-
+      
           <!-- Container for the project content -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
-
+      
           <script>
+            // Toggle the project dropdown
             document.getElementById('projectButton').addEventListener('click', function() {
               var projectList = document.getElementById('projectList');
               projectList.style.display = projectList.style.display === 'none' ? 'block' : 'none';
             });
-
+      
+            // Load the selected project in iframe
             function loadQMDContent(url) {
               var iframe = document.getElementById('qmd-iframe');
               iframe.src = url;
@@ -570,11 +575,24 @@
               container.scrollIntoView({behavior: "smooth"});
               document.getElementById('projectList').style.display = 'none';
             }
+      
+            // Filter the projects based on the selected category
+            function filterProjects(category) {
+              var items = document.querySelectorAll('#projectList .select-item');
+              items.forEach(function(item) {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                  item.style.display = 'block';
+                } else {
+                  item.style.display = 'none';
+                }
+              });
+            }
           </script>
-
+      
         </section>
-
+      
       </article>
+      
 
 
 
