@@ -1,11 +1,7 @@
 'use strict';
 
-
-
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
-
-
 
 // sidebar variables
 const sidebar = document.querySelector("[data-sidebar]");
@@ -13,8 +9,6 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-
 
 // testimonials variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
@@ -35,31 +29,24 @@ const testimonialsModalFunc = function () {
 
 // add click event to all modal items
 for (let i = 0; i < testimonialsItem.length; i++) {
-
   testimonialsItem[i].addEventListener("click", function () {
-
     modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
     modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
     modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
     modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
     testimonialsModalFunc();
-
   });
-
 }
 
 // add click event to modal close button
 modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
-
-
 // Custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
-const subSelect = document.querySelector(".sub-filter-select");
+const subSelect = document.querySelector(".sub-filter-select-box");
 const subSelectItems = document.querySelectorAll("[data-select-sub-item]");
 const subSelectValue = document.querySelector(".sub-select-value");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
@@ -70,14 +57,29 @@ const filterItems = document.querySelectorAll("[data-filter-item]");
 // Event listener for main category select
 select.addEventListener("click", function () {
   elementToggleFunc(this);
+
+  // Show subcategory dropdown if category selected is "remote sensing" or "spatial data"
+  if (selectValue.innerText.toLowerCase() === "remote sensing" || selectValue.innerText.toLowerCase() === "spatial data") {
+    subSelect.style.display = "block";  // Show subcategory select
+  } else {
+    subSelect.style.display = "none";   // Hide subcategory select if no matching category
+  }
 });
 
 // Event listener for all main category select items
 selectItems.forEach(item => {
   item.addEventListener("click", function () {
-    let selectedValue = this.value.toLowerCase();
+    let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     elementToggleFunc(select);
+
+    // Show/hide subcategory dropdown based on selected main category
+    if (selectedValue === "remote sensing" || selectedValue === "spatial data") {
+      subSelect.style.display = "block";
+    } else {
+      subSelect.style.display = "none";
+    }
+
     filterFunc(selectedValue);
     resetSubFilter(); // Reset sub filter when main category changes
   });
@@ -135,8 +137,6 @@ filterBtn.forEach(btn => {
   });
 });
 
-
-
 // contact form variables
 const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
@@ -155,7 +155,6 @@ for (let i = 0; i < formInputs.length; i++) {
 
   });
 }
-
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
