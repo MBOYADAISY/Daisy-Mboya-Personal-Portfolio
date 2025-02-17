@@ -568,88 +568,150 @@
       -->
         
 
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-            <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-  
-        <section class="projects">
-
-          <div class="filter-select-box">
-  
-              <button class="filter-select" data-select>
-  
-                <div class="select-value" data-selecct-value>Select category</div>
-  
+      <section class="projects">
+        <!-- Category Dropdown -->
+        <div class="filter-select-box">
+            <button class="filter-select" data-select-category>
+                <div class="select-value" data-select-value-category>Select category</div>
                 <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
+                    <ion-icon name="chevron-down"></ion-icon>
                 </div>
-  
-              </button>
-  
-              <ul class="select-list">
-  
-                <li class="select-item">
-                  <button data-select-item>All</button>
-                </li>
-  
-                <li class="select-item">
-                  <button data-select-item>Spatial Data Analysis</button>
-                </li>
-  
-                <li class="select-item">
-                  <button data-select-item>Remote Sensing</button>
-                </li>            
-                
-                
-              </ul>
-              
-            </div>         
-            
-          
-  
-            <ul class="project-list">
-              
-              <li class="project-item  active" data-filter-item data-category="remote sensing">
-                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                  
-                  <h3 class="project-title">Introduction to Tidyverse</h3>
-                  </a>
-              </li>
-  
-              <li class="project-item  active" data-filter-item data-category="remote sensing">
-                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                  
-                  <h3 class="project-title">Image Classification</h3>                             
+            </button>
+            <ul class="select-list" id="select-category-list">
+                <li class="select-item" data-project-category="all"><button data-select-item>All</button></li>
+                <li class="select-item" data-project-category="remote-sensing"><button data-select-item>Remote Sensing</button></li>
+                <li class="select-item" data-project-category="spatial-data-analysis"><button data-select-item>Spatial Data Analysis</button></li>
+            </ul>
+        </div>
+    
+        <!-- Portfolio Dropdown (Only visible when "Remote Sensing" is selected) -->
+        <div class="filter-select-box" id="portfolio-dropdown" style="display: none;">
+            <button class="filter-select" data-select-portfolio>
+                <div class="select-value" data-select-value-portfolio>Select project portfolio</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
+            <ul class="select-list" id="select-portfolio-list" style="display: none;">
+                <li class="select-item" data-project-portfolio="intro-tidyverse"><button data-select-item>Introduction to Tidyverse</button></li>
+                <li class="select-item" data-project-portfolio="image-classification"><button data-select-item>Image Classification</button></li>
+            </ul>
+        </div>
+    
+        <!-- Project List -->
+        <ul class="project-list">
+            <li class="project-item remote-sensing tidyverse">
+                <a href="#" data-qmd-url="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html">
+                    <h3 class="project-title">Introduction to Tidyverse</h3>
                 </a>
-              </li>   
-  
-            <!-- Container for the project content below the project list -->
-            <div id="qmd-container" style="display:none; padding-top: 20px;">
-              <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-            </div>
-  
-            <script>
-              function loadQMDContent(url) {
-                // Get the iframe element
+            </li>
+            <li class="project-item remote-sensing classification">
+                <a href="#" data-qmd-url="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html">
+                    <h3 class="project-title">Image Classification</h3>
+                </a>
+            </li>
+            <li class="project-item spatial-data-analysis">
+                <a href="#" data-qmd-url="Spatial%20Data%20Analysis/SpatialTechniques.html">
+                    <h3 class="project-title">Spatial Analysis Techniques</h3>
+                </a>
+            </li>
+        </ul>
+    
+        <!-- Container for project content -->
+        <div id="qmd-container" style="display:none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+        </div>
+    </section>
+    
+    <!-- JavaScript to handle dropdowns and project filtering -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select elements
+            const selectCategoryButton = document.querySelector('[data-select-category]');
+            const selectCategoryList = document.getElementById('select-category-list');
+            const selectPortfolioButton = document.querySelector('[data-select-portfolio]');
+            const selectPortfolioList = document.getElementById('select-portfolio-list');
+            const portfolioDropdown = document.getElementById('portfolio-dropdown');
+    
+            // Toggle category dropdown
+            selectCategoryButton.addEventListener("click", function () {
+                selectCategoryList.classList.toggle("show");
+            });
+    
+            // Toggle portfolio dropdown based on category selection
+            selectCategoryList.addEventListener("click", function (e) {
+                if (e.target.tagName === 'BUTTON') {
+                    const selectedCategory = e.target.parentElement.getAttribute('data-project-category');
+                    document.querySelector('[data-select-value-category]').textContent = e.target.textContent;
+    
+                    // Show the portfolio dropdown if "Remote Sensing" is selected
+                    if (selectedCategory === 'remote-sensing') {
+                        portfolioDropdown.style.display = 'block';
+                    } else {
+                        portfolioDropdown.style.display = 'none';
+                        selectPortfolioList.style.display = 'none';  // Hide portfolio options when not relevant
+                    }
+    
+                    // Filter projects by category
+                    filterProjectsByCategory(selectedCategory);
+    
+                    // Close category dropdown
+                    selectCategoryList.classList.remove("show");
+                }
+            });
+    
+            // Toggle portfolio dropdown
+            selectPortfolioButton.addEventListener("click", function () {
+                selectPortfolioList.style.display = selectPortfolioList.style.display === 'none' ? 'block' : 'none';
+            });
+    
+            // Handle portfolio selection
+            selectPortfolioList.addEventListener("click", function (e) {
+                if (e.target.tagName === 'BUTTON') {
+                    const selectedPortfolio = e.target.parentElement.getAttribute('data-project-portfolio');
+                    document.querySelector('[data-select-value-portfolio]').textContent = e.target.textContent;
+    
+                    // Filter projects by portfolio
+                    filterProjectsByPortfolio(selectedPortfolio);
+    
+                    // Close portfolio dropdown
+                    selectPortfolioList.style.display = 'none';
+                }
+            });
+    
+            // Function to filter projects by category
+            function filterProjectsByCategory(category) {
+                document.querySelectorAll('.project-item').forEach(project => {
+                    project.style.display = (category === 'all' || project.classList.contains(category)) ? 'block' : 'none';
+                });
+            }
+    
+            // Function to filter projects by portfolio
+            function filterProjectsByPortfolio(portfolio) {
+                document.querySelectorAll('.project-item').forEach(project => {
+                    project.style.display = (portfolio === 'all' || project.classList.contains(portfolio)) ? 'block' : 'none';
+                });
+            }
+    
+            // Function to load project content in iframe
+            document.querySelectorAll('.project-item a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var url = link.getAttribute('data-qmd-url');
+                    if (url) loadQMDContent(url);
+                });
+            });
+    
+            function loadQMDContent(url) {
                 var iframe = document.getElementById('qmd-iframe');
-      
-                // Set the iframe source to the .qmd HTML file
                 iframe.src = url;
-      
-                // Show the iframe container
                 var container = document.getElementById('qmd-container');
                 container.style.display = 'block';
-      
-                // Optionally, scroll to the container when it's displayed
-                container.scrollIntoView({behavior: "smooth"});
-              }
-            </script>
-  
-          </section>
-  
-        </article>
+                container.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    </script>
+    
     
     
       
