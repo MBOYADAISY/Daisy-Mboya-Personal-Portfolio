@@ -563,184 +563,93 @@
       
 
 
-      <section class="projects">
+      <!--
+        - #PORTFOLIO
+      -->
         
-        <!-- Category Dropdown -->
-        <div class="filter-select-box">
-            <button class="filter-select" data-select>
-                <div class="select-value" data-select-value>Select category</div>
+
+      <article class="portfolio" data-page="portfolio">
+
+        <header>
+            <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+  
+        <section class="projects">
+
+          <div class="filter-select-box">
+  
+              <button class="filter-select" data-select>
+  
+                <div class="select-value" data-selecct-value>Select category</div>
+  
                 <div class="select-icon">
-                    <ion-icon name="chevron-down"></ion-icon>
+                  <ion-icon name="chevron-down"></ion-icon>
                 </div>
-            </button>
-    
-            <ul class="select-list">
-                <li class="select-item" data-project-category="all"><button data-select-item>All</button></li>
-                <li class="select-item" data-project-category="remote-sensing"><button data-select-item>Remote Sensing</button></li>
-                <li class="select-item" data-project-category="spatial-data-analysis"><button data-select-item>Spatial Data Analysis</button></li>
-            </ul>
-        </div>
-    
-        <!-- Type Dropdown -->
-        <div class="filter-select-box">
-            <button class="filter-select" data-select-type>
-                <div class="select-value" data-select-value-type>Select project type</div>
-                <div class="select-icon">
-                    <ion-icon name="chevron-down"></ion-icon>
-                </div>
-            </button>
-    
-            <ul class="select-list" id="select-type-list">
-                <!-- Dynamically populated project types -->
-            </ul>
-        </div>
-    
-        <!-- Project List -->
-        <ul class="project-list">
-            <li class="project-item remote-sensing tidyverse">
-                <a href="#" data-qmd-url="Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html">
-                    <h3 class="project-title">Introduction to Tidyverse</h3>
+  
+              </button>
+  
+              <ul class="select-list">
+  
+                <li class="select-item">
+                  <button data-select-item>All</button>
+                </li>
+  
+                <li class="select-item">
+                  <button data-select-item>Spatial Data Analysis</button>
+                </li>
+  
+                <li class="select-item">
+                  <button data-select-item>Remote Sensing</button>
+                </li>            
+                
+                
+              </ul>
+              
+            </div>         
+            
+          
+  
+            <ul class="project-list">
+              
+              <li class="project-item  active" data-filter-item data-category="remote sensing">
+                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                  
+                  <h3 class="project-title">Introduction to Tidyverse</h3>
+                  </a>
+              </li>
+  
+              <li class="project-item  active" data-filter-item data-category="remote sensing">
+                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                  
+                  <h3 class="project-title">Image Classification</h3>                             
                 </a>
-            </li>
-            <li class="project-item remote-sensing classification">
-                <a href="#" data-qmd-url="Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html">
-                    <h3 class="project-title">Image Classification</h3>
-                </a>
-            </li>
-            <li class="project-item spatial-data-analysis">
-                <a href="#" data-qmd-url="Spatial%20Data%20Analysis/SpatialTechniques.html">
-                    <h3 class="project-title">Spatial Analysis Techniques</h3>
-                </a>
-            </li>
-        </ul>
-    
-        <!-- Container for project content -->
-        <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-        </div>
-    </section>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Select elements
-            const selectCategoryButton = document.querySelector('[data-select]');
-            const selectCategoryList = selectCategoryButton.nextElementSibling;
-            const selectTypeButton = document.querySelector('[data-select-type]');
-            const selectTypeList = document.getElementById('select-type-list');
-    
-            // Toggle category dropdown
-            selectCategoryButton.addEventListener("click", function () {
-                selectCategoryList.classList.toggle("show");
-            });
-    
-            // Toggle type dropdown
-            selectTypeButton.addEventListener("click", function () {
-                selectTypeList.classList.toggle("show");
-            });
-    
-            // Close dropdowns when clicking outside
-            document.addEventListener("click", function (e) {
-                if (!selectCategoryButton.contains(e.target) && !selectCategoryList.contains(e.target)) {
-                    selectCategoryList.classList.remove("show");
-                }
-                if (!selectTypeButton.contains(e.target) && !selectTypeList.contains(e.target)) {
-                    selectTypeList.classList.remove("show");
-                }
-            });
-    
-            // Handle category selection
-            selectCategoryList.addEventListener("click", function (e) {
-                if (e.target.tagName === 'BUTTON') {
-                    const selectedCategory = e.target.parentElement.getAttribute('data-project-category');
-                    document.querySelector('[data-select-value]').textContent = e.target.textContent;
-    
-                    // Filter projects by category
-                    filterProjectsByCategory(selectedCategory);
-    
-                    // Update project type dropdown based on category
-                    updateProjectTypeDropdown(selectedCategory);
-    
-                    // Close dropdown
-                    selectCategoryList.classList.remove("show");
-                }
-            });
-    
-            // Handle type selection
-            selectTypeList.addEventListener("click", function (e) {
-                if (e.target.tagName === 'BUTTON') {
-                    const selectedType = e.target.parentElement.getAttribute('data-project-type');
-                    document.querySelector('[data-select-value-type]').textContent = e.target.textContent;
-    
-                    // Filter projects by type
-                    filterProjectsByType(selectedType);
-    
-                    // Close dropdown
-                    selectTypeList.classList.remove("show");
-                }
-            });
-    
-            // Function to filter projects by category
-            function filterProjectsByCategory(category) {
-                document.querySelectorAll('.project-item').forEach(project => {
-                    project.style.display = (category === 'all' || project.classList.contains(category)) ? 'block' : 'none';
-                });
-            }
-    
-            // Function to filter projects by type
-            function filterProjectsByType(type) {
-                document.querySelectorAll('.project-item').forEach(project => {
-                    project.style.display = (type === 'all' || project.classList.contains(type)) ? 'block' : 'none';
-                });
-            }
-    
-            // Function to update the project type dropdown
-            function updateProjectTypeDropdown(category) {
-                selectTypeList.innerHTML = ''; // Clear existing options
-    
-                const projectItems = document.querySelectorAll('.project-item');
-    
-                let addedTypes = new Set(); // Avoid duplicate project types
-                projectItems.forEach(project => {
-                    if (category === 'all' || project.classList.contains(category)) {
-                        project.classList.forEach(type => {
-                            if (type !== 'project-item' && type !== category && !addedTypes.has(type)) {
-                                addedTypes.add(type);
-                                
-                                // Create list item
-                                const listItem = document.createElement('li');
-                                listItem.classList.add('select-item');
-                                listItem.setAttribute('data-project-type', type);
-    
-                                const button = document.createElement('button');
-                                button.textContent = type.replace(/-/g, ' '); // Format type name
-                                listItem.appendChild(button);
-    
-                                selectTypeList.appendChild(listItem);
-                            }
-                        });
-                    }
-                });
-            }
-    
-            // Function to load project content in iframe
-            document.querySelectorAll('.project-item a').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var url = link.getAttribute('data-qmd-url');
-                    if (url) loadQMDContent(url);
-                });
-            });
-    
-            function loadQMDContent(url) {
+              </li>   
+  
+            <!-- Container for the project content below the project list -->
+            <div id="qmd-container" style="display:none; padding-top: 20px;">
+              <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+            </div>
+  
+            <script>
+              function loadQMDContent(url) {
+                // Get the iframe element
                 var iframe = document.getElementById('qmd-iframe');
+      
+                // Set the iframe source to the .qmd HTML file
                 iframe.src = url;
+      
+                // Show the iframe container
                 var container = document.getElementById('qmd-container');
                 container.style.display = 'block';
-                container.scrollIntoView({ behavior: "smooth" });
-            }
-        });
-    </script>
-    
+      
+                // Optionally, scroll to the container when it's displayed
+                container.scrollIntoView({behavior: "smooth"});
+              }
+            </script>
+  
+          </section>
+  
+        </article>
     
     
       
