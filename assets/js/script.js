@@ -1,60 +1,21 @@
 'use strict';
 
-// Element toggle function
+// Function to toggle visibility of dropdowns
 const elementToggleFunc = function (elem) {
   elem.classList.toggle("active");
 };
 
-// Sidebar toggle for mobile
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-
-sidebarBtn.addEventListener("click", function () {
-  elementToggleFunc(sidebar);
-});
-
-// Testimonials modal functionality
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-
-// Modal variables
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-};
-
-// Open modal on testimonial click
-testimonialsItem.forEach(item => {
-  item.addEventListener("click", function () {
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-    testimonialsModalFunc();
-  });
-});
-
-// Close modal on button or overlay click
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
-
-// Dropdown functionality for categories
+// Category Dropdown
 const selectCategory = document.querySelector("[data-select-category]");
 const selectCategoryItems = document.querySelectorAll("#category-list [data-select-item]");
 const selectCategoryValue = document.querySelector("[data-select-value-category]");
 
-// Dropdown functionality for projects
+// Project Dropdown
 const selectProject = document.querySelector("[data-select-project]");
 const selectProjectList = document.getElementById("project-list");
 const selectProjectValue = document.querySelector("[data-select-value-project]");
 
-// Project data
+// Project Data (Mapping Categories to Projects)
 const projectData = {
   "all": [
     { name: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
@@ -70,7 +31,7 @@ const projectData = {
   ]
 };
 
-// Function to load project in iframe
+// Function to Load QMD Content
 function loadQMDContent(url) {
   const iframe = document.getElementById("qmd-iframe");
   iframe.src = url;
@@ -78,20 +39,21 @@ function loadQMDContent(url) {
   iframe.scrollIntoView({ behavior: "smooth" });
 }
 
-// Handle category selection
+// 📌 **Handle Category Selection**
 selectCategoryItems.forEach(item => {
   item.addEventListener("click", function () {
-    const selectedCategory = this.dataset.category; // Get correct category
-    selectCategoryValue.textContent = this.textContent;
-    elementToggleFunc(selectCategory);
-    populateProjectDropdown(selectedCategory);
+    const selectedCategory = this.dataset.category; // Ensure correct attribute
+    selectCategoryValue.textContent = this.textContent; // Update dropdown display
+    selectCategory.classList.remove("active"); // Close dropdown after selection
+
+    populateProjectDropdown(selectedCategory); // Load corresponding projects
   });
 });
 
-// Populate projects dropdown based on selected category
+// 📌 **Populate Projects Dropdown Based on Selected Category**
 function populateProjectDropdown(category) {
-  selectProjectList.innerHTML = "";
-  selectProjectValue.textContent = "Select project";
+  selectProjectList.innerHTML = ""; // Clear existing options
+  selectProjectValue.textContent = "Select project"; // Reset project dropdown
 
   if (projectData[category]) {
     projectData[category].forEach(project => {
@@ -102,7 +64,9 @@ function populateProjectDropdown(category) {
       button.setAttribute("data-select-item", "");
       button.textContent = project.name;
       button.addEventListener("click", function () {
-        loadQMDContent(project.url);
+        selectProjectValue.textContent = project.name; // Update selected value
+        loadQMDContent(project.url); // Load project content
+        selectProject.classList.remove("active"); // Close dropdown
       });
 
       listItem.appendChild(button);
@@ -110,64 +74,12 @@ function populateProjectDropdown(category) {
     });
   }
 
-  elementToggleFunc(selectProject);
+  elementToggleFunc(selectProject); // Open project dropdown
 }
 
-// Click event to toggle project dropdown
+// 📌 **Handle Project Dropdown Click**
 selectProject.addEventListener("click", function () {
   elementToggleFunc(selectProject);
-});
-
-// Fix missing filter button variable
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-const filterItems = document.querySelectorAll("[data-filter-item]");
-const selectValue = document.querySelector("[data-select-value]");
-
-// Filtering function
-const filterFunc = function (selectedValue) {
-  filterItems.forEach(item => {
-    item.classList.toggle("active", selectedValue === "all" || selectedValue === item.dataset.category);
-  });
-};
-
-// Handle filter button clicks
-let lastClickedBtn = filterBtn[0];
-filterBtn.forEach(btn => {
-  btn.addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
-});
-
-// Contact form validation
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-formInputs.forEach(input => {
-  input.addEventListener("input", function () {
-    formBtn.toggleAttribute("disabled", !form.checkValidity());
-  });
-});
-
-// Page navigation
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-navigationLinks.forEach(link => {
-  link.addEventListener("click", function () {
-    pages.forEach(page => {
-      const isActive = this.innerHTML.toLowerCase() === page.dataset.page;
-      page.classList.toggle("active", isActive);
-      link.classList.toggle("active", isActive);
-    });
-    window.scrollTo(0, 0);
-  });
 });
 
 // Initialize dropdown with all projects on page load
