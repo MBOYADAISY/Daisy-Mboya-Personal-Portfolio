@@ -501,6 +501,10 @@
       - #PORTFOLIO
       -->
 
+      <!--
+      - #PORTFOLIO
+      -->
+
       <article class="portfolio" data-page="portfolio">
 
         <header>
@@ -533,67 +537,49 @@
 
           <!-- Second button (Project) -->
           <div class="filter-select-box">
-            <button class="filter-select" data-select>
+            <button class="filter-select" data-select id="projectButton">
               <div class="select-value" data-selecct-value>Select project</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
 
-            <ul class="select-list">
-              <li class="select-item">
-                <button data-select-item>All Projects</button>
+            <ul class="select-list" id="projectList" style="display: none;">
+              <li class="select-item" data-category="remote sensing">
+                <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">Introduction to Tidyverse</button>
               </li>
-              <li class="select-item">
-                <button data-select-item>Introduction to Tidyverse</button>
-              </li>
-              <li class="select-item">
-                <button data-select-item>Image Classification</button>
+              <li class="select-item" data-category="remote sensing">
+                <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">Image Classification</button>
               </li>
               <!-- Add more project options as needed -->
             </ul>
           </div>
 
-          <!-- Project items moved here, under the second button -->
-          <ul class="project-list">
-            <li class="project-item active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                <h3 class="project-title">Introduction to Tidyverse</h3>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                <h3 class="project-title">Image Classification</h3>
-              </a>
-            </li>
-          </ul>
-
-          <!-- Container for the project content below the project list -->
+          <!-- Container for the project content -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
 
           <script>
+            document.getElementById('projectButton').addEventListener('click', function() {
+              var projectList = document.getElementById('projectList');
+              projectList.style.display = projectList.style.display === 'none' ? 'block' : 'none';
+            });
+
             function loadQMDContent(url) {
-              // Get the iframe element
               var iframe = document.getElementById('qmd-iframe');
-
-              // Set the iframe source to the .qmd HTML file
               iframe.src = url;
-
-              // Show the iframe container
               var container = document.getElementById('qmd-container');
               container.style.display = 'block';
-
-              // Optionally, scroll to the container when it's displayed
               container.scrollIntoView({behavior: "smooth"});
+              document.getElementById('projectList').style.display = 'none';
             }
           </script>
 
         </section>
 
       </article>
+
 
 
       
