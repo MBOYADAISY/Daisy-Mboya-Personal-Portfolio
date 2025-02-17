@@ -63,25 +63,23 @@ const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
 
-// add event in all select items
+// add event to all select items
 for (let i = 0; i < selectItems.length; i++) {
   selectItems[i].addEventListener("click", function () {
-
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
+    elementToggleFunc(select); // Assuming this hides the select menu
     filterFunc(selectedValue);
-
+    selectedFirstFilterValue = selectedValue;  // Update selected first filter value
   });
 }
 
-// filter variables
+
+// filter variables for the first filter
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
 const filterFunc = function (selectedValue) {
-
   for (let i = 0; i < filterItems.length; i++) {
-
     if (selectedValue === "all") {
       filterItems[i].classList.add("active");
     } else if (selectedValue === filterItems[i].dataset.category) {
@@ -89,40 +87,40 @@ const filterFunc = function (selectedValue) {
     } else {
       filterItems[i].classList.remove("active");
     }
-
   }
-
 };
 
-// Handle the second filter (based on first filter's selection)
+
+// Handle the second filter (based on the first filter's selection)
 const select2 = document.querySelector("[data-select2]");
 const selectItems2 = document.querySelectorAll("[data-select2-item]");
 const selectValue2 = document.querySelector("[data-selecct-value2]");
 
-let selectedFirstFilterValue = "all";
+let selectedFirstFilterValue = "all";  // Initialize with default value "all"
 
+// Event listener for the second filter items
 for (let i = 0; i < selectItems2.length; i++) {
-    selectItems2[i].addEventListener("click", function () {
-        let selectedSecondValue = this.innerText.toLowerCase();
-        selectValue2.innerText = this.innerText;
-        filterFunc2(selectedSecondValue);
-    });
+  selectItems2[i].addEventListener("click", function () {
+    let selectedSecondValue = this.innerText.toLowerCase();
+    selectValue2.innerText = this.innerText;
+    filterFunc2(selectedSecondValue);
+  });
 }
 
+// filter function for the second filter (subcategory)
 const filterFunc2 = function (selectedValue) {
-    const filterItems2 = document.querySelectorAll("[data-filter-item]");
+  const filterItems2 = document.querySelectorAll("[data-filter-item]");
 
-    for (let i = 0; i < filterItems2.length; i++) {
-        if (selectedValue === "all") {
-            filterItems2[i].classList.add("active");
-        } else if (selectedValue === filterItems2[i].dataset.subcategory && selectedFirstFilterValue === filterItems2[i].dataset.category) {
-            filterItems2[i].classList.add("active");
-        } else {
-            filterItems2[i].classList.remove("active");
-        }
+  for (let i = 0; i < filterItems2.length; i++) {
+    if (selectedValue === "all") {
+      filterItems2[i].classList.add("active");
+    } else if (selectedValue === filterItems2[i].dataset.subcategory && selectedFirstFilterValue === filterItems2[i].dataset.category) {
+      filterItems2[i].classList.add("active");
+    } else {
+      filterItems2[i].classList.remove("active");
     }
+  }
 };
-
 
 
 
