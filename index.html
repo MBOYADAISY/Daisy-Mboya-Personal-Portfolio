@@ -579,68 +579,124 @@
           <div class="filter-select-box">
 
             <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
+              <div class="select-value" data-select-value>Select category</div>
               <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
+                  <ion-icon name="chevron-down"></ion-icon>
               </div>
-
             </button>
 
             <ul class="select-list">
-
               <li class="select-item">
-                <button data-select-item>All</button>
+                  <button data-select-item value="all">All</button>
               </li>
-
               <li class="select-item">
-                <button data-select-item>Spatial Data Analysis</button>
+                  <button data-select-item value="spatial">Spatial Data Analysis</button>
               </li>
-
               <li class="select-item">
-                <button data-select-item>Remote Sensing</button>
+                  <button data-select-item value="remote-sensing">Remote Sensing</button>
               </li>
+            </ul>
             
-          </div>         
+          </div> 
           
-        
+          <!-- Second Dropdown (Project Selection, always visible) -->
+          <div class="filter-select-box" id="portfolio-select" style="margin-top: 20px;">
+            <button class="filter-select" data-select>
+                <div class="select-value" data-select-value>Select project portfolio</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
+            <ul class="select-list" id="portfolio-list"></ul>
+          </div>
 
           <ul class="project-list">
-            
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                
-                <h3 class="project-title">Introduction to Tidyverse</h3>
-                </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                
-                <h3 class="project-title">Image Classification</h3>                             
-              </a>
-            </li>
+            <!-- Sample project items (will be dynamically updated) -->
+          </ul>
 
           <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
-            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+              <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
 
+
           <script>
+            // Function to load the QMD content (iframe)
             function loadQMDContent(url) {
-              // Get the iframe element
-              var iframe = document.getElementById('qmd-iframe');
-    
-              // Set the iframe source to the .qmd HTML file
-              iframe.src = url;
-    
-              // Show the iframe container
-              var container = document.getElementById('qmd-container');
-              container.style.display = 'block';
-    
-              // Optionally, scroll to the container when it's displayed
-              container.scrollIntoView({behavior: "smooth"});
+                var iframe = document.getElementById('qmd-iframe');
+                iframe.src = url;
+                var container = document.getElementById('qmd-container');
+                container.style.display = 'block';
+                container.scrollIntoView({ behavior: "smooth" });
+            }
+
+            // Select category dropdown listener
+            const categoryDropdown = document.querySelector('.filter-select[data-select]');
+            const portfolioList = document.getElementById('portfolio-list');
+            const selectCategoryItems = document.querySelectorAll('[data-select-item]');
+
+            // Add click event to each category button
+            selectCategoryItems.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('value');
+                    updatePortfolioList(category); // Update portfolio list based on category
+                });
+            });
+
+            // Update the portfolio options based on the selected category
+            function updatePortfolioList(category) {
+                let portfolioItems = '';
+
+                if (category === 'remote-sensing') {
+                    portfolioItems = `
+                        <li class="select-item">
+                            <button data-select-item value="tidyverse">Introduction to Tidyverse</button>
+                        </li>
+                        <li class="select-item">
+                            <button data-select-item value="classification">Image Classification</button>
+                        </li>
+                    `;
+                } else if (category === 'spatial') {
+                    portfolioItems = `
+                        <li class="select-item">
+                            <button data-select-item value="spatial-analysis">Spatial Analysis</button>
+                        </li>
+                    `;
+                } else {
+                    portfolioItems = `
+                        <li class="select-item">
+                            <button data-select-item value="all-projects">All Projects</button>
+                        </li>
+                    `;
+                }
+
+                portfolioList.innerHTML = portfolioItems;
+
+                // Add click event to each portfolio button
+                const portfolioButtons = portfolioList.querySelectorAll('[data-select-item]');
+                portfolioButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const project = this.getAttribute('value');
+                        loadProjectContent(project);
+                    });
+                });
+            }
+
+            // Function to load the project content based on selection
+            function loadProjectContent(project) {
+                let projectUrl = '';
+
+                if (project === 'tidyverse') {
+                    projectUrl = 'Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html';
+                } else if (project === 'classification') {
+                    projectUrl = 'Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html';
+                } else if (project === 'spatial-analysis') {
+                    projectUrl = 'Spatial%20Data%20Analysis/Supervised%20Spatial%20Analysis/Lab4_spatial_analysis-assign.html';
+                } else {
+                    projectUrl = 'All%20Projects/Overview.html';
+                }
+
+                loadQMDContent(projectUrl);
             }
           </script>
 
