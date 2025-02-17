@@ -1,6 +1,6 @@
 'use strict';
 
-// Element toggle function
+// element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
 // Dropdown functionality for categories and projects
@@ -70,13 +70,11 @@ function populateProjectDropdown(category) {
 }
 
 // Toggle dropdowns on click
-selectCategory.addEventListener("click", function (event) {
-  event.stopPropagation();
+selectCategory.addEventListener("click", function () {
   elementToggleFunc(this);
 });
 
-selectProject.addEventListener("click", function (event) {
-  event.stopPropagation();
+selectProject.addEventListener("click", function () {
   elementToggleFunc(this);
 });
 
@@ -201,18 +199,16 @@ const pages = document.querySelectorAll("[data-page]");
 
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function (event) {
-    event.preventDefault();
-    const targetPage = this.getAttribute("href").substring(1);
-    for (let j = 0; j < pages.length; j++) {
-      if (targetPage === pages[j].id) {
-        pages[j].classList.add("active");
-        navigationLinks[j].classList.add("active");
+  navigationLinks[i].addEventListener("click", function () {
+    for (let i = 0; i < pages.length; i++) {
+      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
+        pages[i].classList.add("active");
+        navigationLinks[i].classList.add("active");
+        window.scrollTo(0, 0);
       } else {
-        pages[j].classList.remove("active");
-        navigationLinks[j].classList.remove("active");
+        pages[i].classList.remove("active");
+        navigationLinks[i].classList.remove("active");
       }
     }
-    window.scrollTo(0, 0);
   });
 }
