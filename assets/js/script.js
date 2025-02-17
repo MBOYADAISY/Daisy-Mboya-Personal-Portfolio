@@ -70,7 +70,7 @@ function populateProjectDropdown(category) {
       button.textContent = project.name;
       button.addEventListener("click", function () {
         selectProjectValue.textContent = project.name;
-        elementToggleFunc(selectProject); // Close the dropdown
+        elementToggleFunc(selectProject);
         loadQMDContent(project.url);
       });
 
