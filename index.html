@@ -563,7 +563,7 @@
             <h2 class="h2 article-title">Portfolio</h2>
         </header>
   
-        <section class="projects">
+        <section class="projects">  
             
             <div class="filter-select-box">
   
@@ -589,50 +589,29 @@
   
                 <li class="select-item">
                   <button data-select-item>Remote Sensing</button>
-                </li>                
-               
+                </li>
+                
               </ul>
               
-            </div>
-            
-            <div class="sub-filter-select-box" style="display: none;">
-              <button class="sub-filter-select" data-select>
-                <div class="sub-select-value" data-select-value>Select subcategory</div>
-                <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-                </div>
-              </button>
-              <ul class="sub-select-list">
-                <li class="sub-select-item" data-category="remote sensing">
-                  <button data-select-sub-item value="tidyverse">Tidyverse</button>
-                </li>
-                <li class="sub-select-item" data-category="remote sensing">
-                  <button data-select-sub-item value="classification">Image Classification</button>
-                </li>
-                <li class="sub-select-item" data-category="spatial data">
-                  <button data-select-sub-item value="analysis">Spatial Analysis</button>
-                </li>
-              </ul>
-            </div>
+            </div>         
             
           
   
             <ul class="project-list">
-              <li class="project-item" data-filter-item data-category="remote sensing" data-subcategory="tidyverse">
+              
+              <li class="project-item  active" data-filter-item data-category="remote sensing">
                 <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                  
                   <h3 class="project-title">Introduction to Tidyverse</h3>
-                </a>
+                  </a>
               </li>
-              <li class="project-item" data-filter-item data-category="remote sensing" data-subcategory="classification">
+  
+              <li class="project-item  active" data-filter-item data-category="remote sensing">
                 <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                  <h3 class="project-title">Image Classification</h3>
+                  
+                  <h3 class="project-title">Image Classification</h3>                             
                 </a>
-              </li>
-              <li class="project-item" data-filter-item data-category="spatial data" data-subcategory="analysis">
-                <a href="#" onclick="loadQMDContent('Spatial%20Data%20Analysis/Analysis/SomeAnalysis.html')">
-                  <h3 class="project-title">Spatial Data Analysis Project</h3>
-                </a>
-              </li>
+              </li>                          
             </ul>
   
             <!-- Container for the project content below the project list -->
@@ -657,9 +636,9 @@
               }
             </script>
   
-          </section>
+        </section>
   
-        </article>
+      </article>
     
     
 
