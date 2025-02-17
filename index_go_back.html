@@ -549,91 +549,101 @@
 
       </article>
 
-      
+ 
 
 
       <!--
-        - #PORTFOLIO
+      - #PORTFOLIO
       -->
         
 
       <article class="portfolio" data-page="portfolio">
 
         <header>
-          <h2 class="h2 article-title">Portfolio</h2>
+            <h2 class="h2 article-title">Portfolio</h2>
         </header>
-  
+
         <section class="projects">
-                       
-          <div class="filter-select-box">
-  
-            <button class="filter-select" data-select>
-                <div class="select-value" data-selecct-value>Select category</div>
-                <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-                </div>
-              
-            </button>
-  
-            <ul class="select-list" id="category-list">
-                <li class="select-item" data-category="all"><button data-select-item>All</button></li>
-                <li class="select-item" data-category="remote-sensing"><button data-select-item>Remote Sensing</button></li>
-                <li class="select-item" data-category="spatial-data-analysis"><button data-select-item>Spatial Data Analysis</button></li>
-            </ul>
-              
-          </div>
+
           
           <div class="filter-select-box">
-            <button class="filter-select" data-select-project>
-              <div class="select-value" data-selecct-value-project>Select project</div>
+
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>Select category</div>
+
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
+
             </button>
-      
-            <ul class="select-list" id="project-list">
-              <!-- Project items will be dynamically populated here based on category selection -->
-            </ul>
-          </div> 
-            
-            
-          <ul class="project-list">
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Spatial Data Analysis</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Remote Sensing</button>
+              </li>
               
-            <li class="project-item remote-sensing" data-project-type="tidyverse">
-                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                  
-                  <h3 class="project-title">Introduction to Tidyverse</h3>
-                  </a>
-            </li>
-  
-            <li class="project-item remote-sensing" data-project-type="classification">
-                <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                  
-                  <h3 class="project-title">Image Classification</h3>                             
+            </ul>
+            
+          </div>         
+          
+        
+
+          <ul class="project-list">
+            
+            <li class="project-item  active" data-filter-item data-category="remote sensing">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
+                
+                <h3 class="project-title">Introduction to Tidyverse</h3>
                 </a>
             </li>
-  
-            <li class="project-item spatial-data-analysis" data-project-type="spatial-analysis">
-                <a href="#">
-                  <h3 class="project-title">Spatial Analysis Techniques</h3>
-                </a>
-            </li> 
-                         
+
+            <li class="project-item  active" data-filter-item data-category="remote sensing">
+              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
+                
+                <h3 class="project-title">Image Classification</h3>                             
+              </a>
+            </li>             
+            
           </ul>
-  
+
           <!-- Container for the project content below the project list -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
-          </div>         
-  
+          </div>
+
+          <script>
+            function loadQMDContent(url) {
+              // Get the iframe element
+              var iframe = document.getElementById('qmd-iframe');
+    
+              // Set the iframe source to the .qmd HTML file
+              iframe.src = url;
+    
+              // Show the iframe container
+              var container = document.getElementById('qmd-container');
+              container.style.display = 'block';
+    
+              // Optionally, scroll to the container when it's displayed
+              container.scrollIntoView({behavior: "smooth"});
+            }
+          </script>
+
         </section>
-  
+
       </article>
     
     
-      
 
-      
 
       <!--
         - #BLOG
@@ -873,10 +883,6 @@
     </div>
 
   </main>
-
-
-
-
 
 
   <!--
