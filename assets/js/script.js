@@ -1,7 +1,11 @@
 'use strict';
 
+
+
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+
+
 
 // sidebar variables
 const sidebar = document.querySelector("[data-sidebar]");
@@ -9,6 +13,8 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+
+
 
 // testimonials variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
@@ -29,113 +35,85 @@ const testimonialsModalFunc = function () {
 
 // add click event to all modal items
 for (let i = 0; i < testimonialsItem.length; i++) {
+
   testimonialsItem[i].addEventListener("click", function () {
+
     modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
     modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
     modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
     modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
+
     testimonialsModalFunc();
+
   });
+
 }
 
 // add click event to modal close button
 modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
-// Custom select variables
+
+
+// custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
-const subSelect = document.querySelector(".sub-filter-select");
-const subSelectItems = document.querySelectorAll("[data-select-sub-item]");
-const subSelectValue = document.querySelector(".sub-select-value");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-// Filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+select.addEventListener("click", function () { elementToggleFunc(this); });
 
-// Event listener for main category select
-select.addEventListener("click", function () {
-  elementToggleFunc(this);
+// add event in all select items
+for (let i = 0; i < selectItems.length; i++) {
+  selectItems[i].addEventListener("click", function () {
 
-  // Show subcategory dropdown if category selected is "remote sensing" or "spatial data"
-  if (selectValue.innerText.toLowerCase() === "remote sensing" || selectValue.innerText.toLowerCase() === "spatial data") {
-    subSelect.style.display = "block";  // Show subcategory select
-  } else {
-    subSelect.style.display = "none";   // Hide subcategory select if no matching category
-  }
-});
-
-// Event listener for all main category select items
-selectItems.forEach(item => {
-  item.addEventListener("click", function () {
-    let selectedValue = this.value.toLowerCase();
+    let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     elementToggleFunc(select);
-
-    // Show/hide subcategory dropdown based on selected main category
-    if (selectedValue === "remote sensing" || selectedValue === "spatial data") {
-      subSelect.style.display = "block";
-    } else {
-      subSelect.style.display = "none";
-    }
-
     filterFunc(selectedValue);
-    resetSubFilter(); // Reset sub filter when main category changes
+
   });
-});
+}
 
-// Event listener for subcategory select
-subSelect.addEventListener("click", function () {
-  elementToggleFunc(this);
-});
+// filter variables
+const filterItems = document.querySelectorAll("[data-filter-item]");
 
-// Event listener for all subcategory select items
-subSelectItems.forEach(item => {
-  item.addEventListener("click", function () {
-    let selectedSubValue = this.value.toLowerCase();
-    subSelectValue.innerText = this.innerText;
-    filterFunc(null, selectedSubValue);
-    elementToggleFunc(subSelect);
-  });
-});
+const filterFunc = function (selectedValue) {
 
-// Filter function
-const filterFunc = function (selectedValue, selectedSubValue) {
-  filterItems.forEach(item => {
-    const categoryMatch = selectedValue === "all" || selectedValue === item.dataset.category;
-    const subcategoryMatch = !selectedSubValue || selectedSubValue === item.dataset.subcategory;
+  for (let i = 0; i < filterItems.length; i++) {
 
-    if (categoryMatch && subcategoryMatch) {
-      item.classList.add("active");
+    if (selectedValue === "all") {
+      filterItems[i].classList.add("active");
+    } else if (selectedValue === filterItems[i].dataset.category) {
+      filterItems[i].classList.add("active");
     } else {
-      item.classList.remove("active");
+      filterItems[i].classList.remove("active");
     }
-  });
-};
 
-// Function to reset sub filter
-const resetSubFilter = function () {
-  subSelectValue.innerText = "Select subcategory";
-  subSelectItems.forEach(item => {
-    item.classList.remove("active");
-  });
-};
+  }
 
-// Add event in all filter button items for large screen
+}
+
+// add event in all filter button items for large screen
 let lastClickedBtn = filterBtn[0];
 
-filterBtn.forEach(btn => {
-  btn.addEventListener("click", function () {
+for (let i = 0; i < filterBtn.length; i++) {
+
+  filterBtn[i].addEventListener("click", function () {
+
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
-    
+
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
+
   });
-});
+
+}
+
+
 
 // contact form variables
 const form = document.querySelector("[data-form]");
@@ -155,6 +133,8 @@ for (let i = 0; i < formInputs.length; i++) {
 
   });
 }
+
+
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
