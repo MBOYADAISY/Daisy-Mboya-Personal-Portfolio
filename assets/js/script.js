@@ -1,6 +1,6 @@
 'use strict';
 
-// Function to toggle the active class of an element
+// Function to toggle an element's visibility
 const toggleElement = (elem) => {
   if (elem) elem.classList.toggle("active");
 };
@@ -17,15 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebarBtn.addEventListener("click", () => toggleElement(sidebar));
   }
 
-  // Dropdown functionality for categories
+  // Dropdown for categories
   const selectCategory = document.querySelector("[data-select-category]");
   const categoryItems = document.querySelectorAll("#category-list [data-select-item]");
   const selectedCategoryValue = document.querySelector("[data-select-value-category]");
 
-  // Dropdown functionality for projects
+  // Dropdown for projects
   const selectProject = document.querySelector("[data-select-project]");
   const projectList = document.getElementById("project-list");
   const selectedProjectValue = document.querySelector("[data-select-value-project]");
+
+  // Iframe container
+  const iframeContainer = document.getElementById("qmd-container");
+  const iframe = document.getElementById("qmd-iframe");
 
   // Project data
   const projects = {
@@ -44,11 +48,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Function to load project in iframe
-  const loadProject = (url) => {
-    const iframe = document.getElementById("qmd-iframe");
-    iframe.src = url;
-    document.getElementById("qmd-container").style.display = "block";
-    iframe.scrollIntoView({ behavior: "smooth" });
+  const loadProject = (name, url) => {
+    console.log("Loading project:", name, url);
+    selectedProjectValue.textContent = name; // Update dropdown button text
+    toggleElement(selectProject); // Close dropdown
+    if (url !== "#") {
+      iframe.src = url;
+      iframeContainer.style.display = "block";
+      iframe.scrollIntoView({ behavior: "smooth" });
+    } else {
+      alert("Page not available!");
+    }
   };
 
   // Populate project dropdown
@@ -63,22 +73,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const button = document.createElement("button");
         button.textContent = name;
-        button.addEventListener("click", () => loadProject(url));
+        button.addEventListener("click", () => loadProject(name, url));
 
         listItem.appendChild(button);
         projectList.appendChild(listItem);
       });
     }
 
-    toggleElement(selectProject);
+    toggleElement(selectProject); // Open the dropdown
   };
 
   // Handle category selection
   categoryItems.forEach(item => {
     item.addEventListener("click", () => {
       selectedCategoryValue.textContent = item.textContent;
-      toggleElement(selectCategory);
-      populateProjectDropdown(item.dataset.category);
+      toggleElement(selectCategory); // Close category dropdown
+      populateProjectDropdown(item.dataset.category); // Load projects for selected category
     });
   });
 
