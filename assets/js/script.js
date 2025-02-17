@@ -1,141 +1,62 @@
 'use strict';
 
-// element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+// Function to toggle an element
+const elementToggleFunc = function (elem) { 
+  elem.classList.toggle("active"); 
+};
 
-// sidebar variables
+// Sidebar toggle functionality
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-// testimonials variables
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-
-// modal variable
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-
-// modal toggle function
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
-
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
-  testimonialsItem[i].addEventListener("click", function () {
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-    testimonialsModalFunc();
-  });
-}
-
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
-
-// custom select variables (fix for multiple dropdowns)
-const selectElements = document.querySelectorAll("[data-select]");
-const selectValues = document.querySelectorAll("[data-selecct-value]");
-const selectLists = document.querySelectorAll(".select-list");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-
-// Function to toggle dropdowns
-selectElements.forEach((select, index) => {
-  select.addEventListener("click", function () {
-    elementToggleFunc(this);
-    selectLists[index].classList.toggle("active");
-  });
+sidebarBtn.addEventListener("click", function () { 
+  elementToggleFunc(sidebar); 
 });
 
-// Function to handle item selection for all dropdowns
-selectItems.forEach(item => {
+// --- CATEGORY & PROJECT DROPDOWN LOGIC ---
+
+const selectCategory = document.querySelector("[data-select]"); // Category dropdown
+const selectCategoryValue = document.querySelector("[data-selecct-value]"); // Selected category text
+const categoryItems = document.querySelectorAll("[data-select-item]"); // All category options
+const projectDropdown = document.getElementById("projectButton"); // Project dropdown
+const projectList = document.getElementById("projectList"); // List of project buttons
+const projectItems = projectList.querySelectorAll("[data-category]"); // All projects with category data
+
+// Function to filter projects based on selected category
+const filterProjects = function (selectedCategory) {
+  projectItems.forEach(project => {
+    if (selectedCategory === "all" || project.dataset.category === selectedCategory) {
+      project.style.display = "block"; // Show matching projects
+    } else {
+      project.style.display = "none"; // Hide non-matching projects
+    }
+  });
+};
+
+// Event listener for category selection
+categoryItems.forEach(item => {
   item.addEventListener("click", function () {
-    let parentDropdown = this.closest(".filter-select-box").querySelector("[data-selecct-value]");
-    parentDropdown.innerText = this.innerText;
-    let dropdown = this.closest(".filter-select-box").querySelector("[data-select]");
-    elementToggleFunc(dropdown);
+    let selectedValue = this.innerText.toLowerCase(); // Get selected category
+    selectCategoryValue.innerText = this.innerText; // Update button text
 
-    // Apply filtering only if it's the category dropdown
-    if (dropdown.hasAttribute("data-select")) {
-      let selectedValue = this.innerText.toLowerCase();
-      filterFunc(selectedValue);
-    }
+    filterProjects(selectedValue); // Filter projects
+
+    projectDropdown.style.display = "block"; // Show project dropdown after category selection
   });
 });
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+// Event listener for project dropdown toggle
+projectDropdown.addEventListener("click", function () {
+  projectList.style.display = (projectList.style.display === "none" || projectList.style.display === "") ? "block" : "none";
+});
 
-const filterFunc = function (selectedValue) {
-  for (let i = 0; i < filterItems.length; i++) {
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-  }
-}
+// Function to load project in iframe
+function loadQMDContent(url) {
+  var iframe = document.getElementById('qmd-iframe');
+  iframe.src = url;
+  var container = document.getElementById('qmd-container');
+  container.style.display = 'block';
+  container.scrollIntoView({ behavior: "smooth" });
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-  filterBtn[i].addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    selectValues[0].innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
-}
-
-// contact form variables
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-  });
-}
-
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-// add event to all nav links
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
-  });
+  projectList.style.display = 'none'; // Hide project list after selection
 }

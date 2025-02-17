@@ -76,61 +76,6 @@
               <a href="CV/Daisy%20Mboya%20CV.pdf" class="contact-link">View Resume</a>
           </li>
           <!--
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:richard@example.com" class="contact-link">richard@example.com</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+12133522795" class="contact-link">+1 (213) 352-2795</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1982-06-23">June 23, 1982</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Sacramento, California, USA</address>
-            </div>
-
-          </li>
         -->
         </ul>
 
@@ -555,92 +500,85 @@
       <!--
       - #PORTFOLIO
       -->
-        
 
       <article class="portfolio" data-page="portfolio">
 
         <header>
-            <h2 class="h2 article-title">Portfolio</h2>
+          <h2 class="h2 article-title">Portfolio</h2>
         </header>
 
         <section class="projects">
 
-          
           <div class="filter-select-box">
-
+            <!-- First button (Category) -->
             <button class="filter-select" data-select>
-
               <div class="select-value" data-selecct-value>Select category</div>
-
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
-
             </button>
 
             <ul class="select-list">
-
               <li class="select-item">
                 <button data-select-item>All</button>
               </li>
-
               <li class="select-item">
                 <button data-select-item>Spatial Data Analysis</button>
               </li>
-
               <li class="select-item">
                 <button data-select-item>Remote Sensing</button>
               </li>
-              
             </ul>
-            
-          </div>         
-          
-        
+          </div>
 
-          <ul class="project-list">
-            
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
-                
-                <h3 class="project-title">Introduction to Tidyverse</h3>
-                </a>
-            </li>
+          <!-- Second button (Project) -->
+          <div class="filter-select-box">
+            <button class="filter-select" data-select id="projectButton">
+              <div class="select-value" data-selecct-value>Select project</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
 
-            <li class="project-item  active" data-filter-item data-category="remote sensing">
-              <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
-                
-                <h3 class="project-title">Image Classification</h3>                             
-              </a>
-            </li>             
-            
-          </ul>
+            <ul class="select-list" id="projectList" style="display: none;">
+              <li class="select-item" data-category="remote sensing">
+                <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">Introduction to Tidyverse</button>
+              </li>
+              <li class="select-item" data-category="remote sensing">
+                <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">Image Classification</button>
+              </li>
+              <!-- Add more project options as needed -->
+            </ul>
+          </div>
 
-          <!-- Container for the project content below the project list -->
+          <!-- Container for the project content -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
 
           <script>
+            document.getElementById('projectButton').addEventListener('click', function() {
+              var projectList = document.getElementById('projectList');
+              projectList.style.display = projectList.style.display === 'none' ? 'block' : 'none';
+            });
+
             function loadQMDContent(url) {
-              // Get the iframe element
               var iframe = document.getElementById('qmd-iframe');
-    
-              // Set the iframe source to the .qmd HTML file
               iframe.src = url;
-    
-              // Show the iframe container
               var container = document.getElementById('qmd-container');
               container.style.display = 'block';
-    
-              // Optionally, scroll to the container when it's displayed
               container.scrollIntoView({behavior: "smooth"});
+              document.getElementById('projectList').style.display = 'none';
             }
           </script>
 
         </section>
 
       </article>
+
+
+
+      
     
     
 
