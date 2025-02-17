@@ -1,6 +1,3 @@
-
-'use strict';
-
 // Element toggle function
 const elementToggleFunc = function (elem) {
   elem.classList.toggle("active");
@@ -8,7 +5,7 @@ const elementToggleFunc = function (elem) {
 
 // Dropdown functionality for categories
 const selectCategory = document.querySelector("[data-select-category]");
-const selectCategoryItems = document.querySelectorAll("#category-list [data-select-item]");
+const selectCategoryList = document.getElementById("category-list");
 const selectCategoryValue = document.querySelector("[data-selecct-value-category]");
 
 // Dropdown functionality for projects
@@ -40,15 +37,23 @@ function loadQMDContent(url) {
   iframe.scrollIntoView({ behavior: "smooth" });
 }
 
-// Handle category selection
-selectCategoryItems.forEach(item => {
-  item.addEventListener("click", function () {
-    const selectedCategory = this.parentElement.dataset.category;
-    selectCategoryValue.textContent = this.textContent;
-    elementToggleFunc(selectCategory);
-    populateProjectDropdown(selectedCategory);
+// Populate category dropdown
+function populateCategoryDropdown() {
+  Object.keys(projectData).forEach(category => {
+    const listItem = document.createElement("li");
+    listItem.classList.add("select-item");
+    const button = document.createElement("button");
+    button.setAttribute("data-select-item", "");
+    button.textContent = category;
+    button.addEventListener("click", function () {
+      selectCategoryValue.textContent = category;
+      elementToggleFunc(selectCategory);
+      populateProjectDropdown(category);
+    });
+    listItem.appendChild(button);
+    selectCategoryList.appendChild(listItem);
   });
-});
+}
 
 // Populate projects dropdown based on selected category
 function populateProjectDropdown(category) {
@@ -65,7 +70,7 @@ function populateProjectDropdown(category) {
       button.textContent = project.name;
       button.addEventListener("click", function () {
         selectProjectValue.textContent = project.name;
-        elementToggleFunc(selectProject);
+        elementToggleFunc(selectProject); // Close the dropdown
         loadQMDContent(project.url);
       });
 
@@ -90,7 +95,8 @@ document.addEventListener("click", function(event) {
   if (!selectProject.contains(event.target)) selectProject.classList.remove("active");
 });
 
-// Initialize dropdown with all projects on page load
+// Initialize dropdowns on page load
 document.addEventListener("DOMContentLoaded", function () {
+  populateCategoryDropdown();
   populateProjectDropdown("all");
 });

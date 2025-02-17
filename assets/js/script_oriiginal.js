@@ -1,102 +1,159 @@
-// Element toggle function
-const elementToggleFunc = function (elem) {
-  elem.classList.toggle("active");
-};
+'use strict';
 
-// Dropdown functionality for categories
-const selectCategory = document.querySelector("[data-select-category]");
-const selectCategoryList = document.getElementById("category-list");
-const selectCategoryValue = document.querySelector("[data-selecct-value-category]");
 
-// Dropdown functionality for projects
-const selectProject = document.querySelector("[data-select-project]");
-const selectProjectList = document.getElementById("project-list");
-const selectProjectValue = document.querySelector("[data-selecct-value-project]");
 
-// Project data
-const projectData = {
-  "all": [
-    { name: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
-    { name: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" },
-    { name: "Spatial Analysis Techniques", url: "#" }
-  ],
-  "remote-sensing": [
-    { name: "Introduction to Tidyverse", url: "Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html" },
-    { name: "Image Classification", url: "Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html" }
-  ],
-  "spatial-data-analysis": [
-    { name: "Spatial Analysis Techniques", url: "#" }
-  ]
-};
+// element toggle function
+const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
-// Function to load project in iframe
-function loadQMDContent(url) {
-  const iframe = document.getElementById("qmd-iframe");
-  iframe.src = url;
-  document.getElementById("qmd-container").style.display = "block";
-  iframe.scrollIntoView({ behavior: "smooth" });
+
+
+// sidebar variables
+const sidebar = document.querySelector("[data-sidebar]");
+const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+
+// sidebar toggle functionality for mobile
+sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+
+
+
+// testimonials variables
+const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
+const modalContainer = document.querySelector("[data-modal-container]");
+const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
+const overlay = document.querySelector("[data-overlay]");
+
+// modal variable
+const modalImg = document.querySelector("[data-modal-img]");
+const modalTitle = document.querySelector("[data-modal-title]");
+const modalText = document.querySelector("[data-modal-text]");
+
+// modal toggle function
+const testimonialsModalFunc = function () {
+  modalContainer.classList.toggle("active");
+  overlay.classList.toggle("active");
 }
 
-// Populate category dropdown
-function populateCategoryDropdown() {
-  Object.keys(projectData).forEach(category => {
-    const listItem = document.createElement("li");
-    listItem.classList.add("select-item");
-    const button = document.createElement("button");
-    button.setAttribute("data-select-item", "");
-    button.textContent = category;
-    button.addEventListener("click", function () {
-      selectCategoryValue.textContent = category;
-      elementToggleFunc(selectCategory);
-      populateProjectDropdown(category);
-    });
-    listItem.appendChild(button);
-    selectCategoryList.appendChild(listItem);
+// add click event to all modal items
+for (let i = 0; i < testimonialsItem.length; i++) {
+
+  testimonialsItem[i].addEventListener("click", function () {
+
+    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
+    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
+    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
+    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
+
+    testimonialsModalFunc();
+
+  });
+
+}
+
+// add click event to modal close button
+modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+overlay.addEventListener("click", testimonialsModalFunc);
+
+
+
+// custom select variables
+const select = document.querySelector("[data-select]");
+const selectItems = document.querySelectorAll("[data-select-item]");
+const selectValue = document.querySelector("[data-selecct-value]");
+const filterBtn = document.querySelectorAll("[data-filter-btn]");
+
+select.addEventListener("click", function () { elementToggleFunc(this); });
+
+// add event in all select items
+for (let i = 0; i < selectItems.length; i++) {
+  selectItems[i].addEventListener("click", function () {
+
+    let selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText;
+    elementToggleFunc(select);
+    filterFunc(selectedValue);
+
   });
 }
 
-// Populate projects dropdown based on selected category
-function populateProjectDropdown(category) {
-  selectProjectList.innerHTML = "";
-  selectProjectValue.textContent = "Select project";
+// filter variables
+const filterItems = document.querySelectorAll("[data-filter-item]");
 
-  if (projectData[category]) {
-    projectData[category].forEach(project => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("select-item");
+const filterFunc = function (selectedValue) {
 
-      const button = document.createElement("button");
-      button.setAttribute("data-select-item", "");
-      button.textContent = project.name;
-      button.addEventListener("click", function () {
-        selectProjectValue.textContent = project.name;
-        elementToggleFunc(selectProject);
-        loadQMDContent(project.url);
-      });
+  for (let i = 0; i < filterItems.length; i++) {
 
-      listItem.appendChild(button);
-      selectProjectList.appendChild(listItem);
-    });
+    if (selectedValue === "all") {
+      filterItems[i].classList.add("active");
+    } else if (selectedValue === filterItems[i].dataset.category) {
+      filterItems[i].classList.add("active");
+    } else {
+      filterItems[i].classList.remove("active");
+    }
+
   }
+
 }
 
-// Toggle dropdowns on click
-selectCategory.addEventListener("click", function () {
-  elementToggleFunc(selectCategory);
-});
+// add event in all filter button items for large screen
+let lastClickedBtn = filterBtn[0];
 
-selectProject.addEventListener("click", function () {
-  elementToggleFunc(selectProject);
-});
+for (let i = 0; i < filterBtn.length; i++) {
 
-// Close dropdowns when clicking outside
-document.addEventListener("click", function(event) {
-  if (!selectCategory.contains(event.target)) selectCategory.classList.remove("active");
-  if (!selectProject.contains(event.target)) selectProject.classList.remove("active");
-});
+  filterBtn[i].addEventListener("click", function () {
 
-// Initialize dropdowns on page load
-document.addEventListener("DOMContentLoaded", function () {
-  populateCategoryDropdown();
-  populateProjectDropdown("all");
-});
+    let selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText;
+    filterFunc(selectedValue);
+
+    lastClickedBtn.classList.remove("active");
+    this.classList.add("active");
+    lastClickedBtn = this;
+
+  });
+
+}
+
+
+
+// contact form variables
+const form = document.querySelector("[data-form]");
+const formInputs = document.querySelectorAll("[data-form-input]");
+const formBtn = document.querySelector("[data-form-btn]");
+
+// add event to all form input field
+for (let i = 0; i < formInputs.length; i++) {
+  formInputs[i].addEventListener("input", function () {
+
+    // check form validation
+    if (form.checkValidity()) {
+      formBtn.removeAttribute("disabled");
+    } else {
+      formBtn.setAttribute("disabled", "");
+    }
+
+  });
+}
+
+
+
+// page navigation variables
+const navigationLinks = document.querySelectorAll("[data-nav-link]");
+const pages = document.querySelectorAll("[data-page]");
+
+// add event to all nav link
+for (let i = 0; i < navigationLinks.length; i++) {
+  navigationLinks[i].addEventListener("click", function () {
+
+    for (let i = 0; i < pages.length; i++) {
+      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
+        pages[i].classList.add("active");
+        navigationLinks[i].classList.add("active");
+        window.scrollTo(0, 0);
+      } else {
+        pages[i].classList.remove("active");
+        navigationLinks[i].classList.remove("active");
+      }
+    }
+
+  });
+}
