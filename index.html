@@ -557,12 +557,12 @@
         
 
       <article class="portfolio" data-page="portfolio">
-
         <header>
-            <h2 class="h2 article-title">Portfolio</h2>
+          <h2 class="h2 article-title">Portfolio</h2>
         </header>
-  
+      
         <section class="projects">
+          <!-- First Filter Dropdown -->
           <div class="filter-select-box">
             <button class="filter-select" data-select>
               <div class="select-value" data-select-value>Select category</div>
@@ -570,7 +570,7 @@
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-  
+      
             <ul class="select-list">
               <li class="select-item">
                 <button data-select-item>All</button>
@@ -583,7 +583,7 @@
               </li>
             </ul>
           </div>
-            
+          
           <!-- Second Filter Dropdown -->
           <div class="filter-select-box">
             <button class="filter-select" data-select2>
@@ -592,7 +592,7 @@
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
             </button>
-              
+      
             <ul class="select-list" data-select2-list>
               <li class="select2-item">
                 <button data-select2-item>All</button>
@@ -605,39 +605,37 @@
               </li>
             </ul>
           </div>
-
+      
+          <!-- Project List -->
           <ul class="project-list">
             <li class="project-item active" data-filter-item data-category="remote sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">
                 <h3 class="project-title">Introduction to Tidyverse</h3>
               </a>
             </li>
-        
+      
             <li class="project-item active" data-filter-item data-category="remote sensing">
               <a href="#" onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">
                 <h3 class="project-title">Image Classification</h3>
               </a>
             </li>
           </ul>
-            
-          <!-- Container for the project content below the project list -->
+      
+          <!-- Project Content (Iframe) -->
           <div id="qmd-container" style="display:none; padding-top: 20px;">
             <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
           </div>
-  
-
+      
           <script>
             function loadQMDContent(url) {
               var iframe = document.getElementById('qmd-iframe');
               iframe.src = url;
               var container = document.getElementById('qmd-container');
               container.style.display = 'block';
-              container.scrollIntoView({behavior: "smooth"});
+              container.scrollIntoView({ behavior: "smooth" });
             }
           </script>
-  
         </section>
-  
       </article>
     
     
