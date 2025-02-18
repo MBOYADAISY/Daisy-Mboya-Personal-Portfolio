@@ -608,38 +608,54 @@
       <article class="blog" data-page="blog">
 
         <header>
-          <h2 class="h2 article-title">Sample Writing</h2>
+            <h2 class="h2 article-title">Sample Writing</h2>
         </header>
-
-        <!-- Blog Posts Dropdown -->
+    
+        <!-- Second button (Project) -->
         <div class="filter-select-box">
-          <button class="filter-select" data-select id="blogButton">
-              <div class="select-value" data-selecct-value>Select a Sample document</div>
-              <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-              </div>
-          </button>
-
-          <ul class="select-list" id="blogList" style="display: none;">
-              <li class="select-item" data-category="design">
-                  <button data-select-item onclick="window.location.href='Landscape%20Ecology/Historical%20data%20and%20Landscape%20patterns.html'">Historical data and landscape patterns</button>
-              </li>
-              <li class="select-item" data-category="design">
-                  <button data-select-item onclick="window.location.href='link-to-blog-2'">Design digest #79</button>
-              </li>
-              <!-- Add more blog options as needed -->
-          </ul>
+            <button class="filter-select" data-select id="projectButton">
+                <div class="select-value" data-select-value>Select project</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
+    
+            <ul class="select-list" id="projectList" style="display: none;">
+                <li class="select-item" data-category="remote sensing">
+                    <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Tidyverse/GEM520_Lab4-assign.html')">Introduction to Tidyverse</button>
+                </li>
+                <li class="select-item" data-category="remote sensing">
+                    <button data-select-item onclick="loadQMDContent('Remote%20Sensing/Supervised%20Image%20Classification/Lab5_classification-assign.html')">Image Classification</button>
+                </li>
+                <li class="select-item" data-category="spatial data analysis">
+                    <button data-select-item onclick="loadQMDContent('Spatial%20Data%20Analysis/SomeOtherProject.html')">Spatial Analysis Example</button>
+                </li>
+                <!-- Add more project options as needed -->
+            </ul>
         </div>
-
+    
+        <!-- Container for the project content -->
+        <div id="qmd-container" style="display:none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
+        </div>
+    
         <script>
-          // Show and hide the dropdown when the button is clicked
-          document.querySelector('#blogButton').addEventListener('click', function() {
-              const blogList = document.querySelector('#blogList');
-              blogList.style.display = (blogList.style.display === 'none' || blogList.style.display === '') ? 'block' : 'none';
-          });
+            // Toggle the project dropdown visibility
+            document.querySelector('#projectButton').addEventListener('click', function() {
+                const projectList = document.querySelector('#projectList');
+                projectList.style.display = (projectList.style.display === 'none' || projectList.style.display === '') ? 'block' : 'none';
+            });
+    
+            // Function to load selected project content
+            function loadQMDContent(url) {
+                const iframe = document.querySelector('#qmd-iframe');
+                iframe.src = url;  // Set the iframe's src to the selected URL
+                document.querySelector('#qmd-container').style.display = 'block';  // Show the container
+            }
         </script>
-
-      </article>
+    
+       </article>
+    
       
       <!--
         - #CONTACT
