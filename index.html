@@ -611,40 +611,33 @@
           <h2 class="h2 article-title">Sample Writing</h2>
         </header>
 
+        <!-- Blog Posts Dropdown -->
         <div class="filter-select-box">
-          <!-- Filter button (Blog Posts) -->
-          <button class="filter-select" data-select>
+          <button class="filter-select" data-select id="blogButton">
               <div class="select-value" data-selecct-value>Select a Blog Post</div>
               <div class="select-icon">
                   <ion-icon name="chevron-down"></ion-icon>
               </div>
           </button>
-      
-          <!-- Dropdown menu -->
-          <div class="dropdown-menu">
-              <ul class="dropdown-list">
-                  <!-- Blog Post 1 -->
-                  <li class="dropdown-item">
-                      <a href="link-to-blog-1" class="dropdown-link">
-                          <div class="dropdown-text">
-                              <h3>The forgotten art of spacing</h3>
-                              <p>Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                          </div>
-                      </a>
-                  </li>
-      
-                  <!-- Blog Post 2 -->
-                  <li class="dropdown-item">
-                      <a href="link-to-blog-2" class="dropdown-link">
-                          <div class="dropdown-text">
-                              <h3>Design digest #79</h3>
-                              <p>Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.</p>
-                          </div>
-                      </a>
-                  </li>
-              </ul>
-          </div>
+
+          <ul class="select-list" id="blogList" style="display: none;">
+              <li class="select-item" data-category="design">
+                  <button data-select-item onclick="window.location.href='link-to-blog-1'">The forgotten art of spacing</button>
+              </li>
+              <li class="select-item" data-category="design">
+                  <button data-select-item onclick="window.location.href='link-to-blog-2'">Design digest #79</button>
+              </li>
+              <!-- Add more blog options as needed -->
+          </ul>
         </div>
+
+        <script>
+          // Show and hide the dropdown when the button is clicked
+          document.querySelector('#blogButton').addEventListener('click', function() {
+              const blogList = document.querySelector('#blogList');
+              blogList.style.display = (blogList.style.display === 'none' || blogList.style.display === '') ? 'block' : 'none';
+          });
+        </script>
 
         <section class="blog-posts">
 
