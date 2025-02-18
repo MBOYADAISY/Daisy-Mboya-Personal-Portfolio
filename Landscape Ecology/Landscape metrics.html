@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Understanding Landscape Metrics and Their Role in Analyzing Landscape Disturbances</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Landscape metrics_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Landscape metrics_files/libs/quarto-html/quarto.js"></script>
+<script src="Landscape metrics_files/libs/quarto-html/popper.min.js"></script>
+<script src="Landscape metrics_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Landscape metrics_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Landscape metrics_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Landscape metrics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Landscape metrics_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Landscape metrics_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Landscape metrics_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Understanding Landscape Metrics and Their Role in Analyzing Landscape Disturbances</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In our rapidly changing world, understanding the impact of disturbances on the environment is crucial for conservation and sustainable land-use planning. One powerful approach for analyzing these changes is the use of landscape metrics - quantitative measures that help us quantify and understand the spatial patterns in landscapes. These metrics are essential for assessing how landscapes are affected by disturbances such as urbanization, deforestation, and natural disasters.</p>
+<section id="what-are-landscape-metrics" class="level5">
+<h5 class="anchored" data-anchor-id="what-are-landscape-metrics"><strong>What Are Landscape Metrics?</strong></h5>
+<p>Landscape metrics are quantitative measures used to describe the structure, composition, and configuration of landscapes. They offer insights into how different land cover types, such as forests, urban areas, and water bodies, are spatially distributed and how these patterns change over time. These metrics help us understand the spatial arrangement of landscape features, how they interact, and the implications of disturbances or changes to the landscape.</p>
+</section>
+<section id="three-main-categories-of-landscape-metrics" class="level5">
+<h5 class="anchored" data-anchor-id="three-main-categories-of-landscape-metrics"><strong>Three Main Categories of Landscape Metrics:</strong></h5>
+<ol type="1">
+<li><p>Patch-based Metrics</p></li>
+<li><p>Class-Based Metrics</p></li>
+<li><p>Landscape-Based Metrics</p></li>
+</ol>
+<p>These categories help break down the complexity of landscape dynamics and provide distinct ways to understand how disturbances—whether human-induced or natural—affect landscape structure and function. Let’s explore these categories in more detail</p>
+<section id="patch-based-metrics" class="level6">
+<h6 class="anchored" data-anchor-id="patch-based-metrics"><strong>1. Patch-Based Metrics</strong></h6>
+<p>Patch-based metrics focus on individual patches within the landscape. Patches are discrete areas with uniform land cover types, and these metrics assess their size, shape, and distribution across the landscape. The key patch-based metrics include:</p>
+<p><strong>Patch Size</strong></p>
+<p>The size of a patch can greatly affect ecological processes. Larger patches tend to have more complex ecosystems, greater biodiversity, and can support more species. Conversely, smaller patches are more vulnerable to edge effects and may have reduced ecosystem functions.</p>
+<ul>
+<li><strong>Impact of Disturbances</strong>: Urbanization, logging, or agriculture often reduce patch size, leading to fragmentation. For example, clearing a forest for urban development might result in smaller patches of forest, reducing the available habitat for species.</li>
+</ul>
+<p><strong>Patch Density (PD)</strong></p>
+<p>Patch density refers to the number of patches of a given land cover type within a specific area. It helps measure how fragmented a landscape is. Higher patch density indicates greater fragmentation and potentially a more disturbed landscape.</p>
+<p><strong>Formula for Patch Density:</strong></p>
+<p><span class="math display">\[
+PD = \frac{N}{A}
+\]</span></p>
+<p>Where:</p>
+<p><span class="math display">\[N = \text{Number of patches of a given land cover type}\]</span></p>
+<p><span class="math display">\[A = \text{Total area of the landscape}\]</span></p>
+<ul>
+<li><strong>Impact of Disturbances</strong>: A growing urban area might increase patch density of forests and green spaces, making them smaller and more isolated. Increased fragmentation might also limit wildlife movement and reduce species diversity.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>The spread of urbanization can fragment a once-continuous forest, creating isolated patches of green spaces scattered across the urban landscape. These isolated patches often have less biodiversity due to the disruption of species’ habitats and migration routes.</p>
+<p><strong>Shape Complexity (e.g., Shape Index)</strong></p>
+<p>Metrics that assess the shape of patches, like the Shape Index, are useful for understanding how irregular or complex the patches are. More complex shapes might be associated with a higher degree of disturbance, as natural landscapes tend to have more regular, simple shapes.</p>
+</section>
+<section id="class-based-metrics" class="level6">
+<h6 class="anchored" data-anchor-id="class-based-metrics"><strong>2. Class-Based Metrics</strong></h6>
+<p>Class-based metrics focus on the composition of the landscape, particularly the proportion of different land cover types. This provides a broader view of the landscape’s overall structure.</p>
+<p><strong>Class Proportions</strong></p>
+<p>Class proportions represent the percentage of each land cover type within the entire landscape. This helps identify the dominance or scarcity of certain land cover classes, such as forests, urban areas, or wetlands.</p>
+<p><strong>Formula for Class Proportions:</strong></p>
+<p>\text{Class Proportion} = \frac{\text{Area of Class}}{\text{Total Landscape Area}}</p>
+<ul>
+<li><strong>Impact of Disturbances</strong>: When a landscape experiences deforestation, urbanization, or agricultural expansion, the proportion of forests or wetlands might decrease, and the proportion of urban or agricultural land may increase. This change can significantly affect biodiversity, ecosystem services, and local climate conditions.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>If forests are cleared to make way for agricultural land, the proportion of forested land in the landscape will decrease, leading to habitat loss for species that depend on forests. This reduction in forested area might also decrease carbon sequestration capacity and disrupt local water cycles.</p>
+<p><strong>Shannon’s Diversity Index (SHDI)</strong></p>
+<p>The Shannon’s Diversity Index quantifies the diversity of land cover types within the landscape. A higher index indicates a more diverse landscape, which is generally more resilient to disturbances and capable of supporting a wider range of species.</p>
+<p><strong>Formula for Shannon’s Diversity Index:</strong></p>
+<p><span class="math display">\[
+SHDI = -\sum_{i=1}^{n}p_i\cdot\ln(p_i)
+\]</span></p>
+<p>Where:</p>
+<p><span class="math display">\[p_i = \text{Proportion of the landscape occupied by the land cover class}\ i\]</span></p>
+<p><span class="math display">\[n = \text{Total number of land cover classes}\]</span></p>
+<ul>
+<li><strong>Impact of Disturbances</strong>: Disturbances like urban sprawl and agricultural conversion often reduce diversity by favoring monoculture or simplified land cover types (e.g., urban land replaces diverse ecosystems like forests or wetlands).</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>When forests are converted into monocultural agricultural plots, biodiversity is significantly reduced, lowering the Shannon index and indicating a loss of landscape resilience.</p>
+</section>
+<section id="landscape-based-metrics" class="level6">
+<h6 class="anchored" data-anchor-id="landscape-based-metrics"><strong>3. Landscape-Based Metrics</strong></h6>
+<p>Landscape-based metrics assess the overall structure and arrangement of patches across the entire landscape, focusing on connectivity, fragmentation, and spatial arrangement. These metrics are particularly useful for understanding how landscapes are connected or fragmented, which is essential for species movement, ecosystem function, and biodiversity conservation.</p>
+<p><strong>Landscape Connectivity (LC)</strong></p>
+<p>Connectivity metrics examine how well different habitat patches are connected to one another, either through corridors or shared boundaries. Higher connectivity promotes species movement, while fragmentation can isolate populations and reduce gene flow.</p>
+<p><strong>Example</strong>: In a landscape with fragmented patches of forest, roads or urban areas might form barriers that prevent wildlife from moving freely between habitats. This isolation can reduce the genetic diversity of species and hinder ecosystem processes like pollination or seed dispersal.</p>
+<p><strong>Example:</strong></p>
+<p>Consider a landscape with patches of forest and urban areas separated by roads. These roads can act as barriers, making it difficult for wildlife to move between patches. This disruption can lead to genetic isolation of animal populations, reducing their ability to adapt to environmental changes.</p>
+<p><strong>Edge Density (ED)</strong></p>
+<p>Edge density is the amount of edge (boundary) between different land cover types per unit area of landscape. Higher edge density often indicates increased fragmentation and more boundary areas where different ecosystems meet, which may have different environmental conditions.</p>
+<p><strong>Formula for Edge Density:</strong></p>
+<p><span class="math display">\[
+ED = \frac{\sum_{i=1}^{N} E_{\text{patch}\ i}}{A}
+\]</span></p>
+<p>Where:</p>
+<p><span class="math display">\[E_{\text{patch}\ i} = \text{Length of the edge of patch}\ i\]</span></p>
+<p><span class="math display">\[A = \text{Total area of the landscape}\]</span></p>
+<ul>
+<li><strong>Impact of Disturbances</strong>: Urbanization, agricultural expansion, and deforestation often lead to an increase in edge density. For example, a forest fragmented by roads and urban sprawl will have more edge areas where species are more exposed to disturbances like pollution, invasive species, or predation.</li>
+</ul>
+<p><strong>The Role of the ‘Historical’ and ‘LandscapePattern’ Classes</strong></p>
+<p>The <strong>Historical</strong> and <strong>LandscapePattern</strong> classes provide powerful tools for tracking changes in landscape structure over time and calculating various landscape metrics.</p>
+<p><strong>Historical Class:</strong></p>
+<p>The Historical class helps us look at how landscapes have evolved over time, identifying how disturbances, land-use changes, or natural events have altered the structure and composition of the landscape. By using this class, we can examine past disturbances and their impacts on the landscape’s patchwork, size, and connectivity. This allows for predictions on how similar disturbances may affect landscapes in the future.</p>
+<p><strong>LandscapePattern Class:</strong></p>
+<p>The LandscapePattern class is useful for calculating key landscape metrics like patch density, edge density, and diversity. This class enables us to analyze both the structure and function of a landscape, helping to determine how well different land cover types are distributed and connected within the broader landscape context.</p>
+<p>By applying these tools, we can track how landscape patterns evolve over time in response to disturbances, providing insights into their long-term effects on ecosystems.</p>
+<p><strong>Conclusion</strong></p>
+<p>Landscape metrics provide a comprehensive framework for understanding how disturbances impact landscapes and ecosystems. By analyzing patch size, land cover composition, and landscape connectivity, we gain insights into the resilience of landscapes and their ability to support biodiversity. These metrics are not just theoretical—they have real-world applications in conservation, urban planning, and environmental management.</p>
+<p>Using tools like the Historical and LandscapePattern classes, we can better understand how landscapes have changed over time and how they might change in the future. By quantifying the impact of disturbances, we can develop strategies for mitigating their effects and promoting sustainable land-use practices that preserve ecosystem services and biodiversity.</p>
+<p>In conclusion, analyzing landscape metrics allows us to see beyond the surface and understand the intricate web of interactions that shape our environment. Whether it’s through tracking changes in forest cover, assessing urban sprawl, or monitoring habitat fragmentation, landscape metrics offer a scientific approach to managing and conserving our landscapes for future generations.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
