@@ -605,41 +605,64 @@
         - #BLOG
       -->
       
+      <!--
+        - #BLOG
+      -->
       <article class="blog" data-page="blog">
 
         <header>
           <h2 class="h2 article-title">Sample Writing</h2>
         </header>
 
-        <!-- Blog Posts Dropdown -->
-        <div class="filter-select-box">
-          <button class="filter-select" data-select id="blogButton">
-              <div class="select-value" data-selecct-value>Select a Sample document</div>
-              <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-              </div>
-          </button>
+        <section class="projects">
 
-          <ul class="select-list" id="blogList" style="display: none;">
-              <li class="select-item" data-category="design">
-                  <button data-select-item onclick="window.location.href='Landscape%20Ecology/Historical%20data%20and%20Landscape%20patterns.html'">Historical data and landscape patterns</button>
-              </li>
-              <li class="select-item" data-category="design">
-                  <button data-select-item onclick="window.location.href='link-to-blog-2'">Design digest #79</button>
-              </li>
-              <!-- Add more blog options as needed -->
-          </ul>
-        </div>
+          <!-- Blog Posts Dropdown -->
+          <div class="filter-select-box">
+            <button class="filter-select" data-select id="blogButton">
+                <div class="select-value" data-selecct-value>Select a Sample Document</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
 
-        <script>
-          // Show and hide the dropdown when the button is clicked
-          document.querySelector('#blogButton').addEventListener('click', function() {
-              const blogList = document.querySelector('#blogList');
-              blogList.style.display = (blogList.style.display === 'none' || blogList.style.display === '') ? 'block' : 'none';
-          });
-        </script>
+            <ul class="select-list" id="blogList" style="display: none;">
+                <li class="select-item" data-category="design">
+                    <button data-select-item onclick="loadBlogContent('Landscape%20Ecology/Historical%20data%20and%20Landscape%20patterns.html')">Historical data and landscape patterns</button>
+                </li>
+                <li class="select-item" data-category="design">
+                    <button data-select-item onclick="loadBlogContent('link-to-blog-2')">Design digest #79</button>
+                </li>
+                <!-- Add more blog options as needed -->
+            </ul>
+          </div>
+
+          <!-- Container for Blog Content -->
+          <div id="blog-container" style="display:none; padding-top: 20px;">
+            <iframe id="blog-iframe" width="100%" height="800px" frameborder="0"></iframe>
+          </div>
+
+        </section>
 
       </article>
+
+      <script>
+        // Toggle the blog dropdown
+        document.getElementById('blogButton').addEventListener('click', function() {
+          var blogList = document.getElementById('blogList');
+          blogList.style.display = blogList.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Load the selected blog post content into the iframe
+        function loadBlogContent(url) {
+          var iframe = document.getElementById('blog-iframe');
+          iframe.src = url;  // Set iframe source to the selected blog URL
+          var container = document.getElementById('blog-container');
+          container.style.display = 'block';  // Show the container
+          container.scrollIntoView({behavior: "smooth"});  // Scroll down to the blog container
+          document.getElementById('blogList').style.display = 'none';  // Hide the dropdown
+        }
+      </script>
+
       
       <!--
         - #CONTACT
