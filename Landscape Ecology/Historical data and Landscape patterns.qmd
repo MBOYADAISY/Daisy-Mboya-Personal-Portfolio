@@ -35,7 +35,7 @@ Class-based metrics shift our focus to the overall composition of the landscape,
 
 Landscape-based metrics take a holistic view, examining the overall structure and arrangement of patches across the entire landscape. They focus on connectivity, fragmentation, and spatial arrangement.
 
--    Landscape Connectivity: This metric assesses how well different habitat patches are connected. High connectivity allows for species movement and gene flow, while fragmentation can isolate populations and reduce biodiversity. Imagine a network of interconnected parks and green spaces within a city – this promotes connectivity for wildlife.
+-   Landscape Connectivity: This metric assesses how well different habitat patches are connected. High connectivity allows for species movement and gene flow, while fragmentation can isolate populations and reduce biodiversity. Imagine a network of interconnected parks and green spaces within a city – this promotes connectivity for wildlife.
 
 -   Edge Density: This measures the amount of edge (boundary) between different land cover types. High edge density often indicates fragmentation and can create challenges for species that rely on interior habitat. Think of the boundary between a forest and a field – this is an edge. A fragmented forest will have a higher edge density than a contiguous forest.
 

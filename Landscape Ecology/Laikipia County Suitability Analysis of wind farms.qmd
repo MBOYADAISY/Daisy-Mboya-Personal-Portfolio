@@ -1,0 +1,20 @@
+---
+format: html
+editor: visual
+---
+
+##### Location of Suitable sites for Wind Farms in Laikipia County,Kenya
+
+###### **Abstract**
+
+In Kenya, a wide gap exists between wind resource and actual energy production, and it is imperative to expand the wind energy development, being cleaner and climate-friendly. Because of the formidable costs associated with wind energy development, the locations for new wind turbines need to be carefully selected to provide the greatest benefit for a given investment. In this study, the adopted siting criteria were identified based on expert opinion and literature review, a relevant GIS database was created and a GIS-based multi-criteria approach developed to identify the areas that are best suited for wind energy development in Laikipia County, Kenya. The adopted multi-criteria approach utilizes AHP to determine weights of the siting criteria (factors and constraints) and develops a composite suitability map from single-factor maps representing these criteria.
+
+The developed decision support tool is capable of identifying priority areas for wind farm development with the results of this work indicating approximately 3.24% of the total study area being of high suitability, 31.07% of medium suitability and 3.04% of low suitability. A follow up study can be conducted to find out the community response to any potential wind installation on their land, as the approach selected could help support sustainable spatial policy development on all levels of public administration related to renewable resources use.
+
+###### Methodology
+
+###### Key Findings
+
+###### Conclusion
+
+###### 
