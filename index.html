@@ -605,41 +605,74 @@
         - #BLOG
       -->
       
+      <!-- BLOG -->
       <article class="blog" data-page="blog">
 
         <header>
-          <h2 class="h2 article-title">Sample Writing</h2>
+            <h2 class="h2 article-title">Sample Writing</h2>
         </header>
 
         <!-- Blog Posts Dropdown -->
         <div class="filter-select-box">
-          <button class="filter-select" data-select id="blogButton">
-              <div class="select-value" data-selecct-value>Select a Sample document</div>
-              <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-              </div>
-          </button>
+            <button class="filter-select" data-select id="blogButton">
+                <div class="select-value" data-select-value>Select a Sample document</div>
+                <div class="select-icon">
+                    <ion-icon name="chevron-down"></ion-icon>
+                </div>
+            </button>
 
-          <ul class="select-list" id="blogList" style="display: none;">
-              <li class="select-item" data-category="design">
-                  <button data-select-item onclick="window.location.href='Landscape%20Ecology/Historical%20data%20and%20Landscape%20patterns.html'">Historical data and landscape patterns</button>
-              </li>
-              <li class="select-item" data-category="design">
-                  <button data-select-item onclick="window.location.href='link-to-blog-2'">Design digest #79</button>
-              </li>
-              <!-- Add more blog options as needed -->
-          </ul>
+            <ul class="select-list" id="blogList" style="display: none;">
+                <li class="select-item">
+                    <button data-select-item onclick="loadBlogContent('Historical data and landscape patterns')">Historical data and landscape patterns</button>
+                </li>
+                <li class="select-item">
+                    <button data-select-item onclick="loadBlogContent('Design digest #79')">Design digest #79</button>
+                </li>
+                <!-- Add more blog options as needed -->
+            </ul>
+        </div>
+
+        <!-- Container for the project content -->
+        <div id="qmd-container" style="display: none; padding-top: 20px;">
+            <iframe id="qmd-iframe" width="100%" height="800px" frameborder="0"></iframe>
         </div>
 
         <script>
-          // Show and hide the dropdown when the button is clicked
-          document.querySelector('#blogButton').addEventListener('click', function() {
-              const blogList = document.querySelector('#blogList');
-              blogList.style.display = (blogList.style.display === 'none' || blogList.style.display === '') ? 'block' : 'none';
-          });
+            // Toggle the blog dropdown
+            document.getElementById('blogButton').addEventListener('click', function() {
+                var blogList = document.getElementById('blogList');
+                blogList.style.display = blogList.style.display === 'none' ? 'block' : 'none';
+            });
+
+            // Load the selected blog content in iframe
+            function loadBlogContent(blogTitle) {
+                var iframe = document.getElementById('qmd-iframe');
+                var container = document.getElementById('qmd-container');
+
+                // Example content based on selection
+                if (blogTitle === 'Historical data and landscape patterns') {
+                    iframe.srcdoc = `
+                        <h3>${blogTitle}</h3>
+                        <p>This is the content for Historical data and landscape patterns.</p>
+                        <!-- Add more content as needed -->
+                    `;
+                } else if (blogTitle === 'Design digest #79') {
+                    iframe.srcdoc = `
+                        <h3>${blogTitle}</h3>
+                        <p>This is the content for Design digest #79.</p>
+                        <!-- Add more content as needed -->
+                    `;
+                }
+
+                // Show the iframe container
+                container.style.display = 'block';
+                container.scrollIntoView({behavior: "smooth"});
+                document.getElementById('blogList').style.display = 'none';
+            }
         </script>
 
       </article>
+
       
       <!--
         - #CONTACT
