@@ -1031,6 +1031,18 @@ main {
   font-weight: var(--fw-300);
 }
 
+/* Add styling for text justification and font */
+p {
+  text-align: justify; /* Justifies the text */
+  font-family: 'Times New Roman', serif; /* Sets font to Times New Roman */
+  font-size: 12pt; /* Font size set to 12pt */
+}
+
+/* Optionally, you can apply the same font and size to headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Times New Roman', serif;
+  font-size: 12pt;
+}
 
 
 
