@@ -1,8 +1,6 @@
 ---
 author: "Mboya Daisy"
 format: html
-toc: true
-toc-depth: 5
 editor: visual
 fontsize: 12pt
 bibliography: references.bib
