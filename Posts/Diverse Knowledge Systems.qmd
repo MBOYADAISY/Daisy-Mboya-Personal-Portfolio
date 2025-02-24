@@ -2,8 +2,6 @@
 author: "Mboya Daisy"
 date: "2 October 2024"
 format: html
-toc: true
-toc-depth: 5
 editor: visual
 fontsize: 12pt
 ---
