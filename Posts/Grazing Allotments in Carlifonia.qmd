@@ -27,11 +27,10 @@ The analysis was conducted using Python, leveraging ArcPy, GeoPandas, and Matp
 
 To begin, the analysis required several key libraries.
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## Python
 
-``` {.python}
+``` python
 import arcpy
 import os
 import geopandas as gpd
@@ -47,16 +46,14 @@ output_directory = os.path.join(data_dir_path, "Output")
 # Set ArcPy environment to allow overwriting
 arcpy.env.overwriteOutput = True
 ```
-
 :::
 
 Next, a geodatabase was created to store the results of the analysis
 
-:::{.panel-tabset}
-
+::: panel-tabset
 ## Python
 
-``` {.python}
+``` python
 try:
     # Check if geodatabase exists and delete if it does
     if arcpy.Exists(output_gdb):
@@ -69,12 +66,11 @@ except arcpy.ExecuteError:
 except Exception as e:
     print(f"General error: {e}")
 ```
-
 :::
 
 With the geodatabase prepared, the next step was to populate it with the input data.
 
-```{.panel-tabset}
+``` panel-tabset
 
 ## Python
 
@@ -90,7 +86,7 @@ for shapefile_dir in shapefile_paths:
 
 To perform the spatial analysis, feature layers were created, and grazing areas without river access were selected.
 
-```{.panel-tabset}
+``` panel-tabset
 
 ## Python
 
@@ -106,7 +102,7 @@ arcpy.CopyFeatures_management("Allotment_area_layer", grazing_area_without_river
 
 To analyze the selected areas, their names and sizes were extracted and then sorted
 
-```{.panel-tabset}
+``` panel-tabset
 
 ## Python
 
@@ -122,7 +118,7 @@ sorted_grazing_area = sorted(grazing_area_with_area, key=lambda x: x[1], reverse
 
 Finally, to visualize the results, a bar chart of the top 10 largest grazing areas without river access was generated.
 
-```{.panel-tabset}
+``` panel-tabset
 
 ## Python
 
@@ -144,7 +140,7 @@ plt.savefig(os.path.join(data_dir_path, "top_10_grazing_areas_plot.png"))
 
 A spatial distribution map of the to 10 largest grazing areas across carlifonia without river access was generated
 
-```{.panel-tabset}
+``` panel-tabset
 
 ## Python
 
