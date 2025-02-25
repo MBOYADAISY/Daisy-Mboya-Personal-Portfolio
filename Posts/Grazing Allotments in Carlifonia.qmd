@@ -27,7 +27,11 @@ The analysis was conducted using Python, leveraging ArcPy, GeoPandas, and Matp
 
 To begin, the analysis required several key libraries.
 
-```{python}
+::: {.panel-tabset}
+
+## Python
+
+``` {.python}
 import arcpy
 import os
 import geopandas as gpd
@@ -44,9 +48,15 @@ output_directory = os.path.join(data_dir_path, "Output")
 arcpy.env.overwriteOutput = True
 ```
 
+:::
+
 Next, a geodatabase was created to store the results of the analysis
 
-```{python}
+:::{.panel-tabset}
+
+## Python
+
+``` {.python}
 try:
     # Check if geodatabase exists and delete if it does
     if arcpy.Exists(output_gdb):
@@ -60,9 +70,15 @@ except Exception as e:
     print(f"General error: {e}")
 ```
 
+:::
+
 With the geodatabase prepared, the next step was to populate it with the input data.
 
-```{python}
+```{.panel-tabset}
+
+## Python
+
+
 # Copy shapefiles to geodatabase
 shapefile_paths = [grazing_area_shapefile_path, rivers_shapefile_path]
 for shapefile_dir in shapefile_paths:
@@ -74,7 +90,10 @@ for shapefile_dir in shapefile_paths:
 
 To perform the spatial analysis, feature layers were created, and grazing areas without river access were selected.
 
-```{python}
+```{.panel-tabset}
+
+## Python
+
 # Create feature layers
 arcpy.MakeFeatureLayer_management("California_Allotments", "Allotment_area_layer")
 arcpy.MakeFeatureLayer_management("California_Rivers", "Rivers_layer")
@@ -87,7 +106,10 @@ arcpy.CopyFeatures_management("Allotment_area_layer", grazing_area_without_river
 
 To analyze the selected areas, their names and sizes were extracted and then sorted
 
-```{python}
+```{.panel-tabset}
+
+## Python
+
 # Retrieve grazing area names and sizes
 grazing_area_with_area = []
 with arcpy.da.SearchCursor(grazing_area_without_rivers, ["ALLOTMENT_", "Shape_Area"]) as cursor:
@@ -100,7 +122,10 @@ sorted_grazing_area = sorted(grazing_area_with_area, key=lambda x: x[1], reverse
 
 Finally, to visualize the results, a bar chart of the top 10 largest grazing areas without river access was generated.
 
-```{python}
+```{.panel-tabset}
+
+## Python
+
 # Plot top 10 grazing areas
 plt.figure(figsize=(12, 6))
 top_10_names = [area[0] for area in sorted_grazing_area[:10]]
@@ -119,7 +144,10 @@ plt.savefig(os.path.join(data_dir_path, "top_10_grazing_areas_plot.png"))
 
 A spatial distribution map of the to 10 largest grazing areas across carlifonia without river access was generated
 
-```{python}
+```{.panel-tabset}
+
+## Python
+
 # Reproject to UTM Zone 10N
 utm_spatial_ref = arcpy.SpatialReference(32610)
 output_utm_fc = os.path.join(output_directory, "grazing_area_without_rivers_UTM.shp")

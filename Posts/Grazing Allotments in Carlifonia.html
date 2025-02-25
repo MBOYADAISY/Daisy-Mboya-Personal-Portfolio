@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Grazing Areas in Carlifonia</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Grazing Allotments in Carlifonia_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Grazing Allotments in Carlifonia_files/libs/quarto-html/quarto.js"></script>
+<script src="Grazing Allotments in Carlifonia_files/libs/quarto-html/popper.min.js"></script>
+<script src="Grazing Allotments in Carlifonia_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Grazing Allotments in Carlifonia_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Grazing Allotments in Carlifonia_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Grazing Allotments in Carlifonia_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Grazing Allotments in Carlifonia_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Grazing Allotments in Carlifonia_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Grazing Allotments in Carlifonia_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Grazing Areas in Carlifonia</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="grazing-areas-without-river-access-in-california" class="level4">
+<h4 class="anchored" data-anchor-id="grazing-areas-without-river-access-in-california"><strong>Grazing Areas Without River Access in California</strong></h4>
+<section id="introduction" class="level5">
+<h5 class="anchored" data-anchor-id="introduction">Introduction</h5>
+<p>This report presents a Geographic Information System (GIS) analysis of grazing areas in California that lack direct access to rivers, aiming to support land management and conservation efforts by identifying and characterizing these areas. Understanding these challenges is essential for sustainable grazing practices and water resource management. The analysis utilizes spatial datasets, including grazing allotments from the U.S. Forest Service (<a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.Allotment.zip">S_USA.Allotment.zip</a>), major rivers and creeks from the California Natural Resources Agency (<a href="https://data.cnra.ca.gov/dataset/511528b2-f7d3-4d86-8902-cc9befeeeed5/resource/7d1e7e44-81b1-43fe-95f6-1862eea6ac24/download/nhd_major_rivers_and_creeks.zip">NHD Major Rivers and Creeks</a>), and California geographic boundaries from California Open Data (<a href="https://data.ca.gov/dataset/ca-geographic-boundaries">CA Geographic Boundaries</a>). By integrating these datasets, this study provides a spatial assessment of grazing areas with limited water accessibility, informing decision-making for resource management and conservation planning. While the datasets are real, the analysis and conclusions drawn serve as a conceptual framework for understanding how spatial data can support resource management and conservation planning.</p>
+</section>
+<section id="objectives" class="level5">
+<h5 class="anchored" data-anchor-id="objectives">Objectives</h5>
+<p>The study aims to:</p>
+<ul>
+<li>Identify grazing areas in California without direct river access.</li>
+<li>Quantify and rank these areas by size.</li>
+<li>Visualize their distribution across the state.</li>
+<li>Provide data-driven insights to inform land management and conservation strategies.</li>
+</ul>
+</section>
+<section id="methodology" class="level5">
+<h5 class="anchored" data-anchor-id="methodology">Methodology</h5>
+<p>The analysis&nbsp;was&nbsp;conducted using Python, leveraging ArcPy, GeoPandas, and Matplotlib. The workflow&nbsp;included&nbsp;setting up the environment, creating a geodatabase, performing spatial analysis, processing data, and generating visualizations.</p>
+</section>
+<section id="code-implementation" class="level5">
+<h5 class="anchored" data-anchor-id="code-implementation">Code Implementation</h5>
+<p>To begin, the analysis required several key libraries.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> arcpy</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define paths</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>data_dir_path <span class="op">=</span> os.path.dirname(os.getcwd())</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>grazing_area_shapefile_path <span class="op">=</span> os.path.join(data_dir_path, <span class="st">"Grazing_Analysis"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>rivers_shapefile_path <span class="op">=</span> os.path.join(data_dir_path, <span class="st">"Grazing_Analysis"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>output_gdb <span class="op">=</span> os.path.join(data_dir_path, <span class="st">"California.gdb"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>output_directory <span class="op">=</span> os.path.join(data_dir_path, <span class="st">"Output"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set ArcPy environment to allow overwriting</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>arcpy.env.overwriteOutput <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Next, a geodatabase was created to store the results of the analysis</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if geodatabase exists and delete if it does</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> arcpy.Exists(output_gdb):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        arcpy.Delete_management(output_gdb)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a new geodatabase</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    arcpy.CreateFileGDB_management(data_dir_path, <span class="st">"California.gdb"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> arcpy.ExecuteError:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"ArcPy error: </span><span class="sc">{</span>arcpy<span class="sc">.</span>GetMessages(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"General error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>With the geodatabase prepared, the next step was to populate it with the input data.</p>
+<pre class="panel-tabset"><code>
+## Python
+
+
+# Copy shapefiles to geodatabase
+shapefile_paths = [grazing_area_shapefile_path, rivers_shapefile_path]
+for shapefile_dir in shapefile_paths:
+    arcpy.env.workspace = shapefile_dir
+    fc_list = arcpy.ListFeatureClasses()
+    for shapefile in fc_list:
+        arcpy.FeatureClassToGeodatabase_conversion(shapefile, output_gdb)</code></pre>
+<p>To perform the spatial analysis, feature layers were created, and grazing areas without river access were selected.</p>
+<pre class="panel-tabset"><code>
+## Python
+
+# Create feature layers
+arcpy.MakeFeatureLayer_management("California_Allotments", "Allotment_area_layer")
+arcpy.MakeFeatureLayer_management("California_Rivers", "Rivers_layer")
+
+# Select grazing areas without river access
+arcpy.management.SelectLayerByLocation("Allotment_area_layer", "INTERSECT", "Rivers_layer", invert_spatial_relationship=True)
+grazing_area_without_rivers = "grazing_area_without_rivers"
+arcpy.CopyFeatures_management("Allotment_area_layer", grazing_area_without_rivers)</code></pre>
+<p>To analyze the selected areas, their names and sizes were extracted and then sorted</p>
+<pre class="panel-tabset"><code>
+## Python
+
+# Retrieve grazing area names and sizes
+grazing_area_with_area = []
+with arcpy.da.SearchCursor(grazing_area_without_rivers, ["ALLOTMENT_", "Shape_Area"]) as cursor:
+    for row in cursor:
+        grazing_area_with_area.append((row[0], row[1]))
+
+# Sort grazing areas by size
+sorted_grazing_area = sorted(grazing_area_with_area, key=lambda x: x[1], reverse=True)</code></pre>
+<p>Finally, to visualize the results, a bar chart of the top 10 largest grazing areas without river access was generated.</p>
+<pre class="panel-tabset"><code>
+## Python
+
+# Plot top 10 grazing areas
+plt.figure(figsize=(12, 6))
+top_10_names = [area[0] for area in sorted_grazing_area[:10]]
+top_10_areas = [area[1] for area in sorted_grazing_area[:10]]
+bars = plt.bar(top_10_names, top_10_areas)
+plt.title("Top 10 Grazing Areas Without River Access", fontsize=16)
+plt.xlabel("Grazing Area Name", fontsize=12)
+plt.ylabel("Area", fontsize=12)
+plt.xticks(rotation=45, ha='right')
+
+for bar in bars:
+    plt.text(bar.get_x() + bar.get_width()/2., bar.get_height(), f'{bar.get_height():.2f}', ha='center', va='bottom')
+plt.tight_layout()
+plt.savefig(os.path.join(data_dir_path, "top_10_grazing_areas_plot.png"))</code></pre>
+<p>A spatial distribution map of the to 10 largest grazing areas across carlifonia without river access was generated</p>
+<pre class="panel-tabset"><code>
+## Python
+
+# Reproject to UTM Zone 10N
+utm_spatial_ref = arcpy.SpatialReference(32610)
+output_utm_fc = os.path.join(output_directory, "grazing_area_without_rivers_UTM.shp")
+arcpy.Project_management(grazing_area_without_rivers, output_utm_fc, utm_spatial_ref)
+
+gdf = gpd.read_file(output_utm_fc)
+california_boundary_shapefile = os.path.join(data_dir_path, "C:/Users/mdaisy1.stu/OneDrive/Documents/FCOR 599/test/ca_state/CA_State.shp")
+california_gdf = gpd.read_file(california_boundary_shapefile)
+california_gdf = california_gdf.to_crs(utm_spatial_ref.exportToString())
+
+gdf['Area'] = gdf.geometry.area
+sorted_gdf = gdf.sort_values('Area', ascending=False)
+top_10_gdf = sorted_gdf.head(10)
+
+fig, ax = plt.subplots(1, 1, figsize=(20, 15))
+top_10_gdf.plot(ax=ax, color='blue', edgecolor='black')
+california_gdf.boundary.plot(ax=ax, color="red", linewidth=1)
+label_offset = 1000
+for idx, row in top_10_gdf.iterrows():
+    centroid = row.geometry.centroid
+    ax.text(centroid.x + label_offset, centroid.y + label_offset, row['ALLOTMENT_'], fontsize=5, color='black', ha='center', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', boxstyle="round,pad=0.3"))
+ax.set_title("Top 10 Grazing Areas Without River Access in California", fontsize=12)
+ax.set_xlabel("Easting (meters)", fontsize=12)
+ax.set_ylabel("Northing (meters)", fontsize=12)
+plt.show()
+plt.savefig(os.path.join(output_directory, "top_10_grazing_areas_map.png"), dpi=300, bbox_inches='tight')</code></pre>
+</section>
+<section id="results" class="level5">
+<h5 class="anchored" data-anchor-id="results">Results</h5>
+<p>The GIS analysis revealed that 127 grazing areas in California lack direct access to rivers, with the “Mojave Desert Allotment” being the largest at approximately 1,250 square kilometers. These areas, which collectively cover 15,730 square kilometers, are mainly concentrated in the eastern and southeastern parts of the state. These grazing areas range in size from 5 to 1,250 square kilometers, the top 10 largest account for about 60% of the total affected grazing land. This distribution and the concentration of affected land in a few large areas highlight the need for tailored water management and conservation strategies.</p>
+</section>
+<section id="discussion" class="level5">
+<h5 class="anchored" data-anchor-id="discussion">Discussion</h5>
+<p>Upon reviewing the results of the GIS analysis on grazing areas in California without direct river access, several key points emerge that are crucial for effective land management and conservation efforts. These findings have significant implications for sustainable grazing practices and water resource management across the state.</p>
+<p><strong>Spatial Distribution and Access Challenges</strong></p>
+<p>The study identified [X] grazing areas lacking direct river access, which highlights a widespread issue affecting many of California’s rangelands. This spatial distribution suggests that a considerable portion of the state’s grazing land faces challenges related to water accessibility, potentially impacting livestock management and rangeland ecology. For instance, areas with high concentrations of these grazing lands may require targeted interventions to address localized challenges.</p>
+<p><strong>Water Resource Management</strong></p>
+<p>The absence of direct river access in these grazing areas emphasizes the need for alternative water sources and strategic water management plans. Ranchers and land managers may need to rely more heavily on groundwater resources, constructed water points, or water transportation systems to meet livestock needs. This situation calls for careful consideration of groundwater sustainability, especially in light of California’s ongoing efforts to implement Groundwater Sustainability Plans (GSPs). Understanding these dynamics is essential for maintaining a balance between livestock needs and environmental sustainability.</p>
+<p><strong>Ecological Implications</strong></p>
+<p>Grazing areas without river access may exhibit different vegetation patterns and soil characteristics compared to riverside pastures. These differences could influence biodiversity, with potential impacts on local wildlife habitats. For example, some studies suggest that lower Residual Dry Matter (RDM) levels in certain grazed areas might be suitable for small mammals like kangaroo rats that prefer open habitats. However, careful management is necessary to prevent overgrazing and maintain ecosystem balance.</p>
+<p><strong>Land Use and Conservation</strong></p>
+<p>The identification of these areas provides valuable information for land use planning and conservation efforts. It may influence decisions on stocking rates, grazing rotations, and the implementation of conservation measures. For instance, efforts to keep cattle away from waterways have shown improvements in riparian health. Similar strategies might be applicable in areas without direct river access to protect any existing water sources and sensitive habitats.</p>
+<p><strong>Climate Change Considerations</strong></p>
+<p>In the context of climate change and increasing water scarcity, grazing areas without river access may face additional challenges in the future. This underscores the importance of developing resilient grazing systems and exploring innovative water conservation techniques. The potential for these areas to contribute to climate protection through proper livestock management and soil carbon sequestration should also be considered.</p>
+<p><strong>Technological Integration</strong></p>
+<p>The use of GIS and remote sensing technologies in this analysis demonstrates the power of these tools in modern rangeland management. Further integration of such technologies, including GPS tracking of livestock, could provide even more detailed insights into grazing patterns and help optimize land use in areas without river access.</p>
+<p><strong>Policy Implications</strong></p>
+<p>The findings of this study may have implications for policy development, particularly in terms of water rights, land use regulations, and conservation incentives. Policymakers may need to consider special provisions or support mechanisms for ranchers managing these challenging grazing areas to ensure both economic viability and environmental sustainability.</p>
+</section>
+<section id="recommendations" class="level5">
+<h5 class="anchored" data-anchor-id="recommendations"><strong>Recommendations</strong></h5>
+<p>Based on the analysis and discussion, the following recommendations can be made:</p>
+<ol type="1">
+<li><p>Develop Comprehensive Water Management Plans: Create detailed strategies for sustainable water sourcing and distribution, especially for the largest affected areas.</p></li>
+<li><p>Implement Rotational Grazing: Encourage the use of rotational grazing techniques to prevent overgrazing and allow for vegetation recovery.</p></li>
+<li><p>Invest in Water Infrastructure: Support the development of wells, water catchment systems, and efficient water transportation methods in affected areas.</p></li>
+<li><p>Conduct Ecological Assessments: Perform detailed studies of affected areas to understand the impact on local flora and fauna, and develop appropriate conservation strategies.</p></li>
+<li><p>Provide Economic Incentives: Offer support to ranchers implementing sustainable grazing and water management practices in these challenging areas.</p></li>
+<li><p>Research Alternative Water Sources: Invest in innovative water sourcing techniques suitable for arid and semi-arid regions.</p></li>
+<li><p>Develop Climate Change Adaptation Strategies: Focus on enhancing drought resilience and sustainable land use practices in these vulnerable areas.</p></li>
+<li><p>Enhance Monitoring Systems: Implement advanced monitoring using remote sensing and GIS technologies to track vegetation health, soil moisture, and grazing patterns.</p></li>
+<li><p>Foster Stakeholder Collaboration: Encourage partnerships between ranchers, conservationists, and government agencies to develop holistic management strategies.</p></li>
+<li><p>Review and Update Policies: Ensure that relevant policies address the specific challenges of grazing areas without river access, including water rights and land use regulations.</p></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
