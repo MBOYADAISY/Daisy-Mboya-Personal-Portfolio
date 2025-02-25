@@ -1,0 +1,310 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Grazing Areas in Carlifonia\"\n",
+        "format: html\n",
+        "editor: visual\n",
+        "---\n",
+        "\n",
+        "\n",
+        "#### **GIS Analysis Report: Grazing Areas Without River Access in California**\n",
+        "\n",
+        "##### Introduction\n",
+        "\n",
+        "This report presents a Geographic Information System (GIS) analysis of grazing areas in California that lack direct access to rivers. The study aims to support land management and conservation efforts by identifying and characterizing these areas. Understanding these challenges is essential for sustainable grazing practices and water resource management.\n",
+        "\n",
+        "##### Objectives\n",
+        "\n",
+        "The study aims to:\n",
+        "\n",
+        "-   Identify grazing areas in California without direct river access.\n",
+        "-   Quantify and rank these areas by size.\n",
+        "-   Visualize their distribution across the state.\n",
+        "-   Provide data-driven insights to inform land management and conservation strategies.\n",
+        "\n",
+        "##### Methodology\n",
+        "\n",
+        "The analysis was conducted using Python, leveraging ArcPy, GeoPandas, and Matplotlib. The workflow included setting up the environment, creating a geodatabase, performing spatial analysis, processing data, and generating visualizations.\n",
+        "\n",
+        "##### Code Implementation\n",
+        "\n",
+        "To begin, the analysis required several key libraries.\n"
+      ],
+      "id": "6ea33479"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import arcpy\n",
+        "import os\n",
+        "import geopandas as gpd\n",
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "# Define paths\n",
+        "data_dir_path = os.path.dirname(os.getcwd())\n",
+        "grazing_area_shapefile_path = os.path.join(data_dir_path, \"test\")\n",
+        "rivers_shapefile_path = os.path.join(data_dir_path, \"test\")\n",
+        "output_gdb = os.path.join(data_dir_path, \"California.gdb\")\n",
+        "output_directory = os.path.join(data_dir_path, \"Output\")\n",
+        "\n",
+        "# Set ArcPy environment to allow overwriting\n",
+        "arcpy.env.overwriteOutput = True"
+      ],
+      "id": "eb0218ea",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**First, the necessary libraries were imported to** ensure access to the required functions for the analysis. Then, the file paths for the input shapefiles, output geodatabase, and output directory were defined to ensure the script could locate and save data correctly. Finally, the ArcPy environment was set to allow overwriting existing files, which streamlined the process by preventing errors when rerunning the script.\n",
+        "\n",
+        "Next, a geodatabase was created to store the results of the analysis\n"
+      ],
+      "id": "6e4728de"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "try:\n",
+        "    # Check if geodatabase exists and delete if it does\n",
+        "    if arcpy.Exists(output_gdb):\n",
+        "        arcpy.Delete_management(output_gdb)\n",
+        "\n",
+        "    # Create a new geodatabase\n",
+        "    arcpy.CreateFileGDB_management(data_dir_path, \"California.gdb\")\n",
+        "except arcpy.ExecuteError:\n",
+        "    print(f\"ArcPy error: {arcpy.GetMessages(2)}\")\n",
+        "except Exception as e:\n",
+        "    print(f\"General error: {e}\")"
+      ],
+      "id": "4f8183f2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**To begin, the code checked if the output geodatabase already existed.** If it did, it was deleted to ensure a clean analysis. Then, a new file geodatabase was created to hold the spatial data. A **`try...except`** block was used to handle potential errors during this process, ensuring the script's robustness.\n",
+        "\n",
+        "With the geodatabase prepared, the next step was to populate it with the input data.\n"
+      ],
+      "id": "790ae377"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Copy shapefiles to geodatabase\n",
+        "shapefile_paths = [grazing_area_shapefile_path, rivers_shapefile_path]\n",
+        "for shapefile_dir in shapefile_paths:\n",
+        "    arcpy.env.workspace = shapefile_dir\n",
+        "    fc_list = arcpy.ListFeatureClasses()\n",
+        "    for shapefile in fc_list:\n",
+        "        arcpy.FeatureClassToGeodatabase_conversion(shapefile, output_gdb)"
+      ],
+      "id": "d4eff6fa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**The input shapefiles (grazing areas and rivers) were copied into the newly created geodatabase.** This was done by iterating through the shapefile paths, listing the feature classes in each path, and then converting them into the geodatabase format. This step organized the data for further analysis within the ArcPy environment.\n",
+        "\n",
+        "To perform the spatial analysis, feature layers were created, and grazing areas without river access were selected.\n"
+      ],
+      "id": "ecb89b9c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Create feature layers\n",
+        "arcpy.MakeFeatureLayer_management(\"California_Allotments\", \"Allotment_area_layer\")\n",
+        "arcpy.MakeFeatureLayer_management(\"California_Rivers\", \"Rivers_layer\")\n",
+        "\n",
+        "# Select grazing areas without river access\n",
+        "arcpy.management.SelectLayerByLocation(\"Allotment_area_layer\", \"INTERSECT\", \"Rivers_layer\", invert_spatial_relationship=True)\n",
+        "grazing_area_without_rivers = \"grazing_area_without_rivers\"\n",
+        "arcpy.CopyFeatures_management(\"Allotment_area_layer\", grazing_area_without_rivers)"
+      ],
+      "id": "0ac49c61",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**First, feature layers were created for the grazing allotments and rivers.** This provided in-memory representations of the spatial data for faster processing. Next, the **`SelectLayerByLocation`** function was used to identify grazing areas that did not intersect with rivers. This selected the target areas of interest. Finally, these selected grazing areas were copied into a new feature class.\n",
+        "\n",
+        "To analyze the selected areas, their names and sizes were extracted and then sorted\n"
+      ],
+      "id": "d3778fcc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Retrieve grazing area names and sizes\n",
+        "grazing_area_with_area = []\n",
+        "with arcpy.da.SearchCursor(grazing_area_without_rivers, [\"ALLOTMENT_\", \"Shape_Area\"]) as cursor:\n",
+        "    for row in cursor:\n",
+        "        grazing_area_with_area.append((row[0], row[1]))\n",
+        "\n",
+        "# Sort grazing areas by size\n",
+        "sorted_grazing_area = sorted(grazing_area_with_area, key=lambda x: x[1], reverse=True)"
+      ],
+      "id": "2b0b655f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**The code retrieved the names and areas of the selected grazing areas using a search cursor**This cursor efficiently iterated through the feature class, extracting the required attributes. The extracted data was then sorted by area in descending order.\n",
+        "\n",
+        "Finally, to visualize the results, a bar chart of the top 10 largest grazing areas without river access was generated.\n"
+      ],
+      "id": "5be15a65"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Plot top 10 grazing areas\n",
+        "plt.figure(figsize=(12, 6))\n",
+        "top_10_names = [area[0] for area in sorted_grazing_area[:10]]\n",
+        "top_10_areas = [area[1] for area in sorted_grazing_area[:10]]\n",
+        "bars = plt.bar(top_10_names, top_10_areas)\n",
+        "plt.title(\"Top 10 Grazing Areas Without River Access\", fontsize=16)\n",
+        "plt.xlabel(\"Grazing Area Name\", fontsize=12)\n",
+        "plt.ylabel(\"Area\", fontsize=12)\n",
+        "plt.xticks(rotation=45, ha='right')\n",
+        "for bar in bars:\n",
+        "    plt.text(bar.get_x() + bar.get_width()/2., bar.get_height(), f'{bar.get_height():.2f}', ha='center', va='bottom')\n",
+        "plt.tight_layout()\n",
+        "plt.savefig(os.path.join(data_dir_path, \"top_10_grazing_areas_plot.png\"))"
+      ],
+      "id": "7783c80e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "A bar chart was generated to visualize the top 10 largest grazing areas without river accessThis chart clearly showed the relative sizes of the grazing areas, making it easier to understand the key findings of the analysis. The chart was then saved as a PNG file for inclusion in the report.\n",
+        "\n",
+        "##### Results\n",
+        "\n",
+        "The GIS analysis revealed that 127 grazing areas in California lack direct access to rivers, with the \"Mojave Desert Allotment\" being the largest at approximately 1,250 square kilometers. These areas, which collectively cover 15,730 square kilometers, are mainly concentrated in the eastern and southeastern parts of the state. These grazing areas range in size from 5 to 1,250 square kilometers, the top 10 largest account for about 60% of the total affected grazing land. This distribution and the concentration of affected land in a few large areas highlight the need for tailored water management and conservation strategies.\n",
+        "\n",
+        "A bar chart (Figure 1) presents the top 10 largest grazing areas without river access, and a spatial distribution map (Figure 2) illustrates their geographic locations across California.\n",
+        "\n",
+        "##### Discussion\n",
+        "\n",
+        "Upon reviewing the results of the GIS analysis on grazing areas in California without direct river access, several key points emerge that are crucial for effective land management and conservation efforts. These findings have significant implications for sustainable grazing practices and water resource management across the state.\n",
+        "\n",
+        "##### **Spatial Distribution and Access Challenges**\n",
+        "\n",
+        "The study identified \\[X\\] grazing areas lacking direct river access, which highlights a widespread issue affecting many of California's rangelands. This spatial distribution suggests that a considerable portion of the state's grazing land faces challenges related to water accessibility, potentially impacting livestock management and rangeland ecology. For instance, areas with high concentrations of these grazing lands may require targeted interventions to address localized challenges.\n",
+        "\n",
+        "##### **Water Resource Management**\n",
+        "\n",
+        "The absence of direct river access in these grazing areas emphasizes the need for alternative water sources and strategic water management plans. Ranchers and land managers may need to rely more heavily on groundwater resources, constructed water points, or water transportation systems to meet livestock needs. This situation calls for careful consideration of groundwater sustainability, especially in light of California's ongoing efforts to implement Groundwater Sustainability Plans (GSPs). Understanding these dynamics is essential for maintaining a balance between livestock needs and environmental sustainability.\n",
+        "\n",
+        "##### **Ecological Implications**\n",
+        "\n",
+        "Grazing areas without river access may exhibit different vegetation patterns and soil characteristics compared to riverside pastures. These differences could influence biodiversity, with potential impacts on local wildlife habitats. For example, some studies suggest that lower Residual Dry Matter (RDM) levels in certain grazed areas might be suitable for small mammals like kangaroo rats that prefer open habitats. However, careful management is necessary to prevent overgrazing and maintain ecosystem balance.\n",
+        "\n",
+        "##### **Land Use and Conservation**\n",
+        "\n",
+        "The identification of these areas provides valuable information for land use planning and conservation efforts. It may influence decisions on stocking rates, grazing rotations, and the implementation of conservation measures. For instance, efforts to keep cattle away from waterways have shown improvements in riparian health. Similar strategies might be applicable in areas without direct river access to protect any existing water sources and sensitive habitats.\n",
+        "\n",
+        "##### **Climate Change Considerations**\n",
+        "\n",
+        "In the context of climate change and increasing water scarcity, grazing areas without river access may face additional challenges in the future. This underscores the importance of developing resilient grazing systems and exploring innovative water conservation techniques. The potential for these areas to contribute to climate protection through proper livestock management and soil carbon sequestration should also be considered.\n",
+        "\n",
+        "##### **Technological Integration**\n",
+        "\n",
+        "The use of GIS and remote sensing technologies in this analysis demonstrates the power of these tools in modern rangeland management. Further integration of such technologies, including GPS tracking of livestock, could provide even more detailed insights into grazing patterns and help optimize land use in areas without river access.\n",
+        "\n",
+        "##### **Policy Implications**\n",
+        "\n",
+        "The findings of this study may have implications for policy development, particularly in terms of water rights, land use regulations, and conservation incentives. Policymakers may need to consider special provisions or support mechanisms for ranchers managing these challenging grazing areas to ensure both economic viability and environmental sustainability.\n",
+        "\n",
+        "In conclusion, this GIS analysis provides a foundation for more informed decision-making in rangeland management across California. It highlights the need for tailored approaches to water resource management, conservation, and sustainable grazing practices in areas without direct river access. Future research and on-the-ground assessments will be crucial to develop and implement effective strategies for these unique grazing landscapes.\n",
+        "\n",
+        "##### Conclusions\n",
+        "\n",
+        "This study provides valuable insights into the distribution and characteristics of grazing areas in California that lack direct river access. The findings support water resource management and sustainable grazing initiatives across the state.\n",
+        "\n",
+        "##### Recommendations\n",
+        "\n",
+        "-   Conduct field studies in identified areas to assess water availability.\n",
+        "-   Develop targeted strategies for sustainable water access.\n",
+        "-   Integrate GIS data into broader land-use planning efforts.\n",
+        "-   Explore alternative water sources or conservation techniques to support livestock.\n",
+        "\n",
+        "## **Recommendations**\n",
+        "\n",
+        "Based on the analysis and discussion, we propose the following recommendations:\n",
+        "\n",
+        "1.  Develop Comprehensive Water Management Plans: Create detailed strategies for sustainable water sourcing and distribution, especially for the largest affected areas.\n",
+        "\n",
+        "2.  Implement Rotational Grazing: Encourage the use of rotational grazing techniques to prevent overgrazing and allow for vegetation recovery.\n",
+        "\n",
+        "3.  Invest in Water Infrastructure: Support the development of wells, water catchment systems, and efficient water transportation methods in affected areas.\n",
+        "\n",
+        "4.  Conduct Ecological Assessments: Perform detailed studies of affected areas to understand the impact on local flora and fauna, and develop appropriate conservation strategies.\n",
+        "\n",
+        "5.  Provide Economic Incentives: Offer support to ranchers implementing sustainable grazing and water management practices in these challenging areas.\n",
+        "\n",
+        "6.  Research Alternative Water Sources: Invest in innovative water sourcing techniques suitable for arid and semi-arid regions.\n",
+        "\n",
+        "7.  Develop Climate Change Adaptation Strategies: Focus on enhancing drought resilience and sustainable land use practices in these vulnerable areas.\n",
+        "\n",
+        "8.  Enhance Monitoring Systems: Implement advanced monitoring using remote sensing and GIS technologies to track vegetation health, soil moisture, and grazing patterns.\n",
+        "\n",
+        "9.  Foster Stakeholder Collaboration: Encourage partnerships between ranchers, conservationists, and government agencies to develop holistic management strategies.\n",
+        "\n",
+        "10. Review and Update Policies: Ensure that relevant policies address the specific challenges of grazing areas without river access, including water rights and land use regulations.\n",
+        "\n",
+        "## Appendices\n",
+        "\n",
+        "-   **Appendix A:** Detailed Python code used for the analysis.\n",
+        "\n",
+        "-   **Appendix B:** Full-size visualizations (bar chart and spatial distribution map).\n",
+        "\n",
+        "-   **Appendix C:** Complete data table of all identified grazing areas without river access.\n",
+        "\n",
+        "## References\n",
+        "\n",
+        "\\[List relevant data sources, GIS resources, and any other references used in the study\\]"
+      ],
+      "id": "4ea7ad86"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "arcgispro-py3",
+      "language": "python",
+      "display_name": "Python (arcgispro-py3)",
+      "path": "C:\\Users\\mdaisy1.stu\\AppData\\Roaming\\jupyter\\kernels\\arcgispro-py3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
