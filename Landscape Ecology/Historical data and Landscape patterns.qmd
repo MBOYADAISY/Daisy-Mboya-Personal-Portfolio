@@ -3,6 +3,7 @@ author: "Mboya Daisy"
 format: html
 editor: visual
 fontsize: 12pt
+theme: cyborg   # no theme css added to document
 bibliography: references.bib
 ---
 
