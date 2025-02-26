@@ -19,7 +19,7 @@ The study utilized a multi-criteria decision-making process to evaluate suitable
 
 AHP was employed to weigh the importance of each criterion through pairwise comparisons between two experts in renewable energy. The criteria were assigned weights based on their relative importance, and a consistency ratio was calculated to ensure the reliability of the findings. The final output was a weighted matrix that represented the relative significance of each factor in determining the optimal locations for wind farms.
 
-![](images/Summary of methodology.jpg)
+![](images/Summary%20of%20methodology.jpg)
 
 ###### Key Findings
 
