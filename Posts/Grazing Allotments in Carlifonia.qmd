@@ -154,7 +154,7 @@ output_utm_fc = os.path.join(output_directory, "grazing_area_without_rivers_UTM.
 arcpy.Project_management(grazing_area_without_rivers, output_utm_fc, utm_spatial_ref)
 
 gdf = gpd.read_file(output_utm_fc)
-california_boundary_shapefile = os.path.join(data_dir_path, "C:/Users/mdaisy1.stu/OneDrive/Documents/FCOR 599/test/ca_state/CA_State.shp")
+california_boundary_shapefile = os.path.join(data_dir_path, "CA_State.shp")
 california_gdf = gpd.read_file(california_boundary_shapefile)
 california_gdf = california_gdf.to_crs(utm_spatial_ref.exportToString())
 
@@ -187,7 +187,7 @@ The GIS analysis revealed that 283 grazing areas in California lack direct acces
 
 ##### Discussion
 
-The GIS analysis highlights several critical factors that influence sustainable land management and conservation efforts. These findings provide essential insights into spatial distribution, water resource management, ecological implications, and broader policy considerations.
+The analysis highlights several critical factors that influence sustainable land management and conservation efforts. These findings provide essential insights into spatial distribution, water resource management, ecological implications, and broader policy considerations.
 
 Spatial Distribution and Access Challenges: The identification of 283 grazing areas without river access underscores a significant challenge in rangeland management. These areas are largely concentrated in the northern and eastern parts of California, suggesting regional disparities in water availability. Limited access to natural water sources may increase reliance on artificial water infrastructure, which could pose economic and logistical challenges for ranchers and land managers.
 
