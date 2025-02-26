@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Mboya Daisy">
 
-<title>Grazing Areas in Carlifonia</title>
+<title>grazing-allotments-in-carlifonia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,13 +80,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Grazing Areas in Carlifonia</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mboya Daisy </p>
+          </div>
+  </div>
     
   
     
@@ -97,7 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="grazing-areas-without-river-access-in-california" class="level4">
-<h4 class="anchored" data-anchor-id="grazing-areas-without-river-access-in-california"><strong>Grazing Areas Without River Access in California</strong></h4>
+<h4 class="anchored" data-anchor-id="grazing-areas-without-river-access-in-california">Grazing Areas Without River Access in California</h4>
 <section id="introduction" class="level5">
 <h5 class="anchored" data-anchor-id="introduction">Introduction</h5>
 <p>This report presents a Geographic Information System (GIS) analysis of grazing areas in California that lack direct access to rivers, aiming to support land management and conservation efforts by identifying and characterizing these areas. Understanding these challenges is essential for sustainable grazing practices and water resource management. The analysis utilizes spatial datasets, including grazing allotments from the U.S. Forest Service (<a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.Allotment.zip">S_USA.Allotment.zip</a>), major rivers and creeks from the California Natural Resources Agency (<a href="https://data.cnra.ca.gov/dataset/511528b2-f7d3-4d86-8902-cc9befeeeed5/resource/7d1e7e44-81b1-43fe-95f6-1862eea6ac24/download/nhd_major_rivers_and_creeks.zip">NHD Major Rivers and Creeks</a>), and California geographic boundaries from California Open Data (<a href="https://data.ca.gov/dataset/ca-geographic-boundaries">CA Geographic Boundaries</a>). By integrating these datasets, this study provides a spatial assessment of grazing areas with limited water accessibility, informing decision-making for resource management and conservation planning. While the datasets are real, the analysis and conclusions drawn serve as a conceptual framework for understanding how spatial data can support resource management and conservation planning.</p>
@@ -160,114 +166,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>With the geodatabase prepared, the next step was to populate it with the input data.</p>
-<pre class="panel-tabset"><code>
-## Python
-
-
-# Copy shapefiles to geodatabase
-shapefile_paths = [grazing_area_shapefile_path, rivers_shapefile_path]
-for shapefile_dir in shapefile_paths:
-    arcpy.env.workspace = shapefile_dir
-    fc_list = arcpy.ListFeatureClasses()
-    for shapefile in fc_list:
-        arcpy.FeatureClassToGeodatabase_conversion(shapefile, output_gdb)</code></pre>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy shapefiles to geodatabase</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>shapefile_paths <span class="op">=</span> [grazing_area_shapefile_path, rivers_shapefile_path]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shapefile_dir <span class="kw">in</span> shapefile_paths:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    arcpy.env.workspace <span class="op">=</span> shapefile_dir</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    fc_list <span class="op">=</span> arcpy.ListFeatureClasses()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> shapefile <span class="kw">in</span> fc_list:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        arcpy.FeatureClassToGeodatabase_conversion(shapefile, output_gdb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>To perform the spatial analysis, feature layers were created, and grazing areas without river access were selected.</p>
-<pre class="panel-tabset"><code>
-## Python
-
-# Create feature layers
-arcpy.MakeFeatureLayer_management("California_Allotments", "Allotment_area_layer")
-arcpy.MakeFeatureLayer_management("California_Rivers", "Rivers_layer")
-
-# Select grazing areas without river access
-arcpy.management.SelectLayerByLocation("Allotment_area_layer", "INTERSECT", "Rivers_layer", invert_spatial_relationship=True)
-grazing_area_without_rivers = "grazing_area_without_rivers"
-arcpy.CopyFeatures_management("Allotment_area_layer", grazing_area_without_rivers)</code></pre>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create feature layers</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>arcpy.MakeFeatureLayer_management(<span class="st">"California_Allotments"</span>, <span class="st">"Allotment_area_layer"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>arcpy.MakeFeatureLayer_management(<span class="st">"California_Rivers"</span>, <span class="st">"Rivers_layer"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Select grazing areas without river access</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>arcpy.management.SelectLayerByLocation(<span class="st">"Allotment_area_layer"</span>, <span class="st">"INTERSECT"</span>, <span class="st">"Rivers_layer"</span>, invert_spatial_relationship<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>grazing_area_without_rivers <span class="op">=</span> <span class="st">"grazing_area_without_rivers"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>arcpy.CopyFeatures_management(<span class="st">"Allotment_area_layer"</span>, grazing_area_without_rivers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>To analyze the selected areas, their names and sizes were extracted and then sorted</p>
-<pre class="panel-tabset"><code>
-## Python
-
-# Retrieve grazing area names and sizes
-grazing_area_with_area = []
-with arcpy.da.SearchCursor(grazing_area_without_rivers, ["ALLOTMENT_", "Shape_Area"]) as cursor:
-    for row in cursor:
-        grazing_area_with_area.append((row[0], row[1]))
-
-# Sort grazing areas by size
-sorted_grazing_area = sorted(grazing_area_with_area, key=lambda x: x[1], reverse=True)</code></pre>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve grazing area names and sizes</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>grazing_area_with_area <span class="op">=</span> []</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> arcpy.da.SearchCursor(grazing_area_without_rivers, [<span class="st">"ALLOTMENT_"</span>, <span class="st">"Shape_Area"</span>]) <span class="im">as</span> cursor:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> cursor:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        grazing_area_with_area.append((row[<span class="dv">0</span>], row[<span class="dv">1</span>]))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort grazing areas by size</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>sorted_grazing_area <span class="op">=</span> <span class="bu">sorted</span>(grazing_area_with_area, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>Finally, to visualize the results, a bar chart of the top 10 largest grazing areas without river access was generated.</p>
-<pre class="panel-tabset"><code>
-## Python
-
-# Plot top 10 grazing areas
-plt.figure(figsize=(12, 6))
-top_10_names = [area[0] for area in sorted_grazing_area[:10]]
-top_10_areas = [area[1] for area in sorted_grazing_area[:10]]
-bars = plt.bar(top_10_names, top_10_areas)
-plt.title("Top 10 Grazing Areas Without River Access", fontsize=16)
-plt.xlabel("Grazing Area Name", fontsize=12)
-plt.ylabel("Area", fontsize=12)
-plt.xticks(rotation=45, ha='right')
-
-for bar in bars:
-    plt.text(bar.get_x() + bar.get_width()/2., bar.get_height(), f'{bar.get_height():.2f}', ha='center', va='bottom')
-plt.tight_layout()
-plt.savefig(os.path.join(data_dir_path, "top_10_grazing_areas_plot.png"))</code></pre>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top 10 grazing areas</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>top_10_names <span class="op">=</span> [area[<span class="dv">0</span>] <span class="cf">for</span> area <span class="kw">in</span> sorted_grazing_area[:<span class="dv">10</span>]]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>top_10_areas <span class="op">=</span> [area[<span class="dv">1</span>] <span class="cf">for</span> area <span class="kw">in</span> sorted_grazing_area[:<span class="dv">10</span>]]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> plt.bar(top_10_names, top_10_areas)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Top 10 Grazing Areas Without River Access"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Grazing Area Name"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Area"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar <span class="kw">in</span> bars:</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    plt.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="fl">2.</span>, bar.get_height(), <span class="ss">f'</span><span class="sc">{</span>bar<span class="sc">.</span>get_height()<span class="sc">:.2f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.savefig(os.path.join(data_dir_path, <span class="st">"top_10_grazing_areas_plot.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>A spatial distribution map of the to 10 largest grazing areas across carlifonia without river access was generated</p>
-<pre class="panel-tabset"><code>
-## Python
-
-# Reproject to UTM Zone 10N
-utm_spatial_ref = arcpy.SpatialReference(32610)
-output_utm_fc = os.path.join(output_directory, "grazing_area_without_rivers_UTM.shp")
-arcpy.Project_management(grazing_area_without_rivers, output_utm_fc, utm_spatial_ref)
-
-gdf = gpd.read_file(output_utm_fc)
-california_boundary_shapefile = os.path.join(data_dir_path, "C:/Users/mdaisy1.stu/OneDrive/Documents/FCOR 599/test/ca_state/CA_State.shp")
-california_gdf = gpd.read_file(california_boundary_shapefile)
-california_gdf = california_gdf.to_crs(utm_spatial_ref.exportToString())
-
-gdf['Area'] = gdf.geometry.area
-sorted_gdf = gdf.sort_values('Area', ascending=False)
-top_10_gdf = sorted_gdf.head(10)
-
-fig, ax = plt.subplots(1, 1, figsize=(20, 15))
-top_10_gdf.plot(ax=ax, color='blue', edgecolor='black')
-california_gdf.boundary.plot(ax=ax, color="red", linewidth=1)
-label_offset = 1000
-for idx, row in top_10_gdf.iterrows():
-    centroid = row.geometry.centroid
-    ax.text(centroid.x + label_offset, centroid.y + label_offset, row['ALLOTMENT_'], fontsize=5, color='black', ha='center', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', boxstyle="round,pad=0.3"))
-ax.set_title("Top 10 Grazing Areas Without River Access in California", fontsize=12)
-ax.set_xlabel("Easting (meters)", fontsize=12)
-ax.set_ylabel("Northing (meters)", fontsize=12)
-plt.show()
-plt.savefig(os.path.join(output_directory, "top_10_grazing_areas_map.png"), dpi=300, bbox_inches='tight')</code></pre>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject to UTM Zone 10N</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>utm_spatial_ref <span class="op">=</span> arcpy.SpatialReference(<span class="dv">32610</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>output_utm_fc <span class="op">=</span> os.path.join(output_directory, <span class="st">"grazing_area_without_rivers_UTM.shp"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>arcpy.Project_management(grazing_area_without_rivers, output_utm_fc, utm_spatial_ref)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.read_file(output_utm_fc)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>california_boundary_shapefile <span class="op">=</span> os.path.join(data_dir_path, <span class="st">"C:/Users/mdaisy1.stu/OneDrive/Documents/FCOR 599/test/ca_state/CA_State.shp"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>california_gdf <span class="op">=</span> gpd.read_file(california_boundary_shapefile)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>california_gdf <span class="op">=</span> california_gdf.to_crs(utm_spatial_ref.exportToString())</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>gdf[<span class="st">'Area'</span>] <span class="op">=</span> gdf.geometry.area</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>sorted_gdf <span class="op">=</span> gdf.sort_values(<span class="st">'Area'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>top_10_gdf <span class="op">=</span> sorted_gdf.head(<span class="dv">10</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">15</span>))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>top_10_gdf.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'blue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>california_gdf.boundary.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">"red"</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>label_offset <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> top_10_gdf.iterrows():</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    centroid <span class="op">=</span> row.geometry.centroid</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ax.text(centroid.x <span class="op">+</span> label_offset, centroid.y <span class="op">+</span> label_offset, row[<span class="st">'ALLOTMENT_'</span>], fontsize<span class="op">=</span><span class="dv">5</span>, color<span class="op">=</span><span class="st">'black'</span>, ha<span class="op">=</span><span class="st">'center'</span>, bbox<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'none'</span>, boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>))</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Top 10 Grazing Areas Without River Access in California"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Easting (meters)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Northing (meters)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.savefig(os.path.join(output_directory, <span class="st">"top_10_grazing_areas_map.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="results" class="level5">
 <h5 class="anchored" data-anchor-id="results">Results</h5>
-<p>The GIS analysis revealed that 127 grazing areas in California lack direct access to rivers, with the “Mojave Desert Allotment” being the largest at approximately 1,250 square kilometers. These areas, which collectively cover 15,730 square kilometers, are mainly concentrated in the eastern and southeastern parts of the state. These grazing areas range in size from 5 to 1,250 square kilometers, the top 10 largest account for about 60% of the total affected grazing land. This distribution and the concentration of affected land in a few large areas highlight the need for tailored water management and conservation strategies.</p>
+<iframe src="https://www.arcgis.com/apps/dashboards/edc8d61d9c994c698ae2c391ea261208" width="100%" height="700px" frameborder="0" allowfullscreen="" allow="geolocation"></iframe>
+<p>The GIS analysis revealed that 283 grazing areas in California lack direct access to rivers, with the Mono Sand Flat C &amp; H being the largest at approximately 70443 acres. These areas, which collectively cover 2525779 acres, are mainly concentrated in the Northern and Eastern parts of the state. These grazing areas range in size from 5 to 70443 square kilometers, the top 10 largest account for about 60% of the total affected grazing land. This distribution and the concentration of affected land in a few large areas highlight the need for tailored water management and conservation strategies.</p>
 </section>
 <section id="discussion" class="level5">
 <h5 class="anchored" data-anchor-id="discussion">Discussion</h5>
-<p>Upon reviewing the results of the GIS analysis on grazing areas in California without direct river access, several key points emerge that are crucial for effective land management and conservation efforts. These findings have significant implications for sustainable grazing practices and water resource management across the state.</p>
-<p><strong>Spatial Distribution and Access Challenges</strong></p>
-<p>The study identified [X] grazing areas lacking direct river access, which highlights a widespread issue affecting many of California’s rangelands. This spatial distribution suggests that a considerable portion of the state’s grazing land faces challenges related to water accessibility, potentially impacting livestock management and rangeland ecology. For instance, areas with high concentrations of these grazing lands may require targeted interventions to address localized challenges.</p>
-<p><strong>Water Resource Management</strong></p>
-<p>The absence of direct river access in these grazing areas emphasizes the need for alternative water sources and strategic water management plans. Ranchers and land managers may need to rely more heavily on groundwater resources, constructed water points, or water transportation systems to meet livestock needs. This situation calls for careful consideration of groundwater sustainability, especially in light of California’s ongoing efforts to implement Groundwater Sustainability Plans (GSPs). Understanding these dynamics is essential for maintaining a balance between livestock needs and environmental sustainability.</p>
-<p><strong>Ecological Implications</strong></p>
-<p>Grazing areas without river access may exhibit different vegetation patterns and soil characteristics compared to riverside pastures. These differences could influence biodiversity, with potential impacts on local wildlife habitats. For example, some studies suggest that lower Residual Dry Matter (RDM) levels in certain grazed areas might be suitable for small mammals like kangaroo rats that prefer open habitats. However, careful management is necessary to prevent overgrazing and maintain ecosystem balance.</p>
-<p><strong>Land Use and Conservation</strong></p>
-<p>The identification of these areas provides valuable information for land use planning and conservation efforts. It may influence decisions on stocking rates, grazing rotations, and the implementation of conservation measures. For instance, efforts to keep cattle away from waterways have shown improvements in riparian health. Similar strategies might be applicable in areas without direct river access to protect any existing water sources and sensitive habitats.</p>
-<p><strong>Climate Change Considerations</strong></p>
-<p>In the context of climate change and increasing water scarcity, grazing areas without river access may face additional challenges in the future. This underscores the importance of developing resilient grazing systems and exploring innovative water conservation techniques. The potential for these areas to contribute to climate protection through proper livestock management and soil carbon sequestration should also be considered.</p>
-<p><strong>Technological Integration</strong></p>
-<p>The use of GIS and remote sensing technologies in this analysis demonstrates the power of these tools in modern rangeland management. Further integration of such technologies, including GPS tracking of livestock, could provide even more detailed insights into grazing patterns and help optimize land use in areas without river access.</p>
-<p><strong>Policy Implications</strong></p>
-<p>The findings of this study may have implications for policy development, particularly in terms of water rights, land use regulations, and conservation incentives. Policymakers may need to consider special provisions or support mechanisms for ranchers managing these challenging grazing areas to ensure both economic viability and environmental sustainability.</p>
+<p>The GIS analysis highlights several critical factors that influence sustainable land management and conservation efforts. These findings provide essential insights into spatial distribution, water resource management, ecological implications, and broader policy considerations.</p>
+<p>Spatial Distribution and Access Challenges: The identification of 283 grazing areas without river access underscores a significant challenge in rangeland management. These areas are largely concentrated in the northern and eastern parts of California, suggesting regional disparities in water availability. Limited access to natural water sources may increase reliance on artificial water infrastructure, which could pose economic and logistical challenges for ranchers and land managers.</p>
+<p>Water Resource Management: The absence of direct river access necessitates alternative water sources, such as groundwater wells, reservoirs, and constructed water points. Given California’s strict water regulations and the ongoing implementation of Groundwater Sustainability Plans (GSPs), managing water use efficiently in these grazing areas is crucial. Over-extraction of groundwater could lead to long-term environmental degradation, making strategic water management a priority for sustaining livestock and rangeland health.</p>
+<p>Ecological Implications: Grazing areas without river access may have different vegetation dynamics and soil characteristics compared to riparian zones. The lack of a steady water supply could lead to lower biomass production, affecting forage availability for livestock. Additionally, these areas might experience increased soil erosion and habitat fragmentation, impacting local biodiversity. Effective grazing strategies, such as rotational grazing, could mitigate these risks and maintain ecological balance.</p>
+<p>Land Use and Conservation Considerations: Understanding the spatial distribution of these grazing areas informs land use planning and conservation efforts. Restricted water access may influence grazing intensity, requiring adaptive management approaches. Conservation programs could prioritize these areas for habitat restoration projects, water conservation incentives, and sustainable grazing initiatives to prevent land degradation.</p>
+<p>Climate Change Considerations: Climate change poses an additional threat to grazing areas with limited water access. Increasing temperatures and prolonged droughts could further exacerbate water scarcity, making these lands even more vulnerable. Adaptive strategies, such as drought-resilient grazing systems and water-efficient technologies, are essential for ensuring long-term sustainability.</p>
+<p>Policy Implications: The findings highlight the need for policy interventions to support ranchers managing grazing lands without river access. Policies could focus on financial assistance for water infrastructure development, incentives for sustainable grazing practices, and regulatory adjustments to facilitate efficient water use. Collaboration between government agencies, conservation organizations, and landowners will be key to developing comprehensive solutions.</p>
 </section>
 <section id="recommendations" class="level5">
-<h5 class="anchored" data-anchor-id="recommendations"><strong>Recommendations</strong></h5>
+<h5 class="anchored" data-anchor-id="recommendations">Recommendations</h5>
 <p>Based on the analysis and discussion, the following recommendations can be made:</p>
 <ol type="1">
 <li><p>Develop Comprehensive Water Management Plans: Create detailed strategies for sustainable water sourcing and distribution, especially for the largest affected areas.</p></li>
