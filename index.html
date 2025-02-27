@@ -699,6 +699,7 @@
           <!-- Success Message Popup -->
           <div id="successMessage" class="popup">
             <p>Message Sent Successfully!</p>
+            <button onclick="closePopup()">OK</button>
           </div>
         </section>
         
@@ -710,41 +711,32 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: #fff;
-            padding: 15px 20px;
-            border-radius: 10px;
+            padding: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-            font-weight: bold;
           }
         </style>
         
         <script>
           document.getElementById("contactForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); // Prevent the default form submission
         
             let formData = new FormData(this);
         
             fetch(this.action, {
               method: "POST",
               body: formData,
-              headers: { "Accept": "application/json" }
-            }).then(response => {
-              if (response.ok) {
-                let popup = document.getElementById("successMessage");
-                popup.style.display = "block"; // Show success message
-        
-                setTimeout(() => {
-                  popup.style.display = "none"; // Hide after 5 sec
-                }, 5000);
-        
-                this.reset(); // Clear form
-              } else {
-                alert("Error sending message. Please try again.");
-              }
+              mode: "no-cors"
+            }).then(() => {
+              document.getElementById("successMessage").style.display = "block";
+              this.reset(); // Reset the form
             }).catch(error => console.error("Error:", error));
           });
-        </script>
         
+          function closePopup() {
+            document.getElementById("successMessage").style.display = "none";
+          }
+        </script>
         
                
 
