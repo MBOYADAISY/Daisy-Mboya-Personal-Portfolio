@@ -680,17 +680,23 @@
           </figure>
         </section>
 
-        <form action="https://formspree.io/f/your_form_id" method="POST" class="form">
-          <div class="input-wrapper">
-            <input type="text" name="fullname" class="form-input" placeholder="Full name" required>
-            <input type="email" name="email" class="form-input" placeholder="Email address" required>
-          </div>
-          <textarea name="message" class="form-input" placeholder="Your Message" required></textarea>
-          <button class="form-btn" type="submit">
-            <ion-icon name="paper-plane"></ion-icon>
-            <span>Send Message</span>
-          </button>
-        </form>
+        <section class="contact-form">
+          <h3 class="h3 form-title">Contact Form</h3>
+        
+          <form action="https://docs.google.com/forms/d/e/1FAIpQLSdsuN1fam2gc6mErxXiO4WsnJaQtrJ9fVTUneMhLXnL6jDwlQ/viewform?usp=header" method="POST" target="_blank" class="form">
+            <div class="input-wrapper">
+              <input type="text" name="entry.YOUR_NAME_FIELD_ID" class="form-input" placeholder="Full name" required>
+              <input type="email" name="entry.YOUR_EMAIL_FIELD_ID" class="form-input" placeholder="Email address" required>
+            </div>
+            <textarea name="entry.YOUR_MESSAGE_FIELD_ID" class="form-input" placeholder="Your Message" required></textarea>
+        
+            <button class="form-btn" type="submit">
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>Send Message</span>
+            </button>
+          </form>
+        </section>
+        
                
 
       </article>
