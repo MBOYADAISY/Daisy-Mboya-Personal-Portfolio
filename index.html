@@ -681,27 +681,59 @@
         </section>
 
         <section class="contact-form">
-
           <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="mailto:mboyadaisy@gmail.com" enctype="text/plain" class="form" data-form>
-
+        
+          <form action="/submit-form" method="POST" class="form" id="contactForm">
+            <!-- Add CSRF token if using a server-side framework -->
+            <!-- <input type="hidden" name="_csrf" value="{{ csrfToken }}"> -->
+        
             <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+              <label for="fullname" class="sr-only">Full name</label>
+              <input type="text" id="fullname" name="fullname" class="form-input" placeholder="Full name" required>
+              
+              <label for="email" class="sr-only">Email address</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="Email address" required>
             </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <!-- Removed the disabled attribute from the button to make it active -->
-            <button class="form-btn" type="submit" data-form-btn>
+        
+            <label for="message" class="sr-only">Your Message</label>
+            <textarea id="message" name="message" class="form-input" placeholder="Your Message" required></textarea>
+        
+            <button class="form-btn" type="submit">
               <ion-icon name="paper-plane"></ion-icon>
               <span>Send Message</span>
             </button>
-
           </form>
-
         </section>
+        
+        <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          // Basic client-side validation
+          var fullname = document.getElementById('fullname').value;
+          var email = document.getElementById('email').value;
+          var message = document.getElementById('message').value;
+        
+          if (fullname.trim() === '' || email.trim() === '' || message.trim() === '') {
+            alert('Please fill in all fields');
+            return;
+          }
+        
+          if (!isValidEmail(email)) {
+            alert('Please enter a valid email address');
+            return;
+          }
+        
+          // If validation passes, you can submit the form
+          this.submit();
+        });
+        
+        function isValidEmail(email) {
+          // Basic email validation regex
+          var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return re.test(email);
+        }
+        </script>
+        
 
       </article>
 
