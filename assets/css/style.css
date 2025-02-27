@@ -1233,7 +1233,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--bg-gradient-yellow-1);
+  background: #e0e0e0;
   padding: 20px;
   box-shadow: var(--shadow-3);
   text-align: center;
