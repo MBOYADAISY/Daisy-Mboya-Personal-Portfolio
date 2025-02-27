@@ -683,7 +683,7 @@
         <section class="contact-form">
           <h3 class="h3 form-title">Contact Form</h3>
         
-          <form action="https://docs.google.com/forms/d/e/1FAIpQLSdsuN1fam2gc6mErxXiO4WsnJaQtrJ9fVTUneMhLXnL6jDwlQ/formResponse" method="POST" target="_blank" class="form">
+          <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdsuN1fam2gc6mErxXiO4WsnJaQtrJ9fVTUneMhLXnL6jDwlQ/formResponse" method="POST">
             <div class="input-wrapper">
               <input type="text" name="entry.770920553" class="form-input" placeholder="Full name" required>
               <input type="email" name="entry.2003490732" class="form-input" placeholder="Email address" required>
@@ -695,7 +695,49 @@
               <span>Send Message</span>
             </button>
           </form>
+        
+          <!-- Success Message Popup -->
+          <div id="successMessage" class="popup">
+            <p>Message Sent Successfully!</p>
+            <button onclick="closePopup()">OK</button>
+          </div>
         </section>
+        
+        <style>
+          .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+          }
+        </style>
+        
+        <script>
+          document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+        
+            let formData = new FormData(this);
+        
+            fetch(this.action, {
+              method: "POST",
+              body: formData,
+              mode: "no-cors"
+            }).then(() => {
+              document.getElementById("successMessage").style.display = "block";
+              this.reset(); // Reset the form
+            }).catch(error => console.error("Error:", error));
+          });
+        
+          function closePopup() {
+            document.getElementById("successMessage").style.display = "none";
+          }
+        </script>
+        
                
 
       </article>
