@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mboya Daisy">
+<meta name="dcterms.date" content="2024-11-01">
 
 <title>grazing-allotments-in-carlifonia</title>
 <style>
@@ -93,6 +94,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 1, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -102,14 +109,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="grazing-areas-without-river-access-in-california" class="level4">
-<h4 class="anchored" data-anchor-id="grazing-areas-without-river-access-in-california">Grazing Areas Without River Access in California</h4>
-<section id="introduction" class="level5">
-<h5 class="anchored" data-anchor-id="introduction">Introduction</h5>
+<section id="grazing-areas-without-river-access-in-california" class="level5">
+<h5 class="anchored" data-anchor-id="grazing-areas-without-river-access-in-california">Grazing Areas Without River Access in California</h5>
+<section id="introduction" class="level6">
+<h6 class="anchored" data-anchor-id="introduction">Introduction</h6>
 <p>This report presents a Geographic Information System (GIS) analysis of grazing areas in California that lack direct access to rivers, aiming to support land management and conservation efforts by identifying and characterizing these areas. Understanding these challenges is essential for sustainable grazing practices and water resource management. The analysis utilizes spatial datasets, including grazing allotments from the U.S. Forest Service (<a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.Allotment.zip">S_USA.Allotment.zip</a>), major rivers and creeks from the California Natural Resources Agency (<a href="https://data.cnra.ca.gov/dataset/511528b2-f7d3-4d86-8902-cc9befeeeed5/resource/7d1e7e44-81b1-43fe-95f6-1862eea6ac24/download/nhd_major_rivers_and_creeks.zip">NHD Major Rivers and Creeks</a>), and California geographic boundaries from California Open Data (<a href="https://data.ca.gov/dataset/ca-geographic-boundaries">CA Geographic Boundaries</a>). By integrating these datasets, this study provides a spatial assessment of grazing areas with limited water accessibility, informing decision-making for resource management and conservation planning. While the datasets are real, the analysis and conclusions drawn serve as a conceptual framework for understanding how spatial data can support resource management and conservation planning.</p>
 </section>
-<section id="objectives" class="level5">
-<h5 class="anchored" data-anchor-id="objectives">Objectives</h5>
+<section id="objectives" class="level6">
+<h6 class="anchored" data-anchor-id="objectives">Objectives</h6>
 <p>The study aims to:</p>
 <ul>
 <li>Identify grazing areas in California without direct river access.</li>
@@ -118,12 +125,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Provide data-driven insights to inform land management and conservation strategies.</li>
 </ul>
 </section>
-<section id="methodology" class="level5">
-<h5 class="anchored" data-anchor-id="methodology">Methodology</h5>
+<section id="methodology" class="level6">
+<h6 class="anchored" data-anchor-id="methodology">Methodology</h6>
 <p>The analysis&nbsp;was&nbsp;conducted using Python, leveraging ArcPy, GeoPandas, and Matplotlib. The workflow&nbsp;included&nbsp;setting up the environment, creating a geodatabase, performing spatial analysis, processing data, and generating visualizations.</p>
 </section>
-<section id="code-implementation" class="level5">
-<h5 class="anchored" data-anchor-id="code-implementation">Code Implementation</h5>
+<section id="code-implementation" class="level6">
+<h6 class="anchored" data-anchor-id="code-implementation">Code Implementation</h6>
 <p>To begin, the analysis required several key libraries.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Python</a></li></ul>
@@ -269,13 +276,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="results" class="level5">
-<h5 class="anchored" data-anchor-id="results">Results</h5>
+<section id="results" class="level6">
+<h6 class="anchored" data-anchor-id="results">Results</h6>
 <iframe src="https://www.arcgis.com/apps/dashboards/edc8d61d9c994c698ae2c391ea261208" width="100%" height="700px" frameborder="0" allowfullscreen="" allow="geolocation"></iframe>
 <p>The GIS analysis revealed that 283 grazing areas in California lack direct access to rivers, with the Mono Sand Flat C &amp; H being the largest at approximately 70443 acres. These areas, which collectively cover 2525779 acres, are mainly concentrated in the Northern and Eastern parts of the state. These grazing areas range in size from 5 to 70443 acres, the top 10 largest grazing areas account for about 60% of the total affected grazing land. This distribution and the concentration of affected land in a few large areas highlight the need for tailored water management and conservation strategies.</p>
 </section>
-<section id="discussion" class="level5">
-<h5 class="anchored" data-anchor-id="discussion">Discussion</h5>
+<section id="discussion" class="level6">
+<h6 class="anchored" data-anchor-id="discussion">Discussion</h6>
 <p>The analysis highlights several critical factors that influence sustainable land management and conservation efforts. These findings provide essential insights into spatial distribution, water resource management, ecological implications, and broader policy considerations.</p>
 <p>Spatial Distribution and Access Challenges: The identification of 283 grazing areas without river access underscores a significant challenge in rangeland management. These areas are largely concentrated in the northern and eastern parts of California, suggesting regional disparities in water availability. Limited access to natural water sources may increase reliance on artificial water infrastructure, which could pose economic and logistical challenges for ranchers and land managers.</p>
 <p>Water Resource Management: The absence of direct river access necessitates alternative water sources, such as groundwater wells, reservoirs, and constructed water points. Given California’s strict water regulations and the ongoing implementation of Groundwater Sustainability Plans (GSPs), managing water use efficiently in these grazing areas is crucial. Over-extraction of groundwater could lead to long-term environmental degradation, making strategic water management a priority for sustaining livestock and rangeland health.</p>
@@ -284,8 +291,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Climate Change Considerations: Climate change poses an additional threat to grazing areas with limited water access. Increasing temperatures and prolonged droughts could further exacerbate water scarcity, making these lands even more vulnerable. Adaptive strategies, such as drought-resilient grazing systems and water-efficient technologies, are essential for ensuring long-term sustainability.</p>
 <p>Policy Implications: The findings highlight the need for policy interventions to support ranchers managing grazing lands without river access. Policies could focus on financial assistance for water infrastructure development, incentives for sustainable grazing practices, and regulatory adjustments to facilitate efficient water use. Collaboration between government agencies, conservation organizations, and landowners will be key to developing comprehensive solutions.</p>
 </section>
-<section id="recommendations" class="level5">
-<h5 class="anchored" data-anchor-id="recommendations">Recommendations</h5>
+<section id="recommendations" class="level6">
+<h6 class="anchored" data-anchor-id="recommendations">Recommendations</h6>
 <p>Based on the analysis and discussion, the following recommendations can be made:</p>
 <ol type="1">
 <li><p>Develop Comprehensive Water Management Plans: Create detailed strategies for sustainable water sourcing and distribution, especially for the largest affected areas.</p></li>

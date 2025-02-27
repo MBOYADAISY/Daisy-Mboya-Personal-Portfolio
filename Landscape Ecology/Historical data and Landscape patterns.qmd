@@ -1,12 +1,13 @@
 ---
 author: "Mboya Daisy"
+date: "October, 2024"
 format: html
 editor: visual
 fontsize: 12pt
 bibliography: references.bib
 ---
 
-#### Understanding Landscape Metrics and Their Role in Analyzing Landscape Disturbances
+##### Understanding Landscape Metrics and Their Role in Analyzing Landscape Disturbances
 
 Our world is changing rapidly, and understanding how these changes affect our environment is more critical than ever. From sprawling urbanization to devastating natural disasters, disturbances reshape the landscapes around us. But how do we measure and analyze these impacts?
 
@@ -42,7 +43,7 @@ It's important to keep a few things in mind when using these tools:
 
 While landscape metrics provide a valuable picture of a landscape at a given point in time, they don't tell the whole story. To truly understand a landscape and how it responds to disturbances, we need to consider its history and how it has changed over time. This is where historical data and an understanding of landscape patterns come into play [@costanza2019].
 
-#### The Role of Historical Data and Landscape Patterns in Understanding and Managing Landscape Disturbances
+##### The Role of Historical Data and Landscape Patterns in Understanding and Managing Landscape Disturbances
 
 In landscape ecology, understanding the evolution of landscapes and their current structure is essential for effective management and conservation. Historical data and landscape patterns are key to this understanding, helping us analyze both past changes and current conditions to assess disturbances and guide future land-use planning. Understanding landscape development and legacies reflects advances in understanding of how land-use history affects contemporary landscapes [@turner2015].
 

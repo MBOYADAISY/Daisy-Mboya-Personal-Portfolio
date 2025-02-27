@@ -1,17 +1,18 @@
 ---
 author: "Mboya Daisy"
+date: " November, 2024"
 format: html
 editor: visual
 fontsize: 12pt
 ---
 
-#### Grazing Areas Without River Access in California
+##### Grazing Areas Without River Access in California
 
-##### Introduction
+###### Introduction
 
 This report presents a Geographic Information System (GIS) analysis of grazing areas in California that lack direct access to rivers, aiming to support land management and conservation efforts by identifying and characterizing these areas. Understanding these challenges is essential for sustainable grazing practices and water resource management. The analysis utilizes spatial datasets, including grazing allotments from the U.S. Forest Service ([S_USA.Allotment.zip](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.Allotment.zip)), major rivers and creeks from the California Natural Resources Agency ([NHD Major Rivers and Creeks](https://data.cnra.ca.gov/dataset/511528b2-f7d3-4d86-8902-cc9befeeeed5/resource/7d1e7e44-81b1-43fe-95f6-1862eea6ac24/download/nhd_major_rivers_and_creeks.zip)), and California geographic boundaries from California Open Data ([CA Geographic Boundaries](https://data.ca.gov/dataset/ca-geographic-boundaries)). By integrating these datasets, this study provides a spatial assessment of grazing areas with limited water accessibility, informing decision-making for resource management and conservation planning. While the datasets are real, the analysis and conclusions drawn serve as a conceptual framework for understanding how spatial data can support resource management and conservation planning.
 
-##### Objectives
+###### Objectives
 
 The study aims to:
 
@@ -20,16 +21,16 @@ The study aims to:
 -   Visualize their distribution across the state.
 -   Provide data-driven insights to inform land management and conservation strategies.
 
-##### Methodology
+###### Methodology
 
 The analysis was conducted using Python, leveraging ArcPy, GeoPandas, and Matplotlib. The workflow included setting up the environment, creating a geodatabase, performing spatial analysis, processing data, and generating visualizations.
 
-##### Code Implementation
+###### Code Implementation
 
 To begin, the analysis required several key libraries.
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 import arcpy
@@ -52,7 +53,7 @@ arcpy.env.overwriteOutput = True
 Next, a geodatabase was created to store the results of the analysis
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 try:
@@ -72,7 +73,7 @@ except Exception as e:
 With the geodatabase prepared, the next step was to populate it with the input data.
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 # Copy shapefiles to geodatabase
@@ -88,7 +89,7 @@ for shapefile_dir in shapefile_paths:
 To perform the spatial analysis, feature layers were created, and grazing areas without river access were selected.
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 # Create feature layers
@@ -105,7 +106,7 @@ arcpy.CopyFeatures_management("Allotment_area_layer", grazing_area_without_river
 To analyze the selected areas, their names and sizes were extracted and then sorted
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 # Retrieve grazing area names and sizes
@@ -122,7 +123,7 @@ sorted_grazing_area = sorted(grazing_area_with_area, key=lambda x: x[1], reverse
 Finally, to visualize the results, a bar chart of the top 10 largest grazing areas without river access was generated.
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 # Plot top 10 grazing areas
@@ -145,7 +146,7 @@ plt.savefig(os.path.join(data_dir_path, "top_10_grazing_areas_plot.png"))
 A spatial distribution map of the to 10 largest grazing areas across carlifonia without river access was generated
 
 ::: panel-tabset
-## Python
+###### Python
 
 ``` python
 # Reproject to UTM Zone 10N
@@ -177,7 +178,7 @@ plt.savefig(os.path.join(output_directory, "top_10_grazing_areas_map.png"), dpi=
 ```
 :::
 
-##### Results
+###### Results
 
 ```{=html}
 <iframe src="https://www.arcgis.com/apps/dashboards/edc8d61d9c994c698ae2c391ea261208" width="100%" height="700px" frameborder="0" allowfullscreen allow="geolocation"></iframe>
@@ -185,7 +186,7 @@ plt.savefig(os.path.join(output_directory, "top_10_grazing_areas_map.png"), dpi=
 
 The GIS analysis revealed that 283 grazing areas in California lack direct access to rivers, with the Mono Sand Flat C & H being the largest at approximately 70443 acres. These areas, which collectively cover 2525779 acres, are mainly concentrated in the Northern and Eastern parts of the state. These grazing areas range in size from 5 to 70443 acres, the top 10 largest grazing areas account for about 60% of the total affected grazing land. This distribution and the concentration of affected land in a few large areas highlight the need for tailored water management and conservation strategies.
 
-##### Discussion
+###### Discussion
 
 The analysis highlights several critical factors that influence sustainable land management and conservation efforts. These findings provide essential insights into spatial distribution, water resource management, ecological implications, and broader policy considerations.
 
@@ -201,7 +202,7 @@ Climate Change Considerations: Climate change poses an additional threat to graz
 
 Policy Implications: The findings highlight the need for policy interventions to support ranchers managing grazing lands without river access. Policies could focus on financial assistance for water infrastructure development, incentives for sustainable grazing practices, and regulatory adjustments to facilitate efficient water use. Collaboration between government agencies, conservation organizations, and landowners will be key to developing comprehensive solutions.
 
-##### Recommendations
+###### Recommendations
 
 Based on the analysis and discussion, the following recommendations can be made:
 

@@ -9,7 +9,7 @@
 <meta name="author" content="Mboya Daisy">
 <meta name="dcterms.date" content="2024-10-26">
 
-<title>Supervised Image Classification</title>
+<title>lab5_classification-assign</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,43 +73,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1. Introduction</a>
-  <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives:</a></li>
-  </ul></li>
-  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">2. Dataset Description</a></li>
-  <li><a href="#required-software-and-libraries" id="toc-required-software-and-libraries" class="nav-link" data-scroll-target="#required-software-and-libraries">3. Required Software and Libraries</a></li>
-  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">4. Methodology</a>
-  <ul>
-  <li><a href="#load-landsat-imagery" id="toc-load-landsat-imagery" class="nav-link" data-scroll-target="#load-landsat-imagery">4.1 Load Landsat Imagery</a></li>
-  <li><a href="#load-and-prepare-training-polygons" id="toc-load-and-prepare-training-polygons" class="nav-link" data-scroll-target="#load-and-prepare-training-polygons">4.2 Load and Prepare Training Polygons</a></li>
-  <li><a href="#split-data-into-training-and-validation-sets" id="toc-split-data-into-training-and-validation-sets" class="nav-link" data-scroll-target="#split-data-into-training-and-validation-sets">4.3 Split Data into Training and Validation Sets</a></li>
-  <li><a href="#extract-training-data-for-classification" id="toc-extract-training-data-for-classification" class="nav-link" data-scroll-target="#extract-training-data-for-classification">4.4 Extract Training Data for Classification</a></li>
-  <li><a href="#visualize-spectral-signatures" id="toc-visualize-spectral-signatures" class="nav-link" data-scroll-target="#visualize-spectral-signatures">4.5 Visualize Spectral Signatures</a></li>
-  <li><a href="#perform-classification" id="toc-perform-classification" class="nav-link" data-scroll-target="#perform-classification">4.6 Perform Classification</a></li>
-  <li><a href="#accuracy-assessment" id="toc-accuracy-assessment" class="nav-link" data-scroll-target="#accuracy-assessment">4.7 Accuracy Assessment</a></li>
-  </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">5: Results and Discussion</a>
-  <ul>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results:</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion:</a></li>
-  </ul></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Supervised Image Classification</h1>
 </div>
 
 
@@ -138,11 +109,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level4">
-<h4 class="anchored" data-anchor-id="introduction">1. Introduction</h4>
+<section id="supervised-image-classification" class="level5">
+<h5 class="anchored" data-anchor-id="supervised-image-classification">Supervised Image Classification</h5>
+<section id="introduction" class="level6">
+<h6 class="anchored" data-anchor-id="introduction">1. Introduction</h6>
 <p>This report presents the process of performing supervised classification on Landsat imagery using R. The objective was to classify the image into various land cover classes based on training data, followed by an accuracy assessment using a confusion matrix. The analysis also included visualizing spectral signatures for different land cover types.</p>
-<section id="learning-objectives" class="level5">
-<h5 class="anchored" data-anchor-id="learning-objectives">Learning Objectives:</h5>
+<p>Learning Objectives:</p>
 <ul>
 <li>Supervised classification of remote sensing data using R</li>
 <li>Data cleaning, training, and applying a classifier</li>
@@ -150,17 +122,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Visualizing spectral signatures</li>
 </ul>
 </section>
-</section>
-<section id="dataset-description" class="level4">
-<h4 class="anchored" data-anchor-id="dataset-description">2. Dataset Description</h4>
+<section id="dataset-description" class="level6">
+<h6 class="anchored" data-anchor-id="dataset-description">2. Dataset Description</h6>
 <p>The Landsat dataset used for this analysis covered a portion of urban and forested areas. The key attributes of the dataset included:</p>
 <ul>
 <li>Spectral bands (e.g., Red, Green, Blue, Near-Infrared)</li>
 <li>Land cover classes (e.g., Urban, Forest, Water, etc.)</li>
 </ul>
 </section>
-<section id="required-software-and-libraries" class="level4">
-<h4 class="anchored" data-anchor-id="required-software-and-libraries">3. Required Software and Libraries</h4>
+<section id="required-software-and-libraries" class="level6">
+<h6 class="anchored" data-anchor-id="required-software-and-libraries">3. Required Software and Libraries</h6>
 <p>The analysis used the following libraries for processing and classification:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Required Libraries </span></span>
@@ -171,10 +142,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>These libraries were used to load, process, and analyze the Landsat imagery and shapefiles containing the training polygons.</p>
 </section>
-<section id="methodology" class="level4">
-<h4 class="anchored" data-anchor-id="methodology">4. Methodology</h4>
-<section id="load-landsat-imagery" class="level5">
-<h5 class="anchored" data-anchor-id="load-landsat-imagery">4.1 Load Landsat Imagery</h5>
+<section id="methodology" class="level6">
+<h6 class="anchored" data-anchor-id="methodology">4. Methodology</h6>
+<p>4.1 Load Landsat Imagery</p>
 <p>The first step was to load the Landsat image. The image was in TIFF format containing multiple spectral bands (Red, Green, Blue, Near-Infrared, etc.).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Landsat imagery into R</span></span>
@@ -206,9 +176,7 @@ max values  :    1,     1,   1,   1,     1,     1 </code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="load-and-prepare-training-polygons" class="level5">
-<h5 class="anchored" data-anchor-id="load-and-prepare-training-polygons">4.2 Load and Prepare Training Polygons</h5>
+<p>4.2 Load and Prepare Training Polygons</p>
 <p>The training polygons, which represent known land cover classes, were loaded from a shapefile. These polygons were used to train the supervised classifier as they ensure that the classification is based on real examples of the classes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the classification polygons shapefile</span></span>
@@ -271,9 +239,7 @@ Projected CRS: WGS 84 / UTM zone 10N</code></pre>
 7 Water                      31</code></pre>
 </div>
 </div>
-</section>
-<section id="split-data-into-training-and-validation-sets" class="level5">
-<h5 class="anchored" data-anchor-id="split-data-into-training-and-validation-sets">4.3 Split Data into Training and Validation Sets</h5>
+<p>4.3 Split Data into Training and Validation Sets</p>
 <p>The training polygons were split into two sets: 70% for training and 30% for validation. This allows us to train the classifier on one subset of the data and test its performance on another.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a unique ID to each polygon for easier identification</span></span>
@@ -306,9 +272,7 @@ Projected CRS: WGS 84 / UTM zone 10N</code></pre>
         88         40 </code></pre>
 </div>
 </div>
-</section>
-<section id="extract-training-data-for-classification" class="level5">
-<h5 class="anchored" data-anchor-id="extract-training-data-for-classification">4.4 Extract Training Data for Classification</h5>
+<p>4.4 Extract Training Data for Classification</p>
 <p>Once the training polygons were split, the corresponding pixel values from the Landsat image were extracted for each class in the training and validation sets, to allow the classifier to learn the spectral characteristics of each land cover class.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>poly_set_vals <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(ls_image, <span class="fu">vect</span>(poly_set))</span>
@@ -420,9 +384,7 @@ Projected CRS: WGS 84 / UTM zone 10N</code></pre>
 # ℹ 32 more rows</code></pre>
 </div>
 </div>
-</section>
-<section id="visualize-spectral-signatures" class="level5">
-<h5 class="anchored" data-anchor-id="visualize-spectral-signatures">4.5 Visualize Spectral Signatures</h5>
+<p>4.5 Visualize Spectral Signatures</p>
 <p>Spectral signatures were generated by plotting the reflectance values of each band for each land cover class. This helped to visualize the differences in spectral characteristics between classes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wavelength corresponding to each band </span></span>
@@ -445,9 +407,7 @@ Projected CRS: WGS 84 / UTM zone 10N</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="perform-classification" class="level5">
-<h5 class="anchored" data-anchor-id="perform-classification">4.6 Perform Classification</h5>
+<p>4.6 Perform Classification</p>
 <p>After preparing the training and validation sets, the <code>superClass()</code> function from the <code>RSToolbox</code> package was used to classify the land cover using the Maximum Likelihood Classifier (MLC). This function requires the Landsat image, the training polygons, and the validation polygons as inputs. 500 sampled pixels from each land cover class were used to train the model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename the land cover class column for training and validation data </span></span>
@@ -472,9 +432,7 @@ Projected CRS: WGS 84 / UTM zone 10N</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="accuracy-assessment" class="level5">
-<h5 class="anchored" data-anchor-id="accuracy-assessment">4.7 Accuracy Assessment</h5>
+<p>4.7 Accuracy Assessment</p>
 <p>To evaluate the accuracy of the classification, the validation samples were used and a confusion matrix was created. The validation predictions were compared with the reference classes to calculate various accuracy metrics, including overall accuracy (OA), producer’s accuracy (PA), and user’s accuracy (UA).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract validation predictions from the model </span></span>
@@ -513,17 +471,17 @@ High density developed  Low density developed  Non-forest vegetation
 </div>
 </div>
 </section>
+<section id="results-and-discussion" class="level6">
+<h6 class="anchored" data-anchor-id="results-and-discussion">5: Results and Discussion</h6>
 </section>
-<section id="results-and-discussion" class="level4">
-<h4 class="anchored" data-anchor-id="results-and-discussion">5: Results and Discussion</h4>
-<section id="results" class="level5">
-<h5 class="anchored" data-anchor-id="results">Results:</h5>
+<section id="results" class="level6">
+<h6 class="anchored" data-anchor-id="results">Results:</h6>
 <p>The overall accuracy (OA) of the classification is 90.11%, which indicates that the model has classified a large proportion of the pixels correctly. This high OA suggests the model is reliable, particularly for classes with a sufficient number of training samples, such as Broadleaf Forest, Water, and Non-forest Vegetation.</p>
 <p>The user’s accuracy (UA) varies across classes. The highest accuracy is observed for Broadleaf Forest and Water, where the model achieves 100% accuracy. However, classes such as High Density Developed and Exposed Soil and Rocks have lower accuracy, particularly for High Density Developed, which has a UA of only 40.64%. This discrepancy may be attributed to a lower number of training samples for these classes, making the model less effective in distinguishing these land cover types.</p>
 <p>The producer’s accuracy (PA) is also high for the Broadleaf Forest and Water classes (both at 100%), which further indicates that these classes were correctly identified in the validation dataset. The Exposed Soil and Rocks class also shows good PA (88.37%). However, the High Density Developed class has a PA of only 60.47%, which suggests that the model struggles to accurately classify this land cover type, possibly due to its low occurrence in the training data.</p>
 </section>
-<section id="discussion" class="level5">
-<h5 class="anchored" data-anchor-id="discussion">Discussion:</h5>
+<section id="discussion" class="level6">
+<h6 class="anchored" data-anchor-id="discussion">Discussion:</h6>
 <p>The classification results highlight the importance of having a balanced dataset when training a model. In this case, the model performed well for land cover classes with higher training samples, such as Broadleaf Forest and Water. However, for classes with fewer training samples (e.g., High Density Developed), the model’s performance is less reliable. To improve the classification results, it would be beneficial to consider techniques such as oversampling for underrepresented classes or using more advanced classifiers that can handle imbalanced data.</p>
 <p>In conclusion, while the Maximum Likelihood Classifier produced a high overall accuracy, further refinement of the training data and exploration of alternative classification algorithms could enhance performance, especially for classes with fewer training observations.</p>
 </section>
