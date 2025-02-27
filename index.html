@@ -701,43 +701,7 @@
             <p>Message Sent Successfully!</p>
             <button onclick="closePopup()">OK</button>
           </div>
-        </section>
-        
-        <style>
-          .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-          }
-        </style>
-        
-        <script>
-          document.getElementById("contactForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the default form submission
-        
-            let formData = new FormData(this);
-        
-            fetch(this.action, {
-              method: "POST",
-              body: formData,
-              mode: "no-cors"
-            }).then(() => {
-              document.getElementById("successMessage").style.display = "block";
-              this.reset(); // Reset the form
-            }).catch(error => console.error("Error:", error));
-          });
-        
-          function closePopup() {
-            document.getElementById("successMessage").style.display = "none";
-          }
-        </script>
-        
+        </section>      
                
 
       </article>

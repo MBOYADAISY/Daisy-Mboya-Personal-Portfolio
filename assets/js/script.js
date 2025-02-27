@@ -137,3 +137,23 @@ for (let i = 0; i < navigationLinks.length; i++) {
     }
   });
 }
+
+        
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  let formData = new FormData(this);
+
+  fetch(this.action, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  }).then(() => {
+    document.getElementById("successMessage").style.display = "block";
+    this.reset(); // Reset the form
+  }).catch(error => console.error("Error:", error));
+});
+
+function closePopup() {
+  document.getElementById("successMessage").style.display = "none";
+}
