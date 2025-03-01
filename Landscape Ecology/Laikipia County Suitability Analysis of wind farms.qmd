@@ -34,3 +34,4 @@ The study identified that approximately 37.2% of Laikipia County is suitable for
 The analysis also revealed that high-suitability areas are primarily located on cropland, while medium-suitability zones tend to be near forest reserves and natural habitats. These areas, while still viable, have smaller extents due to their proximity to environmental constraints. This classification of areas into high, medium, and low suitability zones underscores the varying degrees of feasibility for wind farm development across Laikipia County, offering valuable insights for future wind energy initiatives and policy decisions.
 
 [Click here to view the complete document.](https://drive.google.com/file/d/1_Mw5AvKJ1xsqyEmQ1kWRVylCK-qjVttM/view?usp=sharing)
+:::

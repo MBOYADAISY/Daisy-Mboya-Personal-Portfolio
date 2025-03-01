@@ -4,7 +4,7 @@ date: "9th December, 2024"
 format: html
 editor: visual
 ---
-
+::: {style="text-align: justify"}
 ##### Understanding Our Audience: The Path to Sustainable Forestry
 
 In any community-driven initiative, understanding the diverse perspectives of stakeholders is key to fostering support and ensuring long-term success. For the Cortes Forestry General Partnership (CFGP), two primary groups play a crucial role in shaping the future of sustainable forestry on Cortes Island: local community members and provincial government officials.
@@ -32,3 +32,4 @@ By supporting this initiative, provincial leaders reinforce their dedication to 
 Whether at the community or governmental level, the future of forestry on Cortes Island depends on a collective commitment to sustainability. Local residents and policymakers alike have a vested interest in ensuring that forests remain a source of economic prosperity, cultural heritage, and ecological health. When local knowledge, environmental responsibility, and sound policy come together, the result is a resilient forestry model that benefits everyone involved.
 
 Collaboration is key—community members, policymakers, and environmental advocates must work together to develop solutions that prioritize long-term sustainability over short-term gains. By fostering open communication, promoting education on sustainable forestry practices, and implementing policies that reflect the shared values of conservation and economic stability, the CFGP can continue to nurture the forests that define and sustain Cortes Island. In doing so, they create a legacy of responsible resource management that will inspire and benefit future generations.
+:::

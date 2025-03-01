@@ -6,7 +6,7 @@ editor: visual
 fontsize: 12pt
 bibliography: references.bib
 ---
-
+::: {style="text-align: justify"}
 ##### Understanding Landscape Metrics and Their Role in Analyzing Landscape Disturbances
 
 Our world is changing rapidly, and understanding how these changes affect our environment is more critical than ever. From sprawling urbanization to devastating natural disasters, disturbances reshape the landscapes around us. But how do we measure and analyze these impacts?
