@@ -4,6 +4,7 @@ date: "9th December, 2024"
 format: html
 editor: visual
 ---
+
 ::: {style="text-align: justify"}
 ##### Understanding Our Audience: The Path to Sustainable Forestry
 
@@ -27,7 +28,7 @@ By supporting this initiative, provincial leaders reinforce their dedication to 
 
 ###### A Shared Responsibility
 
-![](images/clipboard-1244001873.png){fig-align="center" width="800"}
+![something](C:/Users/mdaisy1.stu/OneDrive/Documents/GitHub/Daisy Mboya-Personal Portfolio/assets/images/audience analysis.jpg)
 
 Whether at the community or governmental level, the future of forestry on Cortes Island depends on a collective commitment to sustainability. Local residents and policymakers alike have a vested interest in ensuring that forests remain a source of economic prosperity, cultural heritage, and ecological health. When local knowledge, environmental responsibility, and sound policy come together, the result is a resilient forestry model that benefits everyone involved.
 
