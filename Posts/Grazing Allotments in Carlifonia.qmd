@@ -6,6 +6,7 @@ editor: visual
 fontsize: 12pt
 ---
 
+:::::::::: {style="text-align: justify"}
 ##### Grazing Areas Without River Access in California
 
 ###### Introduction
@@ -23,7 +24,7 @@ The study aims to:
 
 ###### Methodology
 
-The analysis was conducted using Python, leveraging ArcPy, GeoPandas, and Matplotlib. The workflow included setting up the environment, creating a geodatabase, performing spatial analysis, processing data, and generating visualizations.
+The analysis was conducted using Python, leveraging ArcPy, GeoPandas, and Matplotlib. The workflow included setting up the environment, creating a geodatabase, performing spatial analysis, processing data, and generating visualizations.
 
 ###### Code Implementation
 
@@ -225,3 +226,4 @@ Based on the analysis and discussion, the following recommendations can be made:
 9.  Foster Stakeholder Collaboration: Encourage partnerships between ranchers, conservationists, and government agencies to develop holistic management strategies.
 
 10. Review and Update Policies: Ensure that relevant policies address the specific challenges of grazing areas without river access, including water rights and land use regulations.
+::::::::::
