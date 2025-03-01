@@ -6,7 +6,7 @@ editor: visual
 fontsize: 12pt
 ---
 ::: {style="text-align: justify"}
-##### Beyond Binaries: Why Diverse Knowledge Systems Matter in Environmental Management
+##### Beyond Binaries: Why Diverse Knowledge Systems matter  in Environmental Management
 
 In an increasingly interconnected world, understanding and appreciating different cultural perspectives and worldviews is not just a nice-to-have, it's a necessity. This is especially true in the field of sustainable natural resources, where decisions often have profound social and ethical implications. As a student in the field of Geomatics for Environmental Management (MGEM), I have been reflecting on why learning to work with diverse knowledge systems is so crucial.
 

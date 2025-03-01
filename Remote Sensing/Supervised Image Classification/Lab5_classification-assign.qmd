@@ -6,6 +6,7 @@ editor: visual
 fontsize: 12pt
 ---
 
+::: {style="text-align: justify"}
 ##### Supervised Image Classification
 
 ###### 1. Introduction
@@ -50,17 +51,17 @@ The first step was to load the Landsat image. The image was in TIFF format conta
 
 ```{r}
 # Load the Landsat imagery into R
-ls_image <- rast("data/LC09_L2SP_047026_20240716_20240717_02_T1_SR_BSTACK.tif")
+landsat_image <- rast("data/LC09_L2SP_047026_20240716_20240717_02_T1_SR_BSTACK.tif")
 
 # Display the Landsat image
-ls_image
+landsat_image
 ```
 
 The next step was to create an RGB composite of the image using three bands (Red, Green, Blue) for easier visual interpretation of the land cover types.
 
 ```{r}
 # Plot the RGB composite of the Landsat image (bands 3, 2, 1 corresponding to RGB)
-terra::plotRGB(ls_image, r = 3, g = 2, b = 1, stretch = "lin")
+terra::plotRGB(landsat_image, r = 3, g = 2, b = 1, stretch = "lin")
 ```
 
 4.2 Load and Prepare Training Polygons
@@ -70,7 +71,7 @@ The training polygons, which represent known land cover classes, were loaded fro
 ```{r }
 # Load the classification polygons shapefile
 my_polygons <- "outputs/shapefiles/classification_polygons_DM.shp"
-class_poly <- st_read(my_polygons)
+class_poly <- st_read(my_polygons, quiet = TRUE)
 ```
 
 ```{r}
@@ -89,7 +90,7 @@ class_poly <- class_poly %>%
                                       "Water")))
 
 # Plot the polygons over the Landsat image
-terra::plotRGB(ls_image, r = 3, g = 2, b = 1, stretch = "lin")
+terra::plotRGB(landsat_image, r = 3, g = 2, b = 1, stretch = "lin")
 plot(class_poly[, "lc_class"], add = TRUE)
 
 ```
@@ -141,7 +142,7 @@ Once the training polygons were split, the corresponding pixel values from the L
 
 ```{r message=FALSE, warning=FALSE}
 
-poly_set_vals <- terra::extract(ls_image, vect(poly_set))
+poly_set_vals <- terra::extract(landsat_image, vect(poly_set))
 
 # We need to perform an inner_join to retrieve lc_class
 poly_set_vals <- inner_join(poly_set, poly_set_vals) %>%
@@ -217,7 +218,7 @@ poly_train <- poly_train %>%
 poly_val <- poly_val %>%
   rename(class = lc_class)  
 # Perform Maximum Likelihood Classification 
-mlc_model <- superClass(img = ls_image, trainData = poly_train, valData = poly_val, responseCol = "class",
+mlc_model <- superClass(img = landsat_image, trainData = poly_train, valData = poly_val, responseCol = "class",
                         model = "mlc",nSamples = 500)  
 # Extract the classified map from the model 
 classified_map <- mlc_model$map  
@@ -267,3 +268,4 @@ The producer's accuracy (PA) is also high for the Broadleaf Forest and Water cla
 The classification results highlight the importance of having a balanced dataset when training a model. In this case, the model performed well for land cover classes with higher training samples, such as Broadleaf Forest and Water. However, for classes with fewer training samples (e.g., High Density Developed), the model's performance is less reliable. To improve the classification results, it would be beneficial to consider techniques such as oversampling for underrepresented classes or using more advanced classifiers that can handle imbalanced data.
 
 In conclusion, while the Maximum Likelihood Classifier produced a high overall accuracy, further refinement of the training data and exploration of alternative classification algorithms could enhance performance, especially for classes with fewer training observations.
+:::
