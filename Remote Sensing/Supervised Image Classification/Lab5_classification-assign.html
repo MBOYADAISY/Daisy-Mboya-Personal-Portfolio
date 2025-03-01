@@ -265,18 +265,18 @@ max values  :    1,     1,   1,   1,     1,     1 </code></pre>
 <p>4.4 Extract Training Data for Classification</p>
 <p>Once the training polygons were split, the corresponding pixel values from the Landsat image were extracted for each class in the training and validation sets, to allow the classifier to learn the spectral characteristics of each land cover class.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>poly_set_vals <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(landsat_image, <span class="fu">vect</span>(poly_set))</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>polygon_pixels <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(landsat_image, <span class="fu">vect</span>(poly_set))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to perform an inner_join to retrieve lc_class</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>poly_set_vals <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(poly_set, poly_set_vals) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>polygon_pixels <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(poly_set, polygon_pixels) <span class="sc">%&gt;%</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of pixels per land cover class  </span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>poly_stats <span class="ot">&lt;-</span> poly_set_vals <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>pixel_statistics <span class="ot">&lt;-</span> polygon_pixels <span class="sc">%&gt;%</span> </span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(set, lc_class) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_px =</span> <span class="fu">n</span>())  </span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the class statistics </span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>poly_stats </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>pixel_statistics </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 3
 # Groups:   set [2]
@@ -300,11 +300,11 @@ max values  :    1,     1,   1,   1,     1,     1 </code></pre>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of pixels per land cover class  </span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>poly_stats <span class="ot">&lt;-</span> poly_set_vals <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pixel_statistics <span class="ot">&lt;-</span> polygon_pixels <span class="sc">%&gt;%</span> </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(set, lc_class) <span class="sc">%&gt;%</span> </span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_px =</span> <span class="fu">n</span>())  </span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the class statistics </span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>poly_stats </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>pixel_statistics </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 3
 # Groups:   set [2]
@@ -329,10 +329,10 @@ max values  :    1,     1,   1,   1,     1,     1 </code></pre>
 <p>For ease of analysis, the dataset was reshaped from a wide format (where each band is a separate column) to a long format (where each band is a row with the corresponding reflectance value).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the data from wide to long format </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>poly_set_vals_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(poly_set_vals, blue<span class="sc">:</span>swir2,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>polygon_pixels_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(polygon_pixels, blue<span class="sc">:</span>swir2,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">names_to =</span> <span class="st">"band"</span>, <span class="at">values_to =</span> <span class="st">"reflectance"</span>)  </span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the reshaped data </span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(poly_set_vals_long) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(polygon_pixels_long) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
 # Groups:   lc_class [1]
@@ -349,7 +349,7 @@ max values  :    1,     1,   1,   1,     1,     1 </code></pre>
 <p>The mean, 5th quantile, and 95th quantile of reflectance for each band and land cover class was then calculated to summarize and analyze the spectral characteristics of the different land cover types.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate spectral signatures for each land cover class and band </span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>spectral_sign <span class="ot">&lt;-</span> poly_set_vals_long <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>spectral_sign <span class="ot">&lt;-</span> polygon_pixels_long <span class="sc">%&gt;%</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lc_class, band) <span class="sc">%&gt;%</span>  </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r_mean =</span> <span class="fu">mean</span>(reflectance, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">r_q05 =</span> <span class="fu">quantile</span>(reflectance, <span class="fl">0.05</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -413,7 +413,7 @@ max values  :    1,     1,   1,   1,     1,     1 </code></pre>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the classified map to a TIFF file </span></span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#terra::writeRaster(classified_map, filename = "outputs/classified_map.tif", overwrite = TRUE)  </span></span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the classified map </span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(classified_map, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">'#A6D96A'</span>,<span class="st">'#33A02C'</span>,<span class="st">'#DE3B13'</span>,<span class="st">'#D63CF1'</span>,<span class="st">'#00D2D2'</span>,<span class="st">'#F1A026'</span>,<span class="st">'#2B83BA'</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(classified_map, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">'#C8EBA2'</span>,<span class="st">'#5CC055'</span>,<span class="st">'#F06A4B'</span>,<span class="st">'#E879F8'</span>,<span class="st">'#5FE9E9'</span>,<span class="st">'#F7C469'</span>,<span class="st">'#5DA7D2'</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

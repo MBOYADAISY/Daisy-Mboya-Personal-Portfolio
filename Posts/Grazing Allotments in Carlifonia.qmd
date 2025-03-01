@@ -5,7 +5,8 @@ format: html
 editor: visual
 fontsize: 12pt
 ---
-::: {style="text-align: justify"}
+
+:::::::::: {style="text-align: justify"}
 ##### Grazing Areas Without River Access in California
 
 ###### Introduction
