@@ -1,0 +1,46 @@
+---
+author: "Mboya Daisy"
+date: "18 March, 2024"
+format: html
+editor: visual
+---
+
+::: {style="text-align: justify"}
+##### A Cartographer's Vision
+
+As a cartographer, I have always been fascinated by how maps can transform our understanding of the world. Beyond their practical use for navigation, maps hold the power to reveal hidden patterns, tell stories, and evoke emotions. In this post, I’d like to share some of my latest map creations and the vision behind them.
+
+###### Introduction to My Maps
+
+My maps are not just about plotting points on a grid; they're about capturing the essence of places and the stories they tell. Whether it's a historical map that brings the past to life, a thematic map that highlights social trends, or a geographical map that showcases natural wonders, each one is crafted with care and attention to detail.
+
+###### Featured Maps
+
+###### 1. Ecological Map: Least Cost Path of Grizzly Bears
+
+This map visualizes the optimal routes for grizzly bear movement across landscapes, considering factors like terrain, vegetation, and human disturbance. It provides crucial insights for wildlife conservation and management.
+
+![](images/grizzly_bear.jpg)
+
+The least cost path analysis reveals potential corridors that grizzly bears might use to move between habitats. These paths are essential for maintaining genetic diversity and allowing bears to access different resources throughout the seasons. By identifying these routes, we can better plan conservation efforts and mitigate human-wildlife conflicts.
+
+###### 2. Watershed and Management Areas: Nahmint Region
+
+This map showcases the complex interplay of watershed boundaries, land management zones, and ecological features in the Nahmint region of Vancouver Island, British Columbia.
+
+![](images/nahmint%20watershed-01.jpg)
+
+The Nahmint region map illustrates the intricate balance between conservation and resource management. It highlights the Nahmint River Watershed, riparian management areas. By visualizing these elements together, the map provides a comprehensive view of the region's ecological importance and the various land use designations that shape its management.
+
+###### The Creation Process
+
+Creating these maps involves a combination of research, data analysis, and design. I use tools like ArcGIS and QGIS to layer data and create visually appealing representations. The process is both technical and artistic, requiring precision and creativity.
+
+###### Challenges and Insights
+
+One of the biggest challenges is balancing detail with simplicity. Maps should be informative yet easy to understand. Through this process, I've gained insights into how maps can influence our perceptions and inspire new perspectives.
+
+###### Conclusion
+
+Maps are more than just tools for navigation; they're windows into different worlds and ways of thinking. My vision as a cartographer is to create maps that inspire curiosity, foster understanding, and encourage exploration. Whether you're a fellow cartographer, a history buff, or simply someone who loves maps, I hope you find these creations as captivating as I do.
+:::
