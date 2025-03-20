@@ -2,8 +2,10 @@
 author: "Mboya Daisy"
 date: "September, 2018"
 format: html
+fontsize: 12pt
 editor: visual
 ---
+
 ::: {style="text-align: justify"}
 ##### Location of Suitable sites for Wind Farms in Laikipia County,Kenya
 

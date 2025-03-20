@@ -3,6 +3,7 @@ author: "Mboya Daisy"
 date: "9 December, 2024"
 format: html
 editor: visual
+fontsize: 12pt
 bibliography: references.bib
 ---
 
