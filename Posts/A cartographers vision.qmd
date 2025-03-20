@@ -13,7 +13,7 @@ As a cartographer, I have always been fascinated by how maps can transform our u
 
 ###### Introduction to My Maps
 
-My maps are not just about plotting points on a grid; they're about capturing the essence of places and the stories they tell. Whether it's a historical map that brings the past to life, a thematic map that highlights social trends, or a geographical map that showcases natural wonders, each one is crafted with care and attention to detail.
+My maps go beyond merely plotting points on a grid; they aim to capture the essence of places and the stories they convey. Whether it's an ecological map highlighting biodiversity, a conservation map showcasing protected areas, or any other thematic representation, each one is meticulously crafted with care and attention to detail.
 
 ###### Featured Maps
 
@@ -31,7 +31,7 @@ This map showcases the complex interplay of watershed boundaries, land managemen
 
 ![](images/nahmint%20watershed-01.jpg)
 
-The Nahmint region map illustrates the intricate balance between conservation and resource management. It highlights the Nahmint River Watershed, riparian management areas. By visualizing these elements together, the map provides a comprehensive view of the region's ecological importance and the various land use designations that shape its management.
+The Nahmint region map illustrates the intricate balance between conservation and resource management. It highlights the Nahmint River Watershed and riparian management areas. By visualizing these elements together, the map provides a comprehensive view of the region's ecological importance and the factors that shape its management.
 
 ###### The Creation Process
 
