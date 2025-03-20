@@ -2,8 +2,8 @@
 author: "Mboya Daisy"
 date: "September, 2018"
 format: html
-fontsize: 12pt
 editor: visual
+fontsize: 12pt
 ---
 
 ::: {style="text-align: justify"}
